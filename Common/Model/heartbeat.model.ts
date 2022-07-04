@@ -1,7 +1,7 @@
 class HeartbeatModel {
-  heartbeat: Date;
+  lastBeatGeneratedAt: Date;
   constructor(timeStamp: Date) {
-    this.heartbeat = timeStamp;
+    this.lastBeatGeneratedAt = timeStamp;
   }
 }
 

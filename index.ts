@@ -1,9 +1,9 @@
 import express from 'express';
-import { HeartBeatController } from './Components/Heartbeat/Controllers/heartbeat.controllers.js';
+import { HeartbeatController } from './Components/Heartbeat/Controllers/heartbeat.controllers.js';
 
 const app = express();
 
 app.get('/heartbeat', (req, res) => {
-  res.send(new HeartBeatController().getHeartbeat());
+  res.send(new HeartbeatController().getHeartbeat());
 });
 app.listen(3000, () => {});
