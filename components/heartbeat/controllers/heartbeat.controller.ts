@@ -6,7 +6,8 @@ export class HeartbeatController {
     const heartbeatService = new HeartbeatServices();
     const timeStamp = heartbeatService.getBeat();
     const beat = timeStamp.heartbeat;
-    const payload = new HeartbeatResponsePayload(beat);
+    const payload = new HeartbeatResponsePayload();
+    payload.heartbeatTimestamp = beat;
     return payload;
   }
 }
