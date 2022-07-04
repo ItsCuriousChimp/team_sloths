@@ -1,10 +1,10 @@
 import express from 'express';
-import getHeartbeat from './components/heartbeat/Controllers/heartbeatController';
+import { HeartbeatController } from './components/heartbeat/Controllers/heartbeat.controller';
 
 const app = express();
 const PORT = 3000;
 
-app.get('/heartbeat', getHeartbeat);
+app.get('/heartbeat', new HeartbeatController().getHeartbeat);
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
