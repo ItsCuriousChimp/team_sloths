@@ -1,8 +1,9 @@
-const heartBeatControllers = require('./components/heartbeat/controllers/heartBeatControllers.ts');
+import express from 'express';
+import { HeartBeatController } from './Components/Heartbeat/Controllers/heartbeat.controllers.js';
 
-const express = require('express');
 const app = express();
 
-app.get('/heartbeat', heartBeatControllers.getHeartBeat);
-
+app.get('/heartbeat', (req, res) => {
+  res.send(new HeartBeatController().getHeartbeat());
+});
 app.listen(3000, () => {});
