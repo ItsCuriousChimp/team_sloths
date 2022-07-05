@@ -7,7 +7,7 @@ export default class HeartbeatController {
     const heartbeatResult = heartbeatService.getBeat();
     const beatTs = heartbeatResult.lastBeatGeneratedAt;
     const payload = new HeartbeatResponsePayload();
-    payload.heartbeatTimestamp = beatTs;
+    payload.lastBeatGeneratedAt = beatTs;
     return payload;
   }
 }
