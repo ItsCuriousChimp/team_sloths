@@ -1,5 +1,4 @@
-const temp = ()=>{
-    console.log('how are you');
-}
-
-temp();
+const temp = (tempVar) => {
+  console.log(tempVar);
+};
+temp(2);
