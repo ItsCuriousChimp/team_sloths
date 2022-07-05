@@ -1,5 +1,5 @@
 import express from 'express';
-import { HeartbeatController } from './components/heartbeat/controllers/heartbeat.controller';
+import HeartbeatController from './components/heartbeat/controllers/heartbeat.controller';
 
 const app = express();
 const PORT = 3000;

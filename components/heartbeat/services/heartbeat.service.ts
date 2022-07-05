@@ -1,7 +1,7 @@
-import { HeartbeatModel } from '../../../common/models/heartbeat.model';
-import { HeartbeatRepository } from '../repository/heartbeat.repository';
+import HeartbeatModel from '../../../common/models/heartbeat.model';
+import HeartbeatRepository from '../repository/heartbeat.repository';
 
-export class HeartbeatServices {
+export default class HeartbeatServices {
   public getBeat(): HeartbeatModel {
     return new HeartbeatRepository().getCurrentHeartbeat();
   }
