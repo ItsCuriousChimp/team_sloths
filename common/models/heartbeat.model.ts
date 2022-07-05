@@ -1,4 +1,4 @@
-export class HeartbeatModel {
+export default class HeartbeatModel {
   lastHeartbeatAtTimestamp: Date;
 
   constructor(timestamp: Date) {

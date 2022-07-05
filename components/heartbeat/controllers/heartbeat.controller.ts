@@ -1,7 +1,7 @@
-import { HeartbeatResponsePayload } from '../../../payloads/heatbeat-response.payload';
-import { HeartbeatServices } from '../services/heartbeat.service';
+import HeartbeatResponsePayload from '../../../payloads/heartbeat-response.payload';
+import HeartbeatServices from '../services/heartbeat.service';
 
-export class HeartbeatController {
+export default class HeartbeatController {
   public getHeartbeat(): HeartbeatResponsePayload {
     const heartbeatService = new HeartbeatServices();
     const heatbeatResult = heartbeatService.getBeat();
