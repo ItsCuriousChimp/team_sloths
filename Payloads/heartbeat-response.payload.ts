@@ -1,5 +1,5 @@
 class HeartbeatResponsePayload {
-  lastBeatGeneratedAt: Date = new Date();
+  lastBeatGeneratedAt: Date | undefined;
 }
 
 export { HeartbeatResponsePayload };
