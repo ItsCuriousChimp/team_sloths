@@ -4,6 +4,7 @@ import HeartbeatController from './components/heartbeat/controllers/heartbeat.co
 const app = express();
 const PORT = 3000;
 
+// GET /heartbeat
 app.get('/heartbeat', (req, res) => {
   res.send(new HeartbeatController().getHeartbeat());
 });
