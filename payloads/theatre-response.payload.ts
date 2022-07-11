@@ -1,3 +1,5 @@
 export default class TheatreResponsePayload {
-  theatreList: Object[] | undefined;
+  id: String = '';
+
+  name: String = '';
 }

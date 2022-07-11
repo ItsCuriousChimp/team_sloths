@@ -8,8 +8,13 @@ export default class TheatreController {
     const { cityId } = req.query;
     const theatreservice : TheatreService = new TheatreService();
     const theatreList: TheatreModel[] = await theatreservice.getTheatre(String(cityId));
-    const payload: TheatreResponsePayload = new TheatreResponsePayload();
-    payload.theatreList = theatreList;
-    res.json(payload.theatreList);
+    const result: TheatreResponsePayload[] = [];
+    for (let i = 0; i < theatreList.length; i += 1) {
+      const payload: TheatreResponsePayload = new TheatreResponsePayload();
+      payload.id = theatreList[i].id;
+      payload.name = theatreList[i].name;
+      result.push(payload);
+    }
+    res.json(result);
   }
 }
