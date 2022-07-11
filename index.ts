@@ -9,11 +9,7 @@ app.get('/heartbeat', (_req: Request, res: Response) => {
   res.send(new HeartbeatController().getHeartbeat());
 });
 
-app.get('/theatres', async (req: Request, res: Response) => {
-  const { cityId } = req.query;
-  const theatreList = await new TheatreController().getTheatre(String(cityId));
-  res.json(theatreList);
-});
+app.get('/theatres', new TheatreController().getTheatre);
 
 app.listen(3000, () => {
   // eslint-disable-next-line no-console

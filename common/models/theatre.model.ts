@@ -1,9 +1,10 @@
-import { theatre } from '@prisma/client';
-
 export default class TheatreModel {
-  theatre: theatre;
+  id: String;
 
-  constructor(theatreResponse: theatre) {
-    this.theatre = theatreResponse;
+  name: String;
+
+  constructor(theatreId: String, theatreName: String) {
+    this.id = theatreId;
+    this.name = theatreName;
   }
 }

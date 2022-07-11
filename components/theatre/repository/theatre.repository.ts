@@ -10,7 +10,7 @@ export default class TheatreRepository {
     });
     const theatreModelList: TheatreModel[] = [];
     for (let i = 0; i < theatreList.length; i += 1) {
-      theatreModelList.push(new TheatreModel(theatreList[i]));
+      theatreModelList.push(new TheatreModel(theatreList[i].id, theatreList[i].name));
     }
     return theatreModelList;
   }
