@@ -1,0 +1,104 @@
+[
+    [
+        {
+            "id": "b5943b18-9f6a-40c6-9ed6-379f70b7b110",
+            "theatreId": "59f66b5e-de04-42ef-bcc9-e36fbdd6c383",
+            "screenNumber": 0,
+            "screenId": "701ee46d-74c6-469a-a831-7549d8036f72",
+            "movieId": "b1e63376-6b0d-4e86-9cce-30ee0d282a14",
+            "showStartTimeInUtc": "1970-01-01T00:00:00.000Z",
+            "showEndTimeInUtc": "1970-01-01T00:00:00.000Z",
+            "availableUntilUtc": "1970-01-01T00:00:00.000Z"
+        },
+        {
+            "id": "b5943b18-9f6a-40c6-9ed6-379f70b7b110",
+            "theatreId": "59f66b5e-de04-42ef-bcc9-e36fbdd6c383",
+            "screenNumber": 1,
+            "screenId": "701ee46d-74c6-469a-a831-7549d8036f72",
+            "movieId": "b1e63376-6b0d-4e86-9cce-30ee0d282a14",
+            "showStartTimeInUtc": "1970-01-01T00:00:00.000Z",
+            "showEndTimeInUtc": "1970-01-01T00:00:00.000Z",
+            "availableUntilUtc": "1970-01-01T00:00:00.000Z"
+        },
+        {
+            "id": "22879af4-0d65-4b08-af84-b24e3529eba3",
+            "theatreId": "59f66b5e-de04-42ef-bcc9-e36fbdd6c383",
+            "screenNumber": 0,
+            "screenId": "93216ed4-533d-4373-bb08-a5cd7cdda040",
+            "movieId": "6958ba51-ddf3-4d9b-80ab-7f2373d6b3b7",
+            "showStartTimeInUtc": "1970-01-01T00:00:00.000Z",
+            "showEndTimeInUtc": "1970-01-01T00:00:00.000Z",
+            "availableUntilUtc": "1970-01-01T00:00:00.000Z"
+        },
+        {
+            "id": "22879af4-0d65-4b08-af84-b24e3529eba3",
+            "theatreId": "59f66b5e-de04-42ef-bcc9-e36fbdd6c383",
+            "screenNumber": 1,
+            "screenId": "93216ed4-533d-4373-bb08-a5cd7cdda040",
+            "movieId": "6958ba51-ddf3-4d9b-80ab-7f2373d6b3b7",
+            "showStartTimeInUtc": "1970-01-01T00:00:00.000Z",
+            "showEndTimeInUtc": "1970-01-01T00:00:00.000Z",
+            "availableUntilUtc": "1970-01-01T00:00:00.000Z"
+        },
+        {
+            "id": "f0e997e6-c3a3-4541-a618-6cef0b19fcee",
+            "theatreId": "59f66b5e-de04-42ef-bcc9-e36fbdd6c383",
+            "screenNumber": 0,
+            "screenId": "701ee46d-74c6-469a-a831-7549d8036f72",
+            "movieId": "83d626ae-5dd9-4121-a0fc-892afbfa4ef0",
+            "showStartTimeInUtc": "1970-01-01T00:00:00.000Z",
+            "showEndTimeInUtc": "1970-01-01T00:00:00.000Z",
+            "availableUntilUtc": "1970-01-01T00:00:00.000Z"
+        },
+        {
+            "id": "f0e997e6-c3a3-4541-a618-6cef0b19fcee",
+            "theatreId": "59f66b5e-de04-42ef-bcc9-e36fbdd6c383",
+            "screenNumber": 1,
+            "screenId": "701ee46d-74c6-469a-a831-7549d8036f72",
+            "movieId": "83d626ae-5dd9-4121-a0fc-892afbfa4ef0",
+            "showStartTimeInUtc": "1970-01-01T00:00:00.000Z",
+            "showEndTimeInUtc": "1970-01-01T00:00:00.000Z",
+            "availableUntilUtc": "1970-01-01T00:00:00.000Z"
+        },
+        {
+            "id": "228aa0b8-e677-4501-bd99-4c8c13c8771d",
+            "theatreId": "59f66b5e-de04-42ef-bcc9-e36fbdd6c383",
+            "screenNumber": 0,
+            "screenId": "93216ed4-533d-4373-bb08-a5cd7cdda040",
+            "movieId": "6980aa44-0fb3-481e-bb57-33660cf3bd00",
+            "showStartTimeInUtc": "1970-01-01T00:00:00.000Z",
+            "showEndTimeInUtc": "1970-01-01T00:00:00.000Z",
+            "availableUntilUtc": "1970-01-01T00:00:00.000Z"
+        },
+        {
+            "id": "228aa0b8-e677-4501-bd99-4c8c13c8771d",
+            "theatreId": "59f66b5e-de04-42ef-bcc9-e36fbdd6c383",
+            "screenNumber": 1,
+            "screenId": "93216ed4-533d-4373-bb08-a5cd7cdda040",
+            "movieId": "6980aa44-0fb3-481e-bb57-33660cf3bd00",
+            "showStartTimeInUtc": "1970-01-01T00:00:00.000Z",
+            "showEndTimeInUtc": "1970-01-01T00:00:00.000Z",
+            "availableUntilUtc": "1970-01-01T00:00:00.000Z"
+        },
+        {
+            "id": "278b0cb9-1ac2-48cc-8b0c-f8d4b3d0ba99",
+            "theatreId": "59f66b5e-de04-42ef-bcc9-e36fbdd6c383",
+            "screenNumber": 0,
+            "screenId": "701ee46d-74c6-469a-a831-7549d8036f72",
+            "movieId": "d13fb0a3-40ae-4ae2-8407-0ca7ff2ec5ab",
+            "showStartTimeInUtc": "1970-01-01T00:00:00.000Z",
+            "showEndTimeInUtc": "1970-01-01T00:00:00.000Z",
+            "availableUntilUtc": "1970-01-01T00:00:00.000Z"
+        },
+        {
+            "id": "278b0cb9-1ac2-48cc-8b0c-f8d4b3d0ba99",
+            "theatreId": "59f66b5e-de04-42ef-bcc9-e36fbdd6c383",
+            "screenNumber": 1,
+            "screenId": "701ee46d-74c6-469a-a831-7549d8036f72",
+            "movieId": "d13fb0a3-40ae-4ae2-8407-0ca7ff2ec5ab",
+            "showStartTimeInUtc": "1970-01-01T00:00:00.000Z",
+            "showEndTimeInUtc": "1970-01-01T00:00:00.000Z",
+            "availableUntilUtc": "1970-01-01T00:00:00.000Z"
+        }
+    ]
+]
