@@ -3,8 +3,8 @@ export default class TheatreModel {
 
   name: String;
 
-  constructor(theatreId: String, theatreName: String) {
-    this.id = theatreId;
-    this.name = theatreName;
+  constructor(id: String, name: String) {
+    this.id = id;
+    this.name = name;
   }
 }
