@@ -5,7 +5,7 @@ import HeartbeatController from './components/heartbeat/controllers/heartbeat.co
 const app = express();
 app.use(express.json());
 
-app.get('/heartbeat', (req, res) => {
+app.get('/heartbeat', (_req: Request, res: Response) => {
   res.send(new HeartbeatController().getHeartbeat());
 });
 
