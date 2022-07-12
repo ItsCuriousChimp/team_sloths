@@ -1,9 +1,35 @@
-import { show } from '@prisma/client';
+import BookedSeatModel from './bookedSeat.model';
 
 export default class ShowModel {
-  show : show;
+  id : String;
 
-  constructor(Show : show) {
-    this.show = Show;
+  screenId : String;
+
+  movieId : String;
+
+  showStartTimeInUtc : Date;
+
+  showEndTimeInUtc : Date;
+
+  availableUntilUtc : Date;
+
+  bookedSeat : BookedSeatModel[];
+
+  constructor(
+    id : String,
+    screenId : String,
+    movieId : String,
+    showStartTimeInUtc : Date,
+    showEndTimeInUtc : Date,
+    availableUntilUtc : Date,
+    bookedSeat : BookedSeatModel[] = [],
+  ) {
+    this.id = id;
+    this.screenId = screenId;
+    this.movieId = movieId;
+    this.showStartTimeInUtc = showStartTimeInUtc;
+    this.showEndTimeInUtc = showEndTimeInUtc;
+    this.availableUntilUtc = availableUntilUtc;
+    this.bookedSeat = bookedSeat;
   }
 }

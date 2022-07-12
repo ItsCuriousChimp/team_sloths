@@ -7,9 +7,9 @@ const seatStatusForShow =
   const totalSeatsMap = new Map<String, Number>();
   //  Fill values in total Seats Map
   seatsInScreensForTheatreAndMovie.forEach((eachScreen : any) => {
-    if (!totalSeatsMap.has(eachScreen.screen.screenId)) {
+    if (!totalSeatsMap.has(eachScreen.screenId)) {
       // eachScreen.screen.totalNumberOfSeats = eachScreen.screen.seat.length;
-      totalSeatsMap.set(eachScreen.screen.id, eachScreen.screen.seat.length);
+      totalSeatsMap.set(eachScreen.id, eachScreen.seat.length);
     }
   });
 
@@ -17,25 +17,25 @@ const seatStatusForShow =
   const bookedSeatsMap = new Map<String, Number>();
   // Fill values in the bookedSeatsMap
   bookedSeats.forEach((eachShow : any) => {
-    if (!bookedSeatsMap.has(eachShow.show.id)) {
+    if (!bookedSeatsMap.has(eachShow.id)) {
       bookedSeatsMap.set(
-        eachShow.show.id,
-        eachShow.show.bookedSeat.length,
+        eachShow.id,
+        eachShow.bookedSeat.length,
       );
     }
   });
 
   // Set status property in shows according to vacant seats
   for (let i : number = 0; i < shows.length; i += 1) {
-    const totalNumberOfSeatsInScreen : any = totalSeatsMap.get(shows[i].show.screenId);
-    const totalNumberOfBookedSeatsForMovie :any = bookedSeatsMap.get(shows[i].show.id);
+    const totalNumberOfSeatsInScreen : any = totalSeatsMap.get(shows[i].screenId);
+    const totalNumberOfBookedSeatsForMovie :any = bookedSeatsMap.get(shows[i].id);
     const emptySeats : number = totalNumberOfSeatsInScreen - totalNumberOfBookedSeatsForMovie;
     if (emptySeats === 0) {
-      shows[i].show.status = 'Not Available';
+      shows[i].status = 'Not Available';
     } else if (emptySeats <= 10) {
-      shows[i].show.status = 'Filling Fast';
+      shows[i].status = 'Filling Fast';
     } else {
-      shows[i].show.status = 'Available';
+      shows[i].status = 'Available';
     }
   }
   return shows;

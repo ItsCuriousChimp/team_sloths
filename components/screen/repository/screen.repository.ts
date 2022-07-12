@@ -10,6 +10,9 @@ export default class ScreenRepository {
         theatreId: theatreIdUrl,
         show: {
           some: {
+            showStartTimeInUtc: {
+              gte: new Date(),
+            },
             movieId: {
               equals: movieIdUrl,
             },
@@ -22,7 +25,14 @@ export default class ScreenRepository {
     });
     const screenModelList : ScreenModel[] = [];
     for (let i = 0; i < screens.length; i += 1) {
-      screenModelList.push(new ScreenModel(screens[i]));
+      const screenModel = new ScreenModel(
+        screens[i].id,
+        screens[i].theatreId,
+        screens[i].screenNumber,
+        screens[i].show,
+        screens[i].seat,
+      );
+      screenModelList.push(screenModel);
     }
     return screenModelList;
   }

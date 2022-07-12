@@ -7,6 +7,9 @@ export default class ShowRepository {
   public async getShow(theatreIdUrl : any, movieIdUrl : any) : Promise<ShowModel[]> {
     const shows : any = await prisma.show.findMany({
       where: {
+        showStartTimeInUtc: {
+          gte: new Date(),
+        },
         movieId: movieIdUrl,
         screen: {
           theatreId: {
@@ -17,7 +20,15 @@ export default class ShowRepository {
     });
     const showsModelList: ShowModel[] = [];
     for (let i = 0; i < shows.length; i += 1) {
-      showsModelList.push(new ShowModel(shows[i]));
+      const showModel = new ShowModel(
+        shows[i].id,
+        shows[i].screenId,
+        shows[i].movieId,
+        shows[i].showStartTimeInUtc,
+        shows[i].showEndTimeInUtc,
+        shows[i].availableUntilUtc,
+      );
+      showsModelList.push(showModel);
     }
     return showsModelList;
   }
@@ -25,6 +36,9 @@ export default class ShowRepository {
   public async getBookedSeat(theatreIdUrl : any, movieIdUrl : any) : Promise<ShowModel[]> {
     const bookedSeats : any = await prisma.show.findMany({
       where: {
+        showStartTimeInUtc: {
+          gte: new Date(),
+        },
         movieId: movieIdUrl,
         screen: {
           theatreId: {
@@ -38,7 +52,16 @@ export default class ShowRepository {
     });
     const showsModelList: ShowModel[] = [];
     for (let i = 0; i < bookedSeats.length; i += 1) {
-      showsModelList.push(new ShowModel(bookedSeats[i]));
+      const showModel = new ShowModel(
+        bookedSeats[i].id,
+        bookedSeats[i].screenId,
+        bookedSeats[i].movieId,
+        bookedSeats[i].showStartTimeInUtc,
+        bookedSeats[i].showEndTimeInUtc,
+        bookedSeats[i].availableUntilUtc,
+        bookedSeats[i].bookedSeat,
+      );
+      showsModelList.push(showModel);
     }
     return showsModelList;
   }

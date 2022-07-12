@@ -1,5 +1,17 @@
-import ShowModel from '../common/models/show.model';
+import BookedSeatModel from '../common/models/bookedSeat.model';
 
 export default class ShowResponsePayload {
-  show : ShowModel[] | undefined;
+  id : String = ' ';
+
+  screenId : String = ' ';
+
+  movieId : String = ' ';
+
+  showStartTimeInUtc : Date = new Date();
+
+  showEndTimeInUtc : Date = new Date();
+
+  availableUntilUtc : Date = new Date();
+
+  bookedSeat : BookedSeatModel[] = [];
 }

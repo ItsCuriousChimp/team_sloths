@@ -1,9 +1,28 @@
-import { screen } from '@prisma/client';
+import SeatModel from './seat.model';
+import ShowModel from './show.model';
 
 export default class ScreenModel {
-  screen : screen;
+  id : String;
 
-  constructor(Screen : screen) {
-    this.screen = Screen;
+  theatreId : String;
+
+  screenNumber : Date;
+
+  show : ShowModel[];
+
+  seat : SeatModel[];
+
+  constructor(
+    id : String,
+    theatreId : String,
+    screenNumber : Date,
+    show : ShowModel[] = [],
+    seat : SeatModel[] = [],
+  ) {
+    this.id = id;
+    this.theatreId = theatreId;
+    this.screenNumber = screenNumber;
+    this.show = show;
+    this.seat = seat;
   }
 }

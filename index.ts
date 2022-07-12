@@ -18,21 +18,20 @@ app.get('/theatres/:theatresId/shows', async (req : Request, res : Response) => 
 
   // Get list of all the shows
   let shows : any =
-  (await new ShowController().getShowFromTreaterAndMovie(theatreIdUrl, movieIdUrl)).show;
+  (await new ShowController().getShowFromTreaterAndMovie(theatreIdUrl, movieIdUrl));
 
   // Get total number of seats in each screen of show
   const seatsInScreensForTheatreAndMovie : any =
-  (await new ScreenController().getSeatFromTreaterAndMovie(theatreIdUrl, movieIdUrl)).screen;
+  (await new ScreenController().getSeatFromTreaterAndMovie(theatreIdUrl, movieIdUrl));
 
   // Get booked seats in each show
   const bookedSeats : any =
-  (await new ShowController().getBookedSeatFromTheatreAndMovie(theatreIdUrl, movieIdUrl))
-    .show;
+  (await new ShowController().getBookedSeatFromTheatreAndMovie(theatreIdUrl, movieIdUrl));
 
   // set status of show
   shows = seatStatusForShow(shows, seatsInScreensForTheatreAndMovie, bookedSeats);
-  // return show with its status
 
+  // return show with its status
   res.send({ shows });
 });
 
