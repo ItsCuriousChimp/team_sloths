@@ -1,0 +1,72 @@
+[
+    {
+        "id": "ecee2421-b5d7-4f00-b3b9-3e98246380e8",
+        "name": "hyderabad",
+        "Theatre": [
+            {
+                "id": "af46db0d-c4f5-46f1-b627-efa9d97373eb",
+                "name": "Atrium",
+                "cityId": "ecee2421-b5d7-4f00-b3b9-3e98246380e8",
+                "numberOfScreens": 1,
+                "Screen": []
+            },
+            {
+                "id": "f35f5643-3d99-46ea-bf27-a18ba98f867e",
+                "name": "Atrium",
+                "cityId": "ecee2421-b5d7-4f00-b3b9-3e98246380e8",
+                "numberOfScreens": 1,
+                "Screen": [
+                    {
+                        "id": "f8aa89b0-0fa1-4f8d-b490-7102c799f022",
+                        "theatreId": "f35f5643-3d99-46ea-bf27-a18ba98f867e",
+                        "screenNumber": 1,
+                        "Show": [
+                            {
+                                "id": "5c8e92a0-41a7-4012-9f01-79d0e94bee04",
+                                "screenId": "f8aa89b0-0fa1-4f8d-b490-7102c799f022",
+                                "movieId": "f669ebb4-8f70-40c8-b3f9-370e1ca9e322",
+                                "showStartTimeInUtc": "1970-01-01T00:00:00.000Z",
+                                "showEndTimeInUtc": "1970-01-01T00:00:00.000Z",
+                                "availableUntilUtc": "1970-01-01T00:00:00.000Z",
+                                "movie": {
+                                    "id": "f669ebb4-8f70-40c8-b3f9-370e1ca9e322",
+                                    "name": "thor ",
+                                    "duration": "1970-01-01T00:00:00.000Z",
+                                    "language": "kannada"
+                                }
+                            },
+                            {
+                                "id": "8d238f41-df03-4723-ba75-efc2bee713c8",
+                                "screenId": "f8aa89b0-0fa1-4f8d-b490-7102c799f022",
+                                "movieId": "2c74a11b-0e6b-44d5-98c5-f710079ab6b7",
+                                "showStartTimeInUtc": "1970-01-01T00:00:00.000Z",
+                                "showEndTimeInUtc": "1970-01-01T00:00:00.000Z",
+                                "availableUntilUtc": "1970-01-01T00:00:00.000Z",
+                                "movie": {
+                                    "id": "2c74a11b-0e6b-44d5-98c5-f710079ab6b7",
+                                    "name": "abc",
+                                    "duration": "1970-01-01T00:00:00.000Z",
+                                    "language": "english"
+                                }
+                            },
+                            {
+                                "id": "af64a0d5-3b6c-4ad9-9719-542724d570d4",
+                                "screenId": "f8aa89b0-0fa1-4f8d-b490-7102c799f022",
+                                "movieId": "0432c720-2d56-466e-99a6-86dc5d0181c5",
+                                "showStartTimeInUtc": "1970-01-01T00:00:00.000Z",
+                                "showEndTimeInUtc": "1970-01-01T00:00:00.000Z",
+                                "availableUntilUtc": "1970-01-01T00:00:00.000Z",
+                                "movie": {
+                                    "id": "0432c720-2d56-466e-99a6-86dc5d0181c5",
+                                    "name": "abc",
+                                    "duration": "1970-01-01T00:00:00.000Z",
+                                    "language": "kannada"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]
