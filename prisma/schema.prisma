@@ -81,7 +81,7 @@ model booking {
   show                show         @relation(fields: [showId], references: [id])
   showId              String
   numberOfSeatsBooked Int
-  showDate            DateTime     @db.Date
+  bookedOnDate        DateTime     @db.Date
   bookedSeat          bookedSeat[]
 }
 
