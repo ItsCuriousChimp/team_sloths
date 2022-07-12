@@ -81,7 +81,11 @@ model booking {
   show                show         @relation(fields: [showId], references: [id])
   showId              String
   numberOfSeatsBooked Int
+<<<<<<< HEAD
+  showDate            DateTime     @db.Date
+=======
   bookedOnDate        DateTime     @db.Date
+>>>>>>> 9e2a883eba0a4d2d78c243ead9e3784b0b1f4e00
   bookedSeat          bookedSeat[]
 }
 
@@ -103,4 +107,8 @@ model account {
   userId   String
   username String @db.VarChar(128)
   password String @db.VarChar(32)
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 9e2a883eba0a4d2d78c243ead9e3784b0b1f4e00
