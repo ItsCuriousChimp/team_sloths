@@ -16,38 +16,6 @@ export default class TheatreRepository {
     return theatreModelList;
   }
 
-  public async getShowByTheatreIdAndMovieId(
-    theatreIdUrl : any,
-    movieIdUrl : any,
-  ) : Promise<ShowModel[]> {
-    const shows : any = await prisma.show.findMany({
-      where: {
-        showStartTimeInUtc: {
-          gte: new Date(),
-        },
-        movieId: movieIdUrl,
-        screen: {
-          theatreId: {
-            contains: theatreIdUrl,
-          },
-        },
-      },
-    });
-    const showsModelList: ShowModel[] = [];
-    for (let i = 0; i < shows.length; i += 1) {
-      const showModel = new ShowModel(
-        shows[i].id,
-        shows[i].screenId,
-        shows[i].movieId,
-        shows[i].showStartTimeInUtc,
-        shows[i].showEndTimeInUtc,
-        shows[i].availableUntilUtc,
-      );
-      showsModelList.push(showModel);
-    }
-    return showsModelList;
-  }
-
   public async getShowsAndBookedSeatByTheatreIdAndMovieId(
     theatreIdUrl : any,
     movieIdUrl : any,
@@ -56,6 +24,8 @@ export default class TheatreRepository {
       where: {
         showStartTimeInUtc: {
           gte: new Date(),
+          //  get shows only for next 14 days
+          lte: new Date(new Date().getTime() + ((1000 * 60 * 60 * 24) * 14)),
         },
         movieId: movieIdUrl,
         screen: {

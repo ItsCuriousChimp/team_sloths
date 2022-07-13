@@ -15,6 +15,8 @@ export default class ScreenRepository {
           some: {
             showStartTimeInUtc: {
               gte: new Date(),
+              //  get shows only for next 14 days
+              lte: new Date(new Date().getTime() + ((1000 * 60 * 60 * 24) * 14)),
             },
             movieId: {
               equals: movieIdUrl,
