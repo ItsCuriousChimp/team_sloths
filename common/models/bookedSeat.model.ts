@@ -1,10 +1,7 @@
 export default class BookedSeatModel {
   id : String;
-
   seatId : String;
-
   showId : String;
-
   bookingId : Date;
 
   constructor(

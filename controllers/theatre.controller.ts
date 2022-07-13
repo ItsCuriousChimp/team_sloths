@@ -3,13 +3,13 @@ import TheatreModel from '../common/models/theatre.model';
 import TheatreResponsePayload from './payloads/theatre-response.payload';
 import TheatreService from '../services/theatre.service';
 import ShowModel from '../common/models/show.model';
-import UpcomingMovieShowInTheatreResponsePayload from './payloads/upcomingMovieShowInTheatre-response.payload';
+import UpcomingMovieShowInTheatreResponsePayload from './payloads/upcoming-movie-show-in-theatre-response.payload.ts';
 
 export default class TheatreController {
-  public async getTheatre(req: Request, res: Response) {
+  public async getTheatresByCityId(req: Request, res: Response) {
     const { cityId } = req.query;
     const theatreService : TheatreService = new TheatreService();
-    const theatreList: TheatreModel[] = await theatreService.getTheatre(String(cityId));
+    const theatreList: TheatreModel[] = await theatreService.getTheatresByCityId(String(cityId));
     const result: TheatreResponsePayload[] = [];
     for (let i = 0; i < theatreList.length; i += 1) {
       const payload: TheatreResponsePayload = new TheatreResponsePayload();

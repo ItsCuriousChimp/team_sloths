@@ -32,9 +32,9 @@ export default class ScreenRepository {
         screens[i].id,
         screens[i].theatreId,
         screens[i].screenNumber,
-        screens[i].show,
-        screens[i].seat,
       );
+      screenModel.show = screens[i].show;
+      screenModel.seat = screens[i].seat;
       screenModelList.push(screenModel);
     }
     return screenModelList;

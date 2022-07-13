@@ -5,7 +5,7 @@ import ShowModel from '../common/models/show.model';
 const prisma: PrismaClient = new PrismaClient();
 
 export default class TheatreRepository {
-  public async getTheatres(cityId: String): Promise<TheatreModel[]> {
+  public async getTheatresByCityId(cityId: String): Promise<TheatreModel[]> {
     const theatreList: theatre[] = await prisma.theatre.findMany({
       where: { cityId: String(cityId) },
     });
@@ -77,8 +77,8 @@ export default class TheatreRepository {
         bookedSeats[i].showStartTimeInUtc,
         bookedSeats[i].showEndTimeInUtc,
         bookedSeats[i].availableUntilUtc,
-        bookedSeats[i].bookedSeat,
       );
+      showModel.bookedSeat = bookedSeats[i].bookedSeat;
       showsModelList.push(showModel);
     }
     return showsModelList;

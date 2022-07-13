@@ -2,24 +2,15 @@ import BookedSeatModel from './bookedSeat.model';
 
 export default class ShowModel {
   id : String;
-
   screenId : String;
-
   movieId : String;
-
   showStartTimeInUtc : Date;
-
   showEndTimeInUtc : Date;
-
   availableUntilUtc : Date;
-
-  totalSeats : Number;
-
-  availableSeats : Number;
-
-  bookedSeat : BookedSeatModel[];
-
-  availabilityStatus : String;
+  totalSeats : Number | undefined;
+  availableSeats : Number | undefined;
+  bookedSeat : BookedSeatModel[] | undefined;
+  availabilityStatus : String | undefined;
 
   constructor(
     id : String,
@@ -28,10 +19,6 @@ export default class ShowModel {
     showStartTimeInUtc : Date,
     showEndTimeInUtc : Date,
     availableUntilUtc : Date,
-    bookedSeat : BookedSeatModel[] = [],
-    totalSeats : Number = -1,
-    availableSeats : Number = -1,
-    availabilityStatus : String = '',
   ) {
     this.id = id;
     this.screenId = screenId;
@@ -39,9 +26,5 @@ export default class ShowModel {
     this.showStartTimeInUtc = showStartTimeInUtc;
     this.showEndTimeInUtc = showEndTimeInUtc;
     this.availableUntilUtc = availableUntilUtc;
-    this.bookedSeat = bookedSeat;
-    this.totalSeats = totalSeats;
-    this.availableSeats = availableSeats;
-    this.availabilityStatus = availabilityStatus;
   }
 }

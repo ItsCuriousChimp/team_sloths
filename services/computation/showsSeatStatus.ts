@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import ShowModel from '../common/models/show.model';
+import ShowModel from '../../common/models/show.model';
 
 const seatStatusForShow =
 (shows : any, seatsInScreensForTheatreAndMovie : any, bookedSeats: any) : ShowModel[] => {
@@ -8,7 +8,6 @@ const seatStatusForShow =
   //  Fill values in total Seats Map
   seatsInScreensForTheatreAndMovie.forEach((eachScreen : any) => {
     if (!totalSeatsMap.has(eachScreen.screenId)) {
-      // eachScreen.screen.totalNumberOfSeats = eachScreen.screen.seat.length;
       totalSeatsMap.set(eachScreen.id, eachScreen.seat.length);
     }
   });

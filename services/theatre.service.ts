@@ -2,11 +2,11 @@ import ShowModel from '../common/models/show.model';
 import TheatreModel from '../common/models/theatre.model';
 import TheatreRepository from '../repository/theatre.repository';
 import ScreenRepository from '../repository/screen.repository';
-import seatStatusForShow from '../computation/showsSeatStatus';
+import seatStatusForShow from './computation/showsSeatStatus';
 
 export default class TheatreService {
-  public async getTheatre(cityId: String): Promise<TheatreModel[]> {
-    const theatres = await new TheatreRepository().getTheatres(cityId);
+  public async getTheatresByCityId(cityId: String): Promise<TheatreModel[]> {
+    const theatres = await new TheatreRepository().getTheatresByCityId(cityId);
     return theatres;
   }
 
