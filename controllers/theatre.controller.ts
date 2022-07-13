@@ -25,20 +25,20 @@ export default class TheatreController {
     const movieIdUrl : any = req.query.movieId;
 
     const theatreService : TheatreService = new TheatreService();
-    const theatreList: ShowModel[] =
+    const showList: ShowModel[] =
     await theatreService.getUpcomingMovieShowsByTheatreAndMovieId(theatreIdUrl, movieIdUrl);
     const result : UpcomingMovieShowInTheatreResponsePayload[] = [];
-    for (let i = 0; i < theatreList.length; i += 1) {
+    for (let i = 0; i < showList.length; i += 1) {
       const payload : UpcomingMovieShowInTheatreResponsePayload =
       new UpcomingMovieShowInTheatreResponsePayload();
-      payload.id = theatreList[i].id;
-      payload.screenId = theatreList[i].screenId;
-      payload.movieId = theatreList[i].movieId;
-      payload.showStartTimeInUtc = theatreList[i].showStartTimeInUtc;
-      payload.showEndTimeInUtc = theatreList[i].showEndTimeInUtc;
-      payload.totalSeats = theatreList[i].totalSeats;
-      payload.availableSeats = theatreList[i].availableSeats;
-      payload.availabilityStatus = theatreList[i].availabilityStatus;
+      payload.id = showList[i].id;
+      payload.screenId = showList[i].screenId;
+      payload.movieId = showList[i].movieId;
+      payload.showStartTimeInUtc = showList[i].showStartTimeInUtc;
+      payload.showEndTimeInUtc = showList[i].showEndTimeInUtc;
+      payload.totalSeats = showList[i].totalSeats;
+      payload.availableSeats = showList[i].availableSeats;
+      payload.availabilityStatus = showList[i].availabilityStatus;
       result.push(payload);
     }
     res.json(result);
