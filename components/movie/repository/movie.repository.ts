@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { PrismaClient, movie } from '@prisma/client';
 import MovieModel from '../../../common/models/movie.model';
 
