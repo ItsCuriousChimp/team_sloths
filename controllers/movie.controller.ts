@@ -23,7 +23,7 @@ export default class MovieController {
     if (cityId === undefined && theatreId === undefined) {
       res.status(400).send('cityId and theatreId are required');
     } else if (cityId === undefined) {
-      res.status(400).send('cityId and theatreId are required');
+      res.status(400).send('call to getMovieByTheatreId is not supported');
     }
     return this.getMovieByCityId(req, res);
   }
