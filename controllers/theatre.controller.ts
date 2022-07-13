@@ -24,10 +24,12 @@ export default class TheatreController {
     const theatreIdUrl : any = req.params.theatresId;
     const movieIdUrl : any = req.query.movieId;
 
-    const theatreService : TheatreService = new TheatreService();
+    const theatreServiceInstance : TheatreService = new TheatreService();
     const showList: ShowModel[] =
-    await theatreService.getUpcomingMovieShowsByTheatreAndMovieId(theatreIdUrl, movieIdUrl);
+    await theatreServiceInstance.getUpcomingMovieShowsByTheatreAndMovieId(theatreIdUrl, movieIdUrl);
+
     const result : UpcomingMovieShowInTheatreResponsePayload[] = [];
+
     for (let i = 0; i < showList.length; i += 1) {
       const payload : UpcomingMovieShowInTheatreResponsePayload =
       new UpcomingMovieShowInTheatreResponsePayload();
@@ -36,11 +38,13 @@ export default class TheatreController {
       payload.movieId = showList[i].movieId;
       payload.showStartTimeInUtc = showList[i].showStartTimeInUtc;
       payload.showEndTimeInUtc = showList[i].showEndTimeInUtc;
+      payload.availableUntilUtc = showList[i].availableUntilUtc;
       payload.totalSeats = showList[i].totalSeats;
       payload.availableSeats = showList[i].availableSeats;
       payload.availabilityStatus = showList[i].availabilityStatus;
       result.push(payload);
     }
+
     res.json(result);
   }
 }

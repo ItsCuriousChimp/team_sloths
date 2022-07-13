@@ -14,17 +14,20 @@ export default class TheatreService {
     theatreId : String,
     movieId : String,
   ) : Promise<ShowModel[]> {
-    const theatreRepository = new TheatreRepository();
-    const screenRepository = new ScreenRepository();
+    const theatreRepositoryInstance = new TheatreRepository();
+    const screenRepositoryInstance = new ScreenRepository();
 
-    let shows = await theatreRepository.getShowByTheatreIdAndMovieId(theatreId, movieId);
+    let shows =
+    await theatreRepositoryInstance.getShowByTheatreIdAndMovieId(theatreId, movieId);
+
     const seatsInScreensForTheatreAndMovie =
-    await screenRepository.getScreensWithItsSeatsByTheatreIdAndMovieId(theatreId, movieId);
+    await screenRepositoryInstance.getScreensWithItsSeatsByTheatreIdAndMovieId(theatreId, movieId);
+
     const bookedSeats =
-    await theatreRepository.getShowsAndBookedSeatByTheatreIdAndMovieId(theatreId, movieId);
+    await theatreRepositoryInstance.getShowsAndBookedSeatByTheatreIdAndMovieId(theatreId, movieId);
 
     shows = seatStatusForShow(shows, seatsInScreensForTheatreAndMovie, bookedSeats);
-    // console.log(shows);
+
     return shows;
   }
 }
