@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import DateTimeHelper from '../common/datetime.helper';
 import ScreenModel from '../common/models/screen.model';
 
 const prisma = new PrismaClient();
@@ -14,9 +15,9 @@ export default class ScreenRepository {
         show: {
           some: {
             showStartTimeInUtc: {
-              gte: new Date(),
+              gte: new DateTimeHelper().getCurrentDate(),
               //  get shows only for next 14 days
-              lte: new Date(new Date().getTime() + ((1000 * 60 * 60 * 24) * 14)),
+              lte: new DateTimeHelper().getDaysAfter(14),
             },
             movieId: {
               equals: movieIdUrl,

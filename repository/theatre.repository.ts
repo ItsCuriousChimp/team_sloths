@@ -1,6 +1,7 @@
 import { PrismaClient, theatre } from '@prisma/client';
 import TheatreModel from '../common/models/theatre.model';
 import ShowModel from '../common/models/show.model';
+import DateTimeHelper from '../common/datetime.helper';
 
 const prisma: PrismaClient = new PrismaClient();
 
@@ -23,9 +24,9 @@ export default class TheatreRepository {
     const bookedSeats : any = await prisma.show.findMany({
       where: {
         showStartTimeInUtc: {
-          gte: new Date(),
+          gte: new DateTimeHelper().getCurrentDate(),
           //  get shows only for next 14 days
-          lte: new Date(new Date().getTime() + ((1000 * 60 * 60 * 24) * 14)),
+          lte: new DateTimeHelper().getDaysAfter(14),
         },
         movieId: movieIdUrl,
         screen: {
