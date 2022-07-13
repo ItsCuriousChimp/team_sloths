@@ -1,4 +1,4 @@
-import BookedSeatModel from './bookedSeat.model';
+import BookedSeatModel from './booked-seat.model';
 
 export default class SeatModel {
   id : String;

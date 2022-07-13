@@ -1,4 +1,4 @@
-import { PrismaClient, theatre } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import TheatreModel from '../common/models/theatre.model';
 import ShowModel from '../common/models/show.model';
 import DateTimeHelper from '../common/datetime.helper';
@@ -7,7 +7,7 @@ const prisma: PrismaClient = new PrismaClient();
 
 export default class TheatreRepository {
   public async getTheatresByCityId(cityId: String): Promise<TheatreModel[]> {
-    const theatreList: theatre[] = await prisma.theatre.findMany({
+    const theatreList: any = await prisma.theatre.findMany({
       where: { cityId: String(cityId) },
     });
     const theatreModelList: TheatreModel[] = [];
