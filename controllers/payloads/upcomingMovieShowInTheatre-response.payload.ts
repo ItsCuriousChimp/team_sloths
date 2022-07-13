@@ -1,19 +1,19 @@
 export default class UpcomingMovieShowInTheatreResponsePayload {
-  id : String = ' ';
+  id : String | undefined;
 
-  screenId : String = ' ';
+  screenId : String | undefined;
 
-  movieId : String = ' ';
+  movieId : String | undefined;
 
-  showStartTimeInUtc : Date = new Date();
+  showStartTimeInUtc : Date | undefined;
 
-  showEndTimeInUtc : Date = new Date();
+  showEndTimeInUtc : Date | undefined;
 
-  availableUntilUtc : Date = new Date();
+  availableUntilUtc : Date | undefined;
 
-  totalSeats : Number = 0;
+  totalSeats : Number | undefined;
 
-  availableSeats : Number = 0;
+  availableSeats : Number | undefined;
 
-  availabilityStatus : String = ' ';
+  availabilityStatus : String | undefined;
 }
