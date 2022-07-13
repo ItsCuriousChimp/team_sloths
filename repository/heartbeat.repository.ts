@@ -1,4 +1,4 @@
-import HeartbeatModel from '../../../common/models/heartbeat.model';
+import HeartbeatModel from '../common/models/heartbeat.model';
 
 export default class HeartbeatRepository {
   public getCurrentHeartbeat(): HeartbeatModel {

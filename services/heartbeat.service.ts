@@ -1,4 +1,4 @@
-import HeartbeatModel from '../../../common/models/heartbeat.model';
+import HeartbeatModel from '../common/models/heartbeat.model';
 import HeartbeatRepository from '../repository/heartbeat.repository';
 
 export default class HeartbeatServices {

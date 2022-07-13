@@ -1,9 +1,10 @@
-import { movie } from '@prisma/client';
-
 export default class MovieModel {
-  movie: movie;
+  id: String;
 
-  constructor(movieResponse: movie) {
-    this.movie = movieResponse;
+  name: String;
+
+  constructor(id: String, name: String) {
+    this.id = id;
+    this.name = name;
   }
 }

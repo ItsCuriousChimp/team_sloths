@@ -1,11 +1,11 @@
 /* eslint-disable max-len */
 import { PrismaClient } from '@prisma/client';
-import MovieModel from '../../../common/models/movie.model';
+import MovieModel from '../common/models/movie.model';
 
 const prisma: PrismaClient = new PrismaClient();
 
 export default class MovieRepository {
-  public async getMovies(cityId: String): Promise<MovieModel[]> {
+  public async getMoviesByCityId(cityId: String): Promise<MovieModel[]> {
     const cityList: any = await prisma.city.findMany({
       where: { id: String(cityId) },
       include: {
@@ -30,15 +30,19 @@ export default class MovieRepository {
       for (let i = 0; i < theatreList.length; i += 1) {
         for (let j = 0; j < theatreList[i].screen.length; j += 1) {
           for (let k = 0; k < theatreList[i].screen[j].show.length; k += 1) {
-            moviesList.push(theatreList[i].screen[j].show[k].movie.name);
+            moviesList.push(theatreList[i].screen[j].show[k].movie);
           }
         }
       }
     }
-    const uniqueMovies: any = moviesList.filter((item, index) => moviesList.indexOf(item) === index);
+
+    const uniqueMovies:any = moviesList.filter((value: any, index: any, self: any) => (
+      self.findIndex((v: any) => v.name === value.name) === index
+    ));
+
     const movieModelList: MovieModel[] = [];
     for (let i = 0; i < uniqueMovies.length; i += 1) {
-      movieModelList.push(new MovieModel(uniqueMovies[i]));
+      movieModelList.push(new MovieModel(uniqueMovies[i].id, uniqueMovies[i].name));
     }
     return movieModelList;
   }

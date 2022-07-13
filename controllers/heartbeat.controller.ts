@@ -1,4 +1,4 @@
-import HeartbeatResponsePayload from '../../../payloads/heartbeat-response.payload';
+import HeartbeatResponsePayload from './payloads/heartbeat-response.payload';
 import HeartbeatServices from '../services/heartbeat.service';
 
 export default class HeartbeatController {

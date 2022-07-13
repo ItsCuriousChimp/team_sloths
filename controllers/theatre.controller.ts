@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import TheatreModel from '../../../common/models/theatre.model';
-import TheatreResponsePayload from '../../../payloads/theatre-response.payload';
+import TheatreModel from '../common/models/theatre.model';
+import TheatreResponsePayload from './payloads/theatre-response.payload';
 import TheatreService from '../services/theatre.service';
 
 export default class TheatreController {

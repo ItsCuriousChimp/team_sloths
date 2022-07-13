@@ -1,4 +1,4 @@
-import TheatreModel from '../../../common/models/theatre.model';
+import TheatreModel from '../common/models/theatre.model';
 import TheatreRepository from '../repository/theatre.repository';
 
 export default class TheatreService {
