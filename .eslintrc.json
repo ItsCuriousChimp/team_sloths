@@ -14,6 +14,7 @@
     "linebreak-style": 0,
     "operator-linebreak": 0,
     "class-methods-use-this": "off",
+    "lines-between-class-members" : "off",
     "import/extensions": [
       "error",
       "ignorePackages",
