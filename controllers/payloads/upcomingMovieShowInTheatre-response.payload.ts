@@ -1,6 +1,4 @@
-import BookedSeatModel from '../common/models/bookedSeat.model';
-
-export default class ShowResponsePayload {
+export default class UpcomingMovieShowInTheatreResponsePayload {
   id : String = ' ';
 
   screenId : String = ' ';
@@ -13,5 +11,9 @@ export default class ShowResponsePayload {
 
   availableUntilUtc : Date = new Date();
 
-  bookedSeat : BookedSeatModel[] = [];
+  totalSeats : Number = 0;
+
+  availableSeats : Number = 0;
+
+  availabilityStatus : String = ' ';
 }

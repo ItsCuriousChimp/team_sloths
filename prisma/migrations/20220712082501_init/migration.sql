@@ -1,22 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to alter the column `name` on the `city` table. The data in that column could be lost. The data in that column will be cast from `Text` to `VarChar(64)`.
-  - You are about to drop the `theater` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropForeignKey
-ALTER TABLE "theater" DROP CONSTRAINT "theater_cityId_fkey";
-
--- DropIndex
-DROP INDEX "city_name_key";
-
--- AlterTable
-ALTER TABLE "city" ALTER COLUMN "name" SET DATA TYPE VARCHAR(64);
-
--- DropTable
-DROP TABLE "theater";
-
 -- CreateTable
 CREATE TABLE "theatre" (
     "id" TEXT NOT NULL,
@@ -25,6 +6,14 @@ CREATE TABLE "theatre" (
     "numberOfScreens" INTEGER NOT NULL,
 
     CONSTRAINT "theatre_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "city" (
+    "id" TEXT NOT NULL,
+    "name" VARCHAR(64) NOT NULL,
+
+    CONSTRAINT "city_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -83,7 +72,7 @@ CREATE TABLE "booking" (
     "userId" TEXT NOT NULL,
     "showId" TEXT NOT NULL,
     "numberOfSeatsBooked" INTEGER NOT NULL,
-    "showDate" DATE NOT NULL,
+    "bookedOnDate" DATE NOT NULL,
 
     CONSTRAINT "booking_pkey" PRIMARY KEY ("id")
 );

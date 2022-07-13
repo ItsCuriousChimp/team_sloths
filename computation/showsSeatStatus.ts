@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
-import { show } from '@prisma/client';
+import ShowModel from '../common/models/show.model';
 
 const seatStatusForShow =
-(shows : any, seatsInScreensForTheatreAndMovie : any, bookedSeats: any) : show => {
+(shows : any, seatsInScreensForTheatreAndMovie : any, bookedSeats: any) : ShowModel[] => {
   // Map for total number of seats in each screen
   const totalSeatsMap = new Map<String, Number>();
   //  Fill values in total Seats Map
@@ -30,12 +30,14 @@ const seatStatusForShow =
     const totalNumberOfSeatsInScreen : any = totalSeatsMap.get(shows[i].screenId);
     const totalNumberOfBookedSeatsForMovie :any = bookedSeatsMap.get(shows[i].id);
     const emptySeats : number = totalNumberOfSeatsInScreen - totalNumberOfBookedSeatsForMovie;
+    shows[i].totalSeats = totalNumberOfSeatsInScreen;
+    shows[i].availableSeats = emptySeats;
     if (emptySeats === 0) {
-      shows[i].status = 'Not Available';
+      shows[i].availabilityStatus = 'Not Available';
     } else if (emptySeats <= 10) {
-      shows[i].status = 'Filling Fast';
+      shows[i].availabilityStatus = 'Filling Fast';
     } else {
-      shows[i].status = 'Available';
+      shows[i].availabilityStatus = 'Available';
     }
   }
   return shows;

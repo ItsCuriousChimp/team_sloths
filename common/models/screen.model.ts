@@ -6,7 +6,7 @@ export default class ScreenModel {
 
   theatreId : String;
 
-  screenNumber : Date;
+  screenNumber : Number;
 
   show : ShowModel[];
 
@@ -15,7 +15,7 @@ export default class ScreenModel {
   constructor(
     id : String,
     theatreId : String,
-    screenNumber : Date,
+    screenNumber : Number,
     show : ShowModel[] = [],
     seat : SeatModel[] = [],
   ) {
