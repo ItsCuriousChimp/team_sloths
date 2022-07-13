@@ -60,6 +60,8 @@ export default class TheatreService {
       }
     }
 
+    /* ***************** End of set seat status property ***************** */
+
     return showsWithBookedSeats;
   }
 }
