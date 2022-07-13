@@ -12,6 +12,7 @@
   "plugins": ["@typescript-eslint"],
   "rules": {
     "linebreak-style": 0,
+    "lines-between-class-members": 0,
     "operator-linebreak": 0,
     "class-methods-use-this": "off",
     "import/extensions": [

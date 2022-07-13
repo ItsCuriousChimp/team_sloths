@@ -1,4 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+/* eslint-disable */
+import { PrismaClient, movie } from '@prisma/client';
 import MovieModel from '../../../common/models/movie.model';
 
 const prisma: PrismaClient = new PrismaClient();
@@ -21,31 +22,24 @@ export default class MovieRepository {
         },
       },
     });
-    let movies: any[] = [];
+    const movies = new Map<String, movie>();
     const screens = theatre?.screen;
     if (screens) {
       for (let i = 0; i < screens.length; i += 1) {
         const { show } = screens[i];
-        movies = movies.concat(show);
-      }
-      for (let i = 0; i < movies.length; i += 1) {
-        movies[i] = movies[i].movie;
-      }
-    }
-    const movieModelList: MovieModel[] = [];
-    for (let i = 0; i < movies.length; i += 1) {
-      const { id, name, language } = movies[i];
-      let shouldAdd = true;
-      for (let j = 0; j < movieModelList.length; j += 1) {
-        if (movieModelList[j].id === id) {
-          shouldAdd = false;
-          break;
+        for (let j = 0; j < show.length; j += 1) {
+          const movie = show[j].movie;
+          movies.set(movie.id, movie)
         }
       }
-      if (shouldAdd) {
-        movieModelList.push(new MovieModel(id, name, language));
-      }
     }
-    return movieModelList;
+
+    const movieModelList: MovieModel[] = [];
+    movies.forEach((movie) => {
+      const { id, name, language } = movie;
+      movieModelList.push(new MovieModel(id, name, language));
+    })
+
+     return movieModelList;
   }
 }
