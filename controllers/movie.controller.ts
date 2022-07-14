@@ -17,14 +17,17 @@ export default class MovieController {
     }
     res.json(result);
   }
-
-  public async getMovie(req: Request, res: Response) {
-    const { cityId, theatreId }: any = req.query;
-    if (cityId === undefined && theatreId === undefined) {
-      res.status(400).send('cityId and theatreId are required');
-    } else if (cityId === undefined) {
-      res.status(400).send('cityId and theatreId are required');
+  public async getMoviesByTheatreId(req: Request, res: Response) {
+    const theatreId : any = req.params.theatresId;
+    const movieservice: MovieService = new MovieService();
+    const movieList: MovieModel[] = await movieservice.getMoviesByTheatreId(theatreId);
+    const result: MovieResponsePayload[] = [];
+    for (let i = 0; i < movieList.length; i += 1) {
+      const payload: MovieResponsePayload = new MovieResponsePayload();
+      payload.id = movieList[i].id;
+      payload.name = movieList[i].name;
+      result.push(payload);
     }
-    return this.getMovieByCityId(req, res);
+    res.json(result);
   }
 }

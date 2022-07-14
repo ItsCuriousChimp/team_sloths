@@ -10,11 +10,12 @@ app.get('/heartbeat', (_req: Request, res: Response) => {
   res.send(new HeartbeatController().getHeartbeat());
 });
 
-app.get('/theatres', new TheatreController().getTheatresByCityId);
+// app.get('/theatres', new TheatreController().getTheatresByCityId);
 
 app.get('/movies', new MovieController().getMovieByCityId);
 
 app.get('/theatres/:theatresId/shows', new TheatreController().getUpcomingMovieShowsByTheatreAndMovieId);
+app.get('/theatres/:theatresId/movies', new MovieController().getMoviesByTheatreId);
 
 app.listen(3000, () => {
   // eslint-disable-next-line no-console
