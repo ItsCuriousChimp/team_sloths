@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "prisma": {
+  "schema": "repositories/prisma/schema.prisma"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
+    "start": "nodemon index.ts",
     "prepare": "husky install client/.husky"
   },
   "keywords": [],

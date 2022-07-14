@@ -1,5 +1,5 @@
 import { PrismaClient, theatre } from '@prisma/client';
-import TheatreModel from '../../../common/models/theatre.model';
+import TheatreModel from '../common/models/theatre.model';
 
 const prisma: PrismaClient = new PrismaClient();
 

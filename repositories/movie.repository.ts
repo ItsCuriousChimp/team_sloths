@@ -1,11 +1,10 @@
-/* eslint-disable */
-import { PrismaClient, movie } from '@prisma/client';
-import MovieModel from '../../../common/models/movie.model';
+import { movie, PrismaClient } from '@prisma/client';
+import MovieModel from '../common/models/movie.model';
 
 const prisma: PrismaClient = new PrismaClient();
 
 export default class MovieRepository {
-  public async getMovie(theatreId: String): Promise<MovieModel[]> {
+  public async getMovies(theatreId: String): Promise<MovieModel[]> {
     const theatre = await prisma.theatre.findUnique({
       where: {
         id: String(theatreId),
@@ -28,18 +27,16 @@ export default class MovieRepository {
       for (let i = 0; i < screens.length; i += 1) {
         const { show } = screens[i];
         for (let j = 0; j < show.length; j += 1) {
-          const movie = show[j].movie;
-          movies.set(movie.id, movie)
+          const currentMovie = show[j].movie;
+          movies.set(currentMovie.id, currentMovie);
         }
       }
     }
-
     const movieModelList: MovieModel[] = [];
-    movies.forEach((movie) => {
-      const { id, name, language } = movie;
+    movies.forEach((currentMovie) => {
+      const { id, name, language } = currentMovie;
       movieModelList.push(new MovieModel(id, name, language));
-    })
-
-     return movieModelList;
+    });
+    return movieModelList;
   }
 }
