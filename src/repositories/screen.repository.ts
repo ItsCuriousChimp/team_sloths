@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import DateTimeHelper from '../common/datetime.helper';
+import DateTimeHelper from '../common/helpers/datetime.helper';
 import ScreenModel from '../common/models/screen.model';
 
 const prisma = new PrismaClient();

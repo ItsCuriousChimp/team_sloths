@@ -1,13 +1,13 @@
-import { PrismaClient, theatre } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import TheatreModel from '../common/models/theatre.model';
 import ShowModel from '../common/models/show.model';
-import DateTimeHelper from '../common/datetime.helper';
+import DateTimeHelper from '../common/helpers/datetime.helper';
 
 const prisma: PrismaClient = new PrismaClient();
 
 export default class TheatreRepository {
   public async getTheatresByCityId(cityId: String): Promise<TheatreModel[]> {
-    const theatreList: theatre[] = await prisma.theatre.findMany({
+    const theatreList: any = await prisma.theatre.findMany({
       where: { cityId: String(cityId) },
     });
     const theatreModelList: TheatreModel[] = [];
@@ -18,10 +18,10 @@ export default class TheatreRepository {
   }
 
   public async getShowsAndBookedSeatByTheatreIdAndMovieId(
-    theatreIdUrl : any,
-    movieIdUrl : any,
-  ) : Promise<ShowModel[]> {
-    const bookedSeats : any = await prisma.show.findMany({
+    theatreIdUrl: any,
+    movieIdUrl: any,
+  ): Promise<ShowModel[]> {
+    const bookedSeats: any = await prisma.show.findMany({
       where: {
         showStartTimeInUtc: {
           gte: new DateTimeHelper().getCurrentDate(),
