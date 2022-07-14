@@ -10,13 +10,17 @@ app.use(express.json());
 app.get('/heartbeat', (_req: Request, res: Response) => {
   res.send(new HeartbeatController().getHeartbeat());
 });
-
+// Rishi
 app.get('/theatres', new TheatreController().getTheatresByCityId);
-
+// Jitender
+app.get('/movies', new MovieController().getMovieByCityId);
+// Rishi
 app.get('/theatres/:theatreId/movies', new MovieController().getMoviesByCityId);
-
+// Tushar
 app.get('/theatres/:theatresId/shows', new TheatreController().getUpcomingMovieShowsByTheatreAndMovieId);
-
+// Jitender
+app.get('/theatres/:theatresId/movies', new MovieController().getMoviesByTheatreId);
+// Tushar
 app.get('/shows', new BookedSeatsController().getBookedSeatsByMovieId);
 
 app.listen(3000, () => {

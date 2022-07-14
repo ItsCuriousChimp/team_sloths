@@ -13,7 +13,6 @@ export default class MovieController {
       const payload: MovieResponsePayload = new MovieResponsePayload();
       payload.id = movieList[i].id;
       payload.name = movieList[i].name;
-      payload.language = movieList[i].language;
       result.push(payload);
     }
     res.json(result);
@@ -27,23 +26,6 @@ export default class MovieController {
       const payload: MovieResponsePayload = new MovieResponsePayload();
       payload.id = movieList[i].id;
       payload.name = movieList[i].name;
-      payload.language = movieList[i].language;
-      result.push(payload);
-    }
-    res.json(result);
-  }
-
-  public async getMoviesByCityId(req: Request, res: Response): Promise<void> {
-    const { theatreId } = req.params;
-    const movieService: MovieService = new MovieService();
-    const movieList: MovieModel[] = await movieService.getMovies(theatreId);
-    const result: MovieResponsePayload[] = [];
-    for (let i = 0; i < movieList.length; i += 1) {
-      const payload: MovieResponsePayload = new MovieResponsePayload();
-      const { id, name, language } = movieList[i];
-      payload.id = id;
-      payload.name = name;
-      payload.language = language;
       result.push(payload);
     }
     res.json(result);
