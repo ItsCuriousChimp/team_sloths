@@ -4,7 +4,7 @@ import MovieResponsePayload from './payloads/movie-response.payload';
 import MovieService from '../services/movie.service';
 
 export default class MovieController {
-  public async getMovies(req: Request, res: Response): Promise<void> {
+  public async getMoviesByCityId(req: Request, res: Response): Promise<void> {
     const { theatreId } = req.params;
     const movieService: MovieService = new MovieService();
     const movieList: MovieModel[] = await movieService.getMovies(theatreId);
