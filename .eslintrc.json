@@ -4,14 +4,19 @@
     "commonjs": true,
     "es2021": true
   },
-  "extends": ["airbnb-base"],
+  "extends": [
+    "airbnb-base"
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest"
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": [
+    "@typescript-eslint"
+  ],
   "rules": {
     "linebreak-style": 0,
+    "lines-between-class-members": 0,
     "operator-linebreak": 0,
     "class-methods-use-this": "off",
     "lines-between-class-members" : "off",
@@ -29,7 +34,12 @@
   "settings": {
     "import/resolver": {
       "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
       }
     }
   }

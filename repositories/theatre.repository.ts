@@ -18,10 +18,10 @@ export default class TheatreRepository {
   }
 
   public async getShowsAndBookedSeatByTheatreIdAndMovieId(
-    theatreIdUrl : any,
-    movieIdUrl : any,
-  ) : Promise<ShowModel[]> {
-    const bookedSeats : any = await prisma.show.findMany({
+    theatreIdUrl: any,
+    movieIdUrl: any,
+  ): Promise<ShowModel[]> {
+    const bookedSeats: any = await prisma.show.findMany({
       where: {
         showStartTimeInUtc: {
           gte: new DateTimeHelper().getCurrentDate(),
