@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import TheatreModel from '../common/models/theatre.model';
 import ShowModel from '../common/models/show.model';
-import DateTimeHelper from '../common/datetime.helper';
+import DateTimeHelper from '../common/helpers/datetime.helper';
 
 const prisma: PrismaClient = new PrismaClient();
 

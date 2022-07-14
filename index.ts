@@ -1,8 +1,8 @@
 import express, { Request, Response } from 'express';
-import TheatreController from './controllers/theatre.controller';
-import HeartbeatController from './controllers/heartbeat.controller';
-import MovieController from './controllers/movie.controller';
-import BookedSeatsController from './controllers/booked-seat.controller';
+import TheatreController from './src/controllers/theatre.controller';
+import HeartbeatController from './src/controllers/heartbeat.controller';
+import MovieController from './src/controllers/movie.controller';
+import BookedSeatsController from './src/controllers/booked-seat.controller';
 
 const app = express();
 app.use(express.json());

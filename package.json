@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
-  "prisma": {
-  "schema": "repositories/prisma/schema.prisma"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.ts",
@@ -34,7 +31,7 @@
     "prisma": "^4.0.0"
   },
   "prisma": {
-    "schema" : "./repository/prisma/schema.prisma"
+    "schema": "src/repositories/entities/schema.prisma"
   },
   "husky": {
     "hooks": {
