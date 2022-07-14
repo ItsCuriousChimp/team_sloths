@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import TheatreController from './controllers/theatre.controller';
 import HeartbeatController from './controllers/heartbeat.controller';
-import BookedSeatsController from './controllers/booked-seats.controller';
+import BookedSeatsController from './controllers/booked-seat.controller';
 
 const app = express();
 app.use(express.json());

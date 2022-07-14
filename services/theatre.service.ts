@@ -1,7 +1,7 @@
 import ShowModel from '../common/models/show.model';
 import TheatreModel from '../common/models/theatre.model';
-import TheatreRepository from '../repository/theatre.repository';
-import ScreenRepository from '../repository/screen.repository';
+import TheatreRepository from '../repositories/theatre.repository';
+import ScreenRepository from '../repositories/screen.repository';
 
 export default class TheatreService {
   public async getTheatresByCityId(cityId: String): Promise<TheatreModel[]> {

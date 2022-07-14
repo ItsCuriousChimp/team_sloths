@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import BookedSeatModel from '../common/models/booked-seat.model';
-import BookedSeatService from '../services/booked-seats.service';
-import BookedSeatResponsePayload from './payloads/booked-seats-response.payload';
+import BookedSeatService from '../services/booked-seat.service';
+import BookedSeatResponsePayload from './payloads/booked-seat-response.payload';
 
 export default class BookedSeatsController {
   public async getBookedSeatsByMovieId(req : Request, res: Response) {
