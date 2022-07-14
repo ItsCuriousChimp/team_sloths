@@ -4,7 +4,7 @@ import TheatreResponsePayload from './payloads/theatre-response.payload';
 import TheatreService from '../services/theatre.service';
 
 export default class TheatreController {
-  public async getTheatres(req: Request, res: Response) {
+  public async getTheatresByCityId(req: Request, res: Response) {
     const { cityId } = req.query;
     const theatreservice : TheatreService = new TheatreService();
     const theatreList: TheatreModel[] = await theatreservice.getTheatres(String(cityId));

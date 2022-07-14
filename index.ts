@@ -10,7 +10,7 @@ app.get('/heartbeat', (_req: Request, res: Response) => {
   res.send(new HeartbeatController().getHeartbeat());
 });
 
-app.get('/theatres', new TheatreController().getTheatres);
+app.get('/theatres', new TheatreController().getTheatresByCityId);
 
 app.get('/theatres/:theatreId/movies', new MovieController().getMovies);
 
