@@ -89,8 +89,8 @@ model user {
   id            String    @id @default(uuid())
   name          String    @db.VarChar(128)
   email         String    @db.VarChar(64)
-  city          city      @relation(fields: [cityId], references: [id])
-  cityId        String
+  city          city?     @relation(fields: [cityId], references: [id])
+  cityId        String?
   phoneNumber   String    @db.VarChar(16)
   loggedInAtUtc DateTime
   booking       booking[]
