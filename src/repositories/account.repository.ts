@@ -4,52 +4,43 @@ import AccountModel from '../common/models/account.model';
 const prisma: PrismaClient = new PrismaClient();
 
 export default class AccountRepository {
-  private async isUserNamePresent(userName : String) {
+  public async getAccountByUsername(userName : String) : Promise<AccountModel> {
     const record = await prisma.account.findFirst({
       where: {
         username: String(userName),
       },
     });
 
-    return record;
-  }
-
-  private async isAccountPresent(accountId : String) {
-    const record = await prisma.account.findFirst({
-      where: {
-        id: String(accountId),
-      },
-    });
-
-    return record;
+    if (record === null) {
+      return new AccountModel('', '', '');
+    }
+    const result = new AccountModel(
+      record.id,
+      record.username,
+      record.passwordHash,
+    );
+    result.userId = String(record.userId);
+    return result;
   }
 
   public async createAccountWithoutUserId(
-    userName : String,
+    username : String,
     passwordHash : String,
   ) : Promise<String> {
-    if (await this.isUserNamePresent(userName) === null) {
-      const account = await prisma.account.create({
-        data: {
-          username: String(userName),
-          passwordHash: String(passwordHash),
-        },
-      });
+    const account = await prisma.account.create({
+      data: {
+        username: String(username),
+        passwordHash: String(passwordHash),
+      },
+    });
 
-      return account.id;
-    }
-    // User with this username already exists
-    return '';
+    return account.id;
   }
 
-  public async addUserIdToAccount(
+  public async updateUserIdInAccount(
     userId: String,
     accountId: String,
-  ) {
-    if (await this.isAccountPresent(accountId) === null) {
-      return new AccountModel('', '', '');
-    }
-
+  ) : Promise<AccountModel> {
     const account = await prisma.account.update({
       where: {
         id: String(accountId),

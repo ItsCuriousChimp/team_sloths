@@ -16,12 +16,17 @@ export default class AccountService {
 
     const accountRepositoryInstance = new AccountRepository();
 
+    const accountByUsername : AccountModel =
+    await accountRepositoryInstance.getAccountByUsername(email);
+
+    // if account with this username already exists
+    if (accountByUsername.id !== '') {
+      return '';
+    }
+
     // Create account without user id
     const accountId : String =
     await accountRepositoryInstance.createAccountWithoutUserId(email, passwordHash);
-
-    // if account if is empty return empty string
-    if (accountId === '') { return ''; }
 
     // Create user
     const userRepositoryInstance = new UserRepository();
@@ -29,21 +34,16 @@ export default class AccountService {
 
     // Add user id to account
     const accountModel : AccountModel =
-    await accountRepositoryInstance.addUserIdToAccount(userId, accountId);
+    await accountRepositoryInstance.updateUserIdInAccount(userId, accountId);
 
     // Initialize AccessTokenModel
     const accessTokenModel : AccessTokenModel =
     new AccessTokenModel(
       accountModel.id,
-      accountModel.username,
-      accountModel.passwordHash,
     );
 
-    // If accessTokenModel is empty return empty string
-    if (accessTokenModel.id === '') { return ''; }
-
     // Add jwt token to AccessTokenModel
-    const accessToken = new JWTHelper().generateJWTToken(accessTokenModel);
+    const accessToken : String = new JWTHelper().generateJWTToken(accessTokenModel);
 
     // return AccessTokenModel
     return accessToken;

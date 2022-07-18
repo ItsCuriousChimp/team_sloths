@@ -99,6 +99,12 @@ CREATE TABLE "account" (
     CONSTRAINT "account_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateIndex
+CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "account_username_key" ON "account"("username");
+
 -- AddForeignKey
 ALTER TABLE "theatre" ADD CONSTRAINT "theatre_cityId_fkey" FOREIGN KEY ("cityId") REFERENCES "city"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 

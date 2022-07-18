@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt');
 
 export default class HashHelper {
-  public hashString(stringToHash : String) : String {
-    return bcrypt.genSalt(12).then((salt : any) => bcrypt.hash(stringToHash, salt));
+  public async hashString(stringToHash : String) : Promise<String> {
+    const salt = await bcrypt.genSalt(12);
+    return bcrypt.hash(stringToHash, salt);
   }
 }

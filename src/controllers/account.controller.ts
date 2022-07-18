@@ -3,10 +3,10 @@ import AccountService from '../services/account.service';
 import SignupResponsePayload from './payloads/signup-response.payload';
 
 export default class AccountController {
-  public async signUpUserUsingEmailAndPassword(req : Request, res : Response) {
-    const nameUrl : String = String(req.query.name);
-    const emailUrl : String = String(req.query.email);
-    const passwordUrl : String = String(req.query.password);
+  public async postSignupUserUsingEmailAndPassword(req : Request, res : Response) {
+    const nameUrl : String = req.body.name;
+    const emailUrl : String = req.body.email;
+    const passwordUrl : String = req.body.password;
 
     const accountServiceInstance : AccountService = new AccountService();
     const accessToken : String =
