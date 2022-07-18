@@ -37,7 +37,7 @@ export default class AccountRepository {
       accountModel.jwtToken = token;
       return accountModel;
     }
-    // User with email already exists
+    // User with this username already exists
     return new AccountModel('', '', '', '');
   }
 }
