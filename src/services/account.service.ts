@@ -9,7 +9,6 @@ export default class AccountService {
     email : String,
     password : String,
   ) : Promise<AccountModel> {
-    // return `${name} ${email} ${password}`;
     const userRepositoryInstance = new UserRepository();
     const userModel : UserModel = await userRepositoryInstance.createUser(name, email);
     if (userModel.id === '') {
