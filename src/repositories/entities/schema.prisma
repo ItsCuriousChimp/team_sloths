@@ -91,7 +91,7 @@ model user {
   email         String    @db.VarChar(64)
   city          city?     @relation(fields: [cityId], references: [id])
   cityId        String?
-  phoneNumber   String    @db.VarChar(16)
+  phoneNumber   String?    @db.VarChar(16)
   loggedInAtUtc DateTime
   booking       booking[]
   account       account[]
