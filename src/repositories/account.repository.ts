@@ -1,28 +1,28 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, account } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 export default class AccountRepository {
-  public async getAccount(email: string) {
-    const account = await prisma.account.findFirst({
+  public async getAccount(email: string): Promise<account | null> {
+    const foundAccount = await prisma.account.findUnique({
       where: {
         username: email,
       },
     });
-    return account?.id;
+    return foundAccount;
   }
 
-  public async createAccount(userName: string, passwordHash: string) {
-    const account = await prisma.account.create({
+  public async createAccount(username: string, passwordHash: string): Promise<account> {
+    const newAccount = await prisma.account.create({
       data: {
-        username: userName,
+        username,
         passwordHash,
       },
     });
-    return account;
+    return newAccount;
   }
 
-  public async setUserId(userId: string, accountId: string) {
+  public async setUserId(userId: string, accountId: string): Promise<void> {
     await prisma.account.update({
       where: { id: accountId },
       data: {

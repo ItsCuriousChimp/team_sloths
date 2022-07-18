@@ -97,7 +97,7 @@ model user {
 model account {
   id           String  @id @default(uuid())
   userId       String?
-  username     String  @db.VarChar(128)
+  username     String  @unique @db.VarChar(128)
   passwordHash String  @db.VarChar(128)
   user         user?   @relation(fields: [userId], references: [id])
 }

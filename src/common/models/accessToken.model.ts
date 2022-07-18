@@ -1,6 +1,6 @@
 export default class AccessTokenModel {
-  token: string;
-  constructor(token: string) {
-    this.token = token;
+  userId: string;
+  constructor(userId: string) {
+    this.userId = userId;
   }
 }
