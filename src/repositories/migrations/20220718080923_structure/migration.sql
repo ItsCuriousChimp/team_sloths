@@ -83,7 +83,7 @@ CREATE TABLE "user" (
     "name" VARCHAR(128) NOT NULL,
     "email" VARCHAR(64) NOT NULL,
     "cityId" TEXT,
-    "phoneNumber" VARCHAR(16) NOT NULL,
+    "phoneNumber" VARCHAR(16),
     "loggedInAtUtc" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
@@ -92,7 +92,7 @@ CREATE TABLE "user" (
 -- CreateTable
 CREATE TABLE "account" (
     "id" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
+    "userId" TEXT,
     "username" VARCHAR(128) NOT NULL,
     "passwordHash" VARCHAR(128) NOT NULL,
 
@@ -133,4 +133,4 @@ ALTER TABLE "booking" ADD CONSTRAINT "booking_userId_fkey" FOREIGN KEY ("userId"
 ALTER TABLE "user" ADD CONSTRAINT "user_cityId_fkey" FOREIGN KEY ("cityId") REFERENCES "city"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "account" ADD CONSTRAINT "account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "account" ADD CONSTRAINT "account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE SET NULL ON UPDATE CASCADE;

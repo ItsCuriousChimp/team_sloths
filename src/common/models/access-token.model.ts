@@ -1,6 +1,5 @@
-export default class AccountModel {
+export default class AccessTokenModel {
   id : String;
-  userId : String | undefined;
   username : String;
   passwordHash : String;
 
