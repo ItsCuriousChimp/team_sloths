@@ -3,7 +3,7 @@ import TheatreController from './src/controllers/theatre.controller';
 import HeartbeatController from './src/controllers/heartbeat.controller';
 import MovieController from './src/controllers/movie.controller';
 import BookedSeatsController from './src/controllers/booked-seat.controller';
-import SignupController from './src/controllers/signup.controller';
+import SignupController from './src/controllers/account.controller';
 
 const app = express();
 app.use(express.json());
