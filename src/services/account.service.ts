@@ -39,7 +39,7 @@ export default class AccountService {
     // Initialize AccessTokenModel
     const accessTokenModel : AccessTokenModel =
     new AccessTokenModel(
-      accountModel.id,
+      String(accountModel.userId),
     );
 
     // Add jwt token to AccessTokenModel
