@@ -59,9 +59,12 @@ export default class AccountService {
     if (accountByUsername.id === '') {
       return '';
     }
+
+    // Check if entered password matches with the hashed password in database
     const isPasswordSame : Boolean =
     await new HashHelper().isHashValueSame(password, accountByUsername.passwordHash);
 
+    // If password is incorrect
     if (!isPasswordSame) {
       return '';
     }
