@@ -11,9 +11,6 @@ export default class AccountService {
     email : String,
     password : String,
   ) : Promise<String> {
-    // Hash the password string
-    const passwordHash : String = await new HashHelper().hashString(password);
-
     const accountRepositoryInstance : AccountRepository = new AccountRepository();
 
     const accountByUsername : AccountModel =
@@ -23,6 +20,9 @@ export default class AccountService {
     if (accountByUsername.id !== '') {
       return '';
     }
+
+    // Hash the password string
+    const passwordHash : String = await new HashHelper().hashString(password);
 
     // Create account without user id
     const accountId : String =
