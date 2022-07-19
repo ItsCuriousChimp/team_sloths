@@ -3,12 +3,12 @@ import AccessTokenModel from '../models/accessToken.model';
 
 export default class JwtTokenHelper {
   public async generateToken(accessToken: AccessTokenModel): Promise<string> {
-    const token = jwt.sign(
+    const token :string = jwt.sign(
+      { accessToken },
+      '',
       {
-        alg: 'HS256',
-        typ: 'JWT',
+        expiresIn: process.env.JWT_EXPIRES_IN,
       },
-      JSON.stringify(accessToken),
     );
     return token;
   }
