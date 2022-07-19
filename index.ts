@@ -7,7 +7,7 @@ import BookedSeatsController from './src/controllers/booked-seat.controller';
 const app = express();
 app.use(express.json());
 
-app.get('/heartbeat', (_req: Request, res: Response) => {
+app.get('/heartbeat', (req: Request, res: Response) => {
   res.send(new HeartbeatController().getHeartbeat());
 });
 // Rishi
@@ -15,13 +15,17 @@ app.get('/theatres', new TheatreController().getTheatresByCityId);
 // Jitender
 app.get('/movies', new MovieController().getMovieByCityId);
 // Rishi
-app.get('/theatres/:theatreId/movies', new MovieController().getMoviesByCityId);
+app.get('/theatres/:theatreId/movies', new MovieController().getMoviesByTheatreId);
 // Tushar
 app.get('/theatres/:theatresId/shows', new TheatreController().getUpcomingMovieShowsByTheatreAndMovieId);
 // Jitender
-app.get('/theatres/:theatresId/movies', new MovieController().getMoviesByTheatreId);
+// app.get('/theatres/:theatresId/movies', new MovieController().getMoviesByTheatreId);
 // Tushar
 app.get('/shows', new BookedSeatsController().getBookedSeatsByMovieId);
+
+app.post('/accounts/signup', (req, res) => {
+  res.send('Addition');
+});
 
 app.listen(3000, () => {
   // eslint-disable-next-line no-console
