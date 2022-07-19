@@ -6,4 +6,8 @@ export default class HashHelper {
     const hashedString = await bcrypt.hash(stringToHash, salt);
     return hashedString;
   }
+
+  public async isHashValueSame(unhashedString : String, hashedString : String) : Promise<Boolean> {
+    return bcrypt.compare(unhashedString, hashedString);
+  }
 }

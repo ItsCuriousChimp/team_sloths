@@ -14,7 +14,7 @@ export default class AccountService {
     // Hash the password string
     const passwordHash : String = await new HashHelper().hashString(password);
 
-    const accountRepositoryInstance = new AccountRepository();
+    const accountRepositoryInstance : AccountRepository = new AccountRepository();
 
     const accountByUsername : AccountModel =
     await accountRepositoryInstance.getAccountByUsername(email);
@@ -32,7 +32,7 @@ export default class AccountService {
     const userRepositoryInstance = new UserRepository();
     const userId : String = await userRepositoryInstance.createUser(name, email);
 
-    // Add user id to account
+    // Update user id in account
     const accountModel : AccountModel =
     await accountRepositoryInstance.updateUserIdInAccount(userId, accountId);
 
@@ -40,6 +40,36 @@ export default class AccountService {
     const accessTokenModel : AccessTokenModel =
     new AccessTokenModel(
       String(accountModel.userId),
+    );
+
+    // Add jwt token to AccessTokenModel
+    const accessToken : String = new JWTHelper().generateJWTToken(accessTokenModel);
+
+    // return AccessTokenModel
+    return accessToken;
+  }
+
+  public async loginUserUsingEmailAndPassword(email : String, password: String) {
+    const accountRepositoryInstance : AccountRepository = new AccountRepository();
+
+    const accountByUsername : AccountModel =
+    await accountRepositoryInstance.getAccountByUsername(email);
+
+    // if account with this username does not exists
+    if (accountByUsername.id === '') {
+      return '';
+    }
+    const isPasswordSame : Boolean =
+    await new HashHelper().isHashValueSame(password, accountByUsername.passwordHash);
+
+    if (!isPasswordSame) {
+      return '';
+    }
+
+    // Initialize AccessTokenModel
+    const accessTokenModel : AccessTokenModel =
+    new AccessTokenModel(
+      String(accountByUsername.userId),
     );
 
     // Add jwt token to AccessTokenModel

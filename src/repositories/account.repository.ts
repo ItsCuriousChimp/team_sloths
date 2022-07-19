@@ -4,7 +4,9 @@ import AccountModel from '../common/models/account.model';
 const prisma: PrismaClient = new PrismaClient();
 
 export default class AccountRepository {
-  public async getAccountByUsername(userName : String) : Promise<AccountModel> {
+  public async getAccountByUsername(
+    userName : String,
+  ) : Promise<AccountModel> {
     const record = await prisma.account.findFirst({
       where: {
         username: String(userName),
