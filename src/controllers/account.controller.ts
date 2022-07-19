@@ -30,7 +30,7 @@ export default class AccountController {
     await accountServiceInstance.loginUserUsingEmailAndPassword(emailUrl, passwordUrl);
 
     if (accessToken === '') {
-      res.status(400).send('Username or Password is incorrect!');
+      res.status(400).send('Email address or password incorrect');
     } else {
       const payload : AccessTokenResponsePayload = new AccessTokenResponsePayload();
       payload.accessToken = accessToken;
