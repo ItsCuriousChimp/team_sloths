@@ -14,15 +14,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/heartbeat', (req: Request, res: Response) => {
   res.send(new HeartbeatController().getHeartbeat());
 });
-// Rishi
+
 app.get('/theatres', new TheatreController().getTheatresByCityId);
-// Jitender
+
 app.get('/movies', new MovieController().getMovieByCityId);
-// Rishi
+
 app.get('/theatres/:theatreId/movies', new MovieController().getMoviesByTheatreId);
-// Tushar
+
 app.get('/theatres/:theatresId/shows', new TheatreController().getUpcomingMovieShowsByTheatreAndMovieId);
-// Tushar
+
 app.get('/shows', new BookedSeatController().getBookedSeatsByMovieId);
 
 app.post('/accounts/signup', new AccountController().postSignupUserUsingEmailAndPassword);

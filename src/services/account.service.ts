@@ -42,7 +42,7 @@ export default class AccountService {
       String(accountModel.userId),
     );
 
-    // Add jwt token to AccessTokenModel
+    // Create jwt token from AccessTokenModel
     const accessToken : String = new JWTHelper().generateJWTToken(accessTokenModel);
 
     // return AccessTokenModel
@@ -72,7 +72,7 @@ export default class AccountService {
       String(accountByUsername.userId),
     );
 
-    // Add jwt token to AccessTokenModel
+    // Create jwt token from AccessTokenModel
     const accessToken : String = new JWTHelper().generateJWTToken(accessTokenModel);
 
     // return AccessTokenModel

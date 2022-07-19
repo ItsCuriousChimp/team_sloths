@@ -17,7 +17,7 @@ export default class AccountController {
     } else {
       const payload : AccessTokenResponsePayload = new AccessTokenResponsePayload();
       payload.accessToken = accessToken;
-      res.send({ payload });
+      res.send(payload);
     }
   }
 
@@ -34,7 +34,7 @@ export default class AccountController {
     } else {
       const payload : AccessTokenResponsePayload = new AccessTokenResponsePayload();
       payload.accessToken = accessToken;
-      res.send({ payload });
+      res.send(payload);
     }
   }
 }
