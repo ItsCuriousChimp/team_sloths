@@ -27,18 +27,16 @@ export default class AccountService {
   public async loginUser(email: string, password: string): Promise<string> {
     const account: AccountModel | null = await new AccountRepository().getAccount(email);
     let response: string = '';
-    if (account) {
-      const hashHelper: HashHelper = new HashHelper();
-      const isMatched: boolean = await hashHelper.validateHash(password, account.passwordHash);
-      if (isMatched) {
-        const accessToken: AccessTokenModel = new AccessTokenModel(String(account.id));
-        response = await new JwtTokenHelper().generateToken(accessToken);
-      } else {
-        response = '401';
-      }
-    } else {
-      response = '401';
+    if (!account) {
+      return '400';
     }
+    const hashHelper: HashHelper = new HashHelper();
+    const isMatched: boolean = await hashHelper.validateHash(password, account.passwordHash);
+    if (!isMatched) {
+      return '400';
+    }
+    const accessToken: AccessTokenModel = new AccessTokenModel(String(account.id));
+    response = await new JwtTokenHelper().generateToken(accessToken);
     return response;
   }
 }

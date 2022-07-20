@@ -16,8 +16,8 @@ export default class AccountController {
     const { email, password } = req.query;
     const loginService: AccountService = new AccountService();
     const serviceResponse: string = await loginService.loginUser(String(email), String(password));
-    if (serviceResponse === '401') {
-      res.status(401).send('Incorrect email or password.');
+    if (serviceResponse === '400') {
+      res.status(400).send('Incorrect email or password.');
     } else {
       const loginPayload: AccessTokenResponsePayload = new AccessTokenResponsePayload();
       loginPayload.token = serviceResponse;
