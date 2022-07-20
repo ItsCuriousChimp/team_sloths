@@ -27,7 +27,7 @@ app.get('/shows', new BookedSeatController().getBookedSeatsByMovieId);
 
 app.post('/accounts/signup', new AccountController().postSignupUserUsingEmailAndPassword);
 
-app.get('/accounts/login', new AccountController().getAccountFromEmailAndPassword);
+app.get('/accounts/login', new AccountController().getLoginUsingEmailAndPassword);
 
 app.listen(3000, () => {
   // eslint-disable-next-line no-console

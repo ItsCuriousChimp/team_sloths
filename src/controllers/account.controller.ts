@@ -21,7 +21,7 @@ export default class AccountController {
     }
   }
 
-  public async getAccountFromEmailAndPassword(req: Request, res: Response) {
+  public async getLoginUsingEmailAndPassword(req: Request, res: Response) {
     const emailUrl : String = req.body.email;
     const passwordUrl : String = req.body.password;
 
