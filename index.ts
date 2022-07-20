@@ -5,8 +5,7 @@ import HeartbeatController from './src/controllers/heartbeat.controller';
 import MovieController from './src/controllers/movie.controller';
 import BookedSeatController from './src/controllers/booked-seat.controller';
 import AccountController from './src/controllers/account.controller';
-
-const auth = require('./src/middleware/auth');
+import auth from './src/middleware/auth';
 
 const app = express();
 app.use(express.json());
