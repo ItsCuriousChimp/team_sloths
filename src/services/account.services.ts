@@ -20,11 +20,11 @@ export default class AccountService {
     if (userAccount.username !== '') {
       return '';
     }
-    const passwordHash : string = await new HashHelper().hashString(password);
 
     const userRepositoryInstance = new UserRepository();
     const userId : string = await userRepositoryInstance.createUser(name, email);
 
+    const passwordHash : string = await new HashHelper().hashString(password);
     const accountModel : AccountModel =
     await accountRepositoryInstance.createUserAccount(email, passwordHash, userId);
 
