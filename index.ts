@@ -6,6 +6,8 @@ import MovieController from './src/controllers/movie.controller';
 import BookedSeatController from './src/controllers/booked-seat.controller';
 import AccountController from './src/controllers/account.controller';
 
+const auth = require('./src/middleware/auth');
+
 const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
@@ -28,6 +30,10 @@ app.get('/shows', new BookedSeatController().getBookedSeatsByMovieId);
 app.post('/accounts/signup', new AccountController().signUpUserUsingEmailAndPassword);
 
 app.get('/accounts/login', new AccountController().loginUsingEmailAndPassword);
+
+app.get('/verify', auth, (req: Request, res: Response) => {
+  res.status(200).send('Welcome 🙌 ');
+});
 
 app.listen(3000, () => {
   // eslint-disable-next-line no-console

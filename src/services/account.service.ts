@@ -17,7 +17,7 @@ export default class AccountService {
     await accountRepositoryInstance.getAccountByUsername(email);
 
     // if account with this username already exists
-    if (accountByUsername === null) {
+    if (accountByUsername !== null) {
       return '';
     }
 
