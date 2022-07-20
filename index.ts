@@ -3,6 +3,7 @@ import TheatreController from './src/controllers/theatre.controller';
 import HeartbeatController from './src/controllers/heartbeat.controller';
 import MovieController from './src/controllers/movie.controller';
 import BookedSeatsController from './src/controllers/booked-seat.controller';
+import AccountController from './src/controllers/account-controller';
 
 const app = express();
 app.use(express.json());
@@ -23,9 +24,7 @@ app.get('/theatres/:theatresId/shows', new TheatreController().getUpcomingMovieS
 // Tushar
 app.get('/shows', new BookedSeatsController().getBookedSeatsByMovieId);
 
-app.post('/accounts/signup', (req, res) => {
-  res.send('Addition');
-});
+app.post('/accounts/signup', new AccountController().signupUser);
 
 app.listen(3000, () => {
   // eslint-disable-next-line no-console
