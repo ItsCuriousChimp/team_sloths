@@ -6,7 +6,7 @@ const prisma: PrismaClient = new PrismaClient();
 export default class AccountRepository {
   public async getAccountByUsername(
     userName : String,
-  ) : Promise<AccountModel> {
+  ) : Promise<AccountModel | null> {
     const record = await prisma.account.findFirst({
       where: {
         username: String(userName),
@@ -14,7 +14,7 @@ export default class AccountRepository {
     });
 
     if (record === null) {
-      return new AccountModel('', '', '');
+      return null;
     }
     const result = new AccountModel(
       record.id,

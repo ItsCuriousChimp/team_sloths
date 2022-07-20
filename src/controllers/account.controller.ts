@@ -3,7 +3,7 @@ import AccountService from '../services/account.service';
 import AccessTokenResponsePayload from './payloads/access-token-response.payload';
 
 export default class AccountController {
-  public async postSignupUserUsingEmailAndPassword(req : Request, res : Response) {
+  public async signupUserUsingEmailAndPassword(req : Request, res : Response) {
     const nameUrl : String = req.body.name;
     const emailUrl : String = req.body.email;
     const passwordUrl : String = req.body.password;
@@ -21,7 +21,7 @@ export default class AccountController {
     }
   }
 
-  public async getLoginUsingEmailAndPassword(req: Request, res: Response) {
+  public async loginUsingEmailAndPassword(req: Request, res: Response) {
     const emailUrl : String = req.body.email;
     const passwordUrl : String = req.body.password;
 

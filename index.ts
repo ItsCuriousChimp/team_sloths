@@ -25,9 +25,9 @@ app.get('/theatres/:theatresId/shows', new TheatreController().getUpcomingMovieS
 
 app.get('/shows', new BookedSeatController().getBookedSeatsByMovieId);
 
-app.post('/accounts/signup', new AccountController().postSignupUserUsingEmailAndPassword);
+app.post('/accounts/signup', new AccountController().signupUserUsingEmailAndPassword);
 
-app.get('/accounts/login', new AccountController().getLoginUsingEmailAndPassword);
+app.get('/accounts/login', new AccountController().loginUsingEmailAndPassword);
 
 app.listen(3000, () => {
   // eslint-disable-next-line no-console

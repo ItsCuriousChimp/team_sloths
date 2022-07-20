@@ -13,11 +13,11 @@ export default class AccountService {
   ) : Promise<String> {
     const accountRepositoryInstance : AccountRepository = new AccountRepository();
 
-    const accountByUsername : AccountModel =
+    const accountByUsername : AccountModel | null =
     await accountRepositoryInstance.getAccountByUsername(email);
 
     // if account with this username already exists
-    if (accountByUsername.id !== '') {
+    if (accountByUsername === null) {
       return '';
     }
 
@@ -52,11 +52,11 @@ export default class AccountService {
   public async loginUserUsingEmailAndPassword(email : String, password: String) {
     const accountRepositoryInstance : AccountRepository = new AccountRepository();
 
-    const accountByUsername : AccountModel =
+    const accountByUsername : AccountModel | null =
     await accountRepositoryInstance.getAccountByUsername(email);
 
     // if account with this username does not exists
-    if (accountByUsername.id === '') {
+    if (accountByUsername === null) {
       return '';
     }
 
