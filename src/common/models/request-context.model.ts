@@ -1,4 +1,4 @@
-export default class RequestModel {
+export default class RequestContextModel {
   userId : String;
 
   constructor(

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import RequestModel from '../common/models/request.model';
+import RequestContextModel from '../common/models/request-context.model';
 import UserModel from '../common/models/user.model';
 import UserService from '../services/user.service';
 
@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken');
 let instance : any;
 
 export default class AuthMiddleware {
-  storage : Map<String, RequestModel>;
+  storage : Map<String, RequestContextModel>;
   config : any;
 
   constructor() {
@@ -40,11 +40,11 @@ export default class AuthMiddleware {
       return res.status(401).send('Invalid Token');
     }
 
-    const requestContextModel : RequestModel = new RequestModel(userId);
+    const requestContextModel : RequestContextModel = new RequestContextModel(userId);
     const asyncLocalStorage = new AsyncLocalStorage();
 
     asyncLocalStorage.run(instance.storage, () => {
-      asyncLocalStorage.getStore().set('RequestContextModel', requestContextModel);
+      asyncLocalStorage.getStore().set('RequestContext', requestContextModel);
     });
     return next();
   }
