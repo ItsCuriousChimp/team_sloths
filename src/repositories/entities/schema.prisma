@@ -85,7 +85,7 @@ model booking {
 model user {
   id            String    @id @default(uuid())
   name          String    @db.VarChar(128)
-  email         String    @db.VarChar(64)
+  email         String    @unique @db.VarChar(64)
   cityId        String?
   phoneNumber   String?   @db.VarChar(16)
   loggedInAtUtc DateTime

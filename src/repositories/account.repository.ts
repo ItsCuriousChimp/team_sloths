@@ -17,6 +17,19 @@ export default class AccountRepository {
     return null;
   }
 
+  public async getAccountById(id: string): Promise<AccountModel | null> {
+    const account = await prisma.account.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (account) {
+      const { username, passwordHash } = account;
+      return new AccountModel(id, username, passwordHash);
+    }
+    return null;
+  }
+
   public async createAccount(username: string, passwordHash: string): Promise<AccountModel> {
     const newAccount = await prisma.account.create({
       data: {
