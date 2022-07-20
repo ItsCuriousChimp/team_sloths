@@ -7,7 +7,7 @@ export default class HashHelper {
     return hashedString;
   }
 
-  public async isHashValueSame(unhashedString : string, hashedString : string) : Promise<Boolean> {
-    return bcrypt.compare(unhashedString, hashedString);
+  public async isPasswordSame(password : string, hashedString : String) : Promise<Boolean> {
+    return bcrypt.compare(password, hashedString);
   }
 }

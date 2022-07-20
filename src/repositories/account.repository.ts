@@ -6,14 +6,17 @@ const prisma: PrismaClient = new PrismaClient();
 export default class AccountRepository {
   public async getAccountByEmail(
     username : string,
-  ) : Promise<boolean> {
+  ) : Promise<AccountModel> {
     const record = await prisma.account.findFirst({
       where: {
         username,
       },
     });
 
-    return !(record === null);
+    if (record) {
+      return new AccountModel(record.id, record.username, record.passwordHash);
+    }
+    return new AccountModel('', '', '');
   }
 
   public async createUserAccount(

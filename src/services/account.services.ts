@@ -14,10 +14,10 @@ export default class AccountService {
   ) : Promise<string> {
     const accountRepositoryInstance : AccountRepository = new AccountRepository();
 
-    const isAccountByUsernameExist : boolean =
+    const userAccount : AccountModel =
     await accountRepositoryInstance.getAccountByEmail(email);
 
-    if (isAccountByUsernameExist) {
+    if (userAccount.username !== '') {
       return '';
     }
     const passwordHash : string = await new HashHelper().hashString(password);
@@ -31,6 +31,34 @@ export default class AccountService {
     const accessTokenModel : AccessTokenModel =
     new AccessTokenModel(
       String(accountModel.userId),
+    );
+
+    const accessToken : string = new JWTHelper().generateJWTToken(accessTokenModel);
+
+    return accessToken;
+  }
+
+  public async loginUser(
+    email : string,
+    password : string,
+  ) : Promise<string> {
+    const accountRepositoryInstance : AccountRepository = new AccountRepository();
+
+    const userAccount : AccountModel =
+    await accountRepositoryInstance.getAccountByEmail(email);
+    if (userAccount.username === '') {
+      return '';
+    }
+
+    const isPasswordSame : Boolean =
+    await new HashHelper().isPasswordSame(password, userAccount.passwordHash);
+    if (!isPasswordSame) {
+      return '';
+    }
+
+    const accessTokenModel : AccessTokenModel =
+    new AccessTokenModel(
+      String(userAccount.userId),
     );
 
     const accessToken : string = new JWTHelper().generateJWTToken(accessTokenModel);
