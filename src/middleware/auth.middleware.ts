@@ -1,18 +1,18 @@
 import { Request, Response } from 'express';
-import AccessTokenModel from '../common/models/accessToken.model';
+import RequestContextModel from '../common/models/requestContext.model';
 import AccountModel from '../common/models/account.model';
 import AccountRepository from '../repositories/account.repository';
 
 const { AsyncLocalStorage } = require('async_hooks');
 const jwt = require('jsonwebtoken');
 
-export default class VerifyToken {
+export default class AuthMiddleware {
   async verifyToken(req: Request, res: Response, next: any) {
-    const storage: Map<String, AccessTokenModel> = new Map();
+    const storage: Map<String, RequestContextModel> = new Map();
     const token: string | string[] | undefined = req.headers['access-token'];
 
     if (!token) {
-      return res.status(400).send('A token is required for authentication');
+      return res.status(401).send('Unauthorized');
     }
 
     let userId: string = '';
@@ -25,19 +25,19 @@ export default class VerifyToken {
       userId = decoded.accessToken.userId;
     });
     if (!isValid) {
-      return res.status(400).send('Invalid Token');
+      return res.status(401).send('Unauthorized');
     }
 
     const account: AccountModel | null = await new AccountRepository().getAccountById(userId);
 
     if (!account) {
-      return res.status(400).send('User not found');
+      return res.status(401).send('Unauthorized');
     }
 
-    const accessTokenModel = new AccessTokenModel(userId);
+    const requestContextModel: RequestContextModel = new RequestContextModel(userId);
     const asyncLocalStorage = new AsyncLocalStorage();
     asyncLocalStorage.run(storage, (): any => {
-      asyncLocalStorage.getStore().set('AccessTokenModel', accessTokenModel);
+      asyncLocalStorage.getStore().set('RequestContext', requestContextModel);
     });
     return next();
   }

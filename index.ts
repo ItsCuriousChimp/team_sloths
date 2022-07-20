@@ -4,7 +4,7 @@ import HeartbeatController from './src/controllers/heartbeat.controller';
 import MovieController from './src/controllers/movie.controller';
 import BookedSeatsController from './src/controllers/booked-seat.controller';
 import AccountController from './src/controllers/account.controller';
-import VerifyToken from './src/middleware/auth.middleware';
+import AuthMiddleware from './src/middleware/auth.middleware';
 
 const app = express();
 app.use(express.json());
@@ -27,7 +27,7 @@ app.post('/accounts/signup', new AccountController().signupUser);
 
 app.get('/accounts/login', new AccountController().loginUser);
 
-app.get('/verify', new VerifyToken().verifyToken, (req: Request, res: Response) => {
+app.get('/verify', new AuthMiddleware().verifyToken, (req: Request, res: Response) => {
   res.status(200).send('Verified');
 });
 
