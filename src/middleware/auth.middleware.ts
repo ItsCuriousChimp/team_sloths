@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import { Request, Response } from 'express';
 import { AsyncLocalStorage } from 'async_hooks';
 import RequestContextModel from '../common/models/requestContext.model';
 import AccountModel from '../common/models/account.model';
