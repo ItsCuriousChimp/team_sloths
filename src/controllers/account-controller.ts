@@ -2,18 +2,13 @@
 import { Request, Response } from 'express';
 import AccountService from '../services/account.services';
 import AccessTokenResponsePayload from './payloads/access-token-response.payload';
-import ValidateHelper from '../common/helpers/validate.helper';
+import SignupRequestPayload from './payloads/signup-signup-request.payload';
 
 export default class AccountController {
   public async signupUser(req: Request, res: Response) {
-    interface IRequestBody {
-      name: string;
-      email: string;
-      password: string;
-    }
-    const requestBody: IRequestBody = req.body;
-    const validateHelper: ValidateHelper = new ValidateHelper();
-    const { error } = await validateHelper.signupValidate().validateAsync(req.body);
+    const signupRequestPayload: SignupRequestPayload =
+    new SignupRequestPayload(req.body.name, req.body.email, req.body.password);
+    const { error } = await signupRequestPayload.validate().validateAsync(req.body);
     if (error) {
       return res.status(400).send({
         error: error.details[0].message,
@@ -21,9 +16,9 @@ export default class AccountController {
     }
     const accessToken: string =
         await new AccountService().signupUser(
-          requestBody.name,
-          requestBody.email,
-          requestBody.password,
+          signupRequestPayload.name,
+          signupRequestPayload.email,
+          signupRequestPayload.password,
         );
     const payload: AccessTokenResponsePayload = new AccessTokenResponsePayload();
     payload.accessToken = accessToken;
@@ -33,13 +28,9 @@ export default class AccountController {
   }
 
   public async loginUser(req: Request, res: Response) {
-    interface IRequestBody {
-      email: string;
-      password: string;
-    }
-    const requestBody: IRequestBody = req.body;
-    const validateHelper: ValidateHelper = new ValidateHelper();
-    const { error } = await validateHelper.signupValidate().validateAsync(req.body);
+    const signupRequestPayload: SignupRequestPayload =
+    new SignupRequestPayload(req.body.name, req.body.email, req.body.password);
+    const { error } = await signupRequestPayload.validate().validateAsync(req.body);
     if (error) {
       return res.status(400).send({
         error: error.details[0].message,
@@ -47,8 +38,8 @@ export default class AccountController {
     }
     const accessToken: string =
         await new AccountService().loginUser(
-          requestBody.email,
-          requestBody.password,
+          signupRequestPayload.email,
+          signupRequestPayload.password,
         );
     const payload: AccessTokenResponsePayload = new AccessTokenResponsePayload();
     payload.accessToken = accessToken;

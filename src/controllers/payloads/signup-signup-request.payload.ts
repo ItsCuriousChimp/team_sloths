@@ -1,7 +1,17 @@
-const Joi = require('joi');
+import Joi from 'joi';
 
-export default class ValidateHelper {
-  public signupValidate() {
+export default class SignupRequestResponsePayload {
+  name: string = '';
+  email: string = '';
+  password: string = '';
+
+  constructor(name: string, email: string, password: string) {
+    this.name = name;
+    this.email = email;
+    this.password = password;
+  }
+
+  public validate() {
     const schema = Joi.object().keys({
       name: Joi.string()
         .min(3)
