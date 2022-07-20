@@ -36,6 +36,8 @@ app.get('/verify', authMiddleware.verifyToken, (req: Request, res: Response) => 
   res.status(200).send('Welcome 🙌 ');
 });
 
+// app.get('/user/profile', authMiddleware.verifyToken, new UserController().getUserUsingUserId);
+
 app.listen(3000, () => {
   // eslint-disable-next-line no-console
   console.log('listening on port 3000');

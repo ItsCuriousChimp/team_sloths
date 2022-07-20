@@ -26,10 +26,14 @@ export default class AuthMiddleware {
       return res.status(401).send('Unauthorized');
     }
 
-    let decoded : any;
-    try {
-      decoded = jwt.verify(token, instance.config.ACCESS_TOKEN_SECRET);
-    } catch (err) {
+    const decoded : any =
+    jwt.verify(token, instance.config.ACCESS_TOKEN_SECRET, (err : any, decodedJWT: any) => {
+      if (err) {
+        return null;
+      }
+      return decodedJWT;
+    });
+    if (decoded === null) {
       return res.status(401).send('Invalid Token');
     }
 

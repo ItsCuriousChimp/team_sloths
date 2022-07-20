@@ -30,6 +30,12 @@ export default class UserRepository {
       user.email,
       user.loggedInAtUtc,
     );
+    if (user.cityId !== null) {
+      userModel.cityId = user.cityId;
+    }
+    if (user.phoneNumber !== null) {
+      userModel.phoneNumber = user?.phoneNumber;
+    }
     return userModel;
   }
 }
