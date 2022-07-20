@@ -28,18 +28,10 @@ export default class AccountController {
   }
 
   public async loginUser(req: Request, res: Response) {
-    const signupRequestPayload: SignupRequestPayload =
-    new SignupRequestPayload(req.body.name, req.body.email, req.body.password);
-    const { error } = await signupRequestPayload.validate().validateAsync(req.body);
-    if (error) {
-      return res.status(400).send({
-        error: error.details[0].message,
-      });
-    }
     const accessToken: string =
         await new AccountService().loginUser(
-          signupRequestPayload.email,
-          signupRequestPayload.password,
+          req.body.email,
+          req.body.password,
         );
     const payload: AccessTokenResponsePayload = new AccessTokenResponsePayload();
     payload.accessToken = accessToken;
