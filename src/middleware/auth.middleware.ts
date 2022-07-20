@@ -15,23 +15,30 @@ export default class VerifyToken {
       return res.status(400).send('A token is required for authentication');
     }
 
-    try {
-      const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-      const { userId } = decoded.accessToken;
-      const account: AccountModel | null = await new AccountRepository().getAccountById(userId);
-
-      if (!account) {
-        throw new TypeError('User not found');
+    let userId: string = '';
+    let isValid: boolean = false;
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err: any, decoded: any) => {
+      if (err) {
+        return;
       }
-
-      const accessToken = new AccessTokenModel(userId);
-      const asyncLocalStorage = new AsyncLocalStorage();
-      asyncLocalStorage.run(storage, (): any => {
-        asyncLocalStorage.getStore().set('AccessTokenModel', accessToken);
-      });
-    } catch (err) {
+      isValid = true;
+      userId = decoded.accessToken.userId;
+    });
+    if (!isValid) {
       return res.status(400).send('Invalid Token');
     }
+
+    const account: AccountModel | null = await new AccountRepository().getAccountById(userId);
+
+    if (!account) {
+      return res.status(400).send('User not found');
+    }
+
+    const accessTokenModel = new AccessTokenModel(userId);
+    const asyncLocalStorage = new AsyncLocalStorage();
+    asyncLocalStorage.run(storage, (): any => {
+      asyncLocalStorage.getStore().set('AccessTokenModel', accessTokenModel);
+    });
     return next();
   }
 }
