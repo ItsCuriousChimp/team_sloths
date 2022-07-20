@@ -1,15 +1,14 @@
 import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
+import { AsyncLocalStorage } from 'async_hooks';
 import RequestContextModel from '../common/models/requestContext.model';
 import AccountModel from '../common/models/account.model';
 import AccountRepository from '../repositories/account.repository';
 
-const { AsyncLocalStorage } = require('async_hooks');
-const jwt = require('jsonwebtoken');
-
 export default class AuthMiddleware {
   async verifyToken(req: Request, res: Response, next: any) {
     const storage: Map<String, RequestContextModel> = new Map();
-    const token: string | string[] | undefined = req.headers['access-token'];
+    const token: string | undefined = req.header('access-token');
 
     if (!token) {
       return res.status(401).send('Unauthorized');
@@ -17,7 +16,7 @@ export default class AuthMiddleware {
 
     let userId: string = '';
     let isValid: boolean = false;
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err: any, decoded: any) => {
+    jwt.verify(String(token), String(process.env.ACCESS_TOKEN_SECRET), (err: any, decoded: any) => {
       if (err) {
         return;
       }
@@ -36,8 +35,9 @@ export default class AuthMiddleware {
 
     const requestContextModel: RequestContextModel = new RequestContextModel(userId);
     const asyncLocalStorage = new AsyncLocalStorage();
-    asyncLocalStorage.run(storage, (): any => {
-      asyncLocalStorage.getStore().set('RequestContext', requestContextModel);
+    asyncLocalStorage.run(storage, () => {
+      const store: any = asyncLocalStorage.getStore();
+      store.set('RequestContext', requestContextModel);
     });
     return next();
   }
