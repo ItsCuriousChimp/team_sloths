@@ -5,12 +5,14 @@ import HeartbeatController from './src/controllers/heartbeat.controller';
 import MovieController from './src/controllers/movie.controller';
 import BookedSeatController from './src/controllers/booked-seat.controller';
 import AccountController from './src/controllers/account.controller';
-import auth from './src/middleware/auth';
+import AuthMiddleware from './src/middleware/auth.middleware';
 
 const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const authMiddleware : AuthMiddleware = new AuthMiddleware();
 
 app.get('/heartbeat', (req: Request, res: Response) => {
   res.send(new HeartbeatController().getHeartbeat());
@@ -30,7 +32,7 @@ app.post('/accounts/signup', new AccountController().signUpUserUsingEmailAndPass
 
 app.get('/accounts/login', new AccountController().loginUsingEmailAndPassword);
 
-app.get('/verify', auth, (req: Request, res: Response) => {
+app.get('/verify', authMiddleware.verifyToken, (req: Request, res: Response) => {
   res.status(200).send('Welcome 🙌 ');
 });
 
