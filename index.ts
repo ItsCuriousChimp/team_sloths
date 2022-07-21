@@ -12,8 +12,6 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const authMiddleware : AuthMiddleware = new AuthMiddleware();
-
 app.get('/heartbeat', (req: Request, res: Response) => {
   res.send(new HeartbeatController().getHeartbeat());
 });
@@ -32,11 +30,9 @@ app.post('/accounts/signup', new AccountController().signUpUserUsingEmailAndPass
 
 app.get('/accounts/login', new AccountController().loginUsingEmailAndPassword);
 
-app.get('/verify', authMiddleware.verifyToken, (req: Request, res: Response) => {
+app.get('/verify', new AuthMiddleware().verifyToken, (req: Request, res: Response) => {
   res.status(200).send('Welcome 🙌 ');
 });
-
-// app.get('/user/profile', authMiddleware.verifyToken, new UserController().getUserUsingUserId);
 
 app.listen(3000, () => {
   // eslint-disable-next-line no-console
