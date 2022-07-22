@@ -2,8 +2,6 @@ import { Request, Response } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import RequestContextHelper from '../common/helpers/request-context.helper';
 import RequestContextModel from '../common/models/request-context.model';
-import UserModel from '../common/models/user.model';
-import UserService from '../services/user.service';
 
 let instance : any;
 
@@ -32,16 +30,10 @@ export default class AuthMiddleware {
       if (err.name === 'TokenExpiredError') {
         return res.status(401).send('Token Expired');
       }
-      return res.status(400).send('System error.');
+      throw err;
     }
 
     const { userId } = decoded.accessTokenModel;
-
-    const userByUserId : UserModel | null = await new UserService().getUserUsingUserId(userId);
-
-    if (userByUserId === null) {
-      return res.status(401).send('Invalid Token');
-    }
 
     const requestContextModel : RequestContextModel = new RequestContextModel(userId);
 
