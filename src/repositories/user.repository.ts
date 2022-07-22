@@ -34,7 +34,7 @@ export default class UserRepository {
     name : String,
     phoneNumber: String,
     cityId: String,
-  ) {
+  ) : Promise<UserModel | null> {
     const user = await prisma.user.update({
       where: {
         id: String(userId),

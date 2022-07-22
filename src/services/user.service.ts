@@ -14,7 +14,7 @@ export default class UserService {
     name : String,
     phoneNumber: String,
     cityId: String,
-  ) {
+  ) : Promise<UserModel | null> {
     const cityRepository = new CityRepository();
     const city = await cityRepository.getCityByCityId(cityId);
     if (city === null) {
