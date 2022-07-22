@@ -9,10 +9,19 @@ export default class AccountRepository {
       where: {
         username: email,
       },
+      include: {
+        user: {
+          include: {
+            city: true,
+          },
+        },
+      },
     });
     if (account) {
-      const { id, username, passwordHash } = account;
-      return new AccountModel(id, username, passwordHash);
+      const {
+        id, username, passwordHash, user,
+      } = account;
+      return new AccountModel(id, username, passwordHash, user);
     }
     return null;
   }
@@ -22,10 +31,17 @@ export default class AccountRepository {
       where: {
         id,
       },
+      include: {
+        user: {
+          include: {
+            city: true,
+          },
+        },
+      },
     });
     if (account) {
-      const { username, passwordHash } = account;
-      return new AccountModel(id, username, passwordHash);
+      const { username, passwordHash, user } = account;
+      return new AccountModel(id, username, passwordHash, user);
     }
     return null;
   }
@@ -37,7 +53,7 @@ export default class AccountRepository {
         passwordHash,
       },
     });
-    return new AccountModel(newAccount.id, newAccount.username, newAccount.passwordHash);
+    return new AccountModel(newAccount.id, newAccount.username, newAccount.passwordHash, {});
   }
 
   public async setUserId(userId: string, accountId: string): Promise<void> {

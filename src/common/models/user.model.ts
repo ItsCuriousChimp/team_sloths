@@ -5,6 +5,7 @@ export default class UserModel {
   loggedInAtUtc: Date;
   cityId: string | undefined;
   phoneNumber: string | undefined;
+  city: string | undefined;
   constructor(
     id: string,
     name: string,
