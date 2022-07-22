@@ -26,21 +26,7 @@ export default class UserRepository {
         city: true,
       },
     });
-    if (user === null) { return null; }
-    const userModel : UserModel = new UserModel(
-      user.id,
-      user.name,
-      user.email,
-      user.loggedInAtUtc,
-    );
-    if (user.cityId !== null) {
-      userModel.cityId = user.cityId;
-      userModel.city = user.city?.name;
-    }
-    if (user.phoneNumber !== null) {
-      userModel.phoneNumber = user.phoneNumber;
-    }
-    return userModel;
+    return this.makeUserModel(user);
   }
 
   public async updateUserDetails(
@@ -62,6 +48,10 @@ export default class UserRepository {
         city: true,
       },
     });
+    return this.makeUserModel(user);
+  }
+
+  private makeUserModel(user : any) : UserModel | null {
     if (user === null) { return null; }
     const userModel : UserModel = new UserModel(
       user.id,
