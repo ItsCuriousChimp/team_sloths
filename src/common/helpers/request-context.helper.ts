@@ -10,6 +10,8 @@ export default class RequestContextHelper {
   }
 
   public static getContext(): RequestContextModel {
-    return asyncLocalStorage.getStore();
+    const value = asyncLocalStorage.getStore();
+    if (value === undefined) { return new RequestContextModel(); }
+    return value;
   }
 }

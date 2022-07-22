@@ -35,8 +35,11 @@ export default class AuthMiddleware {
 
     const { userId } = decoded.accessTokenModel;
 
-    const requestContextModel : RequestContextModel = new RequestContextModel(userId);
+    // Adding data in async local storage
+    const requestContextModel : RequestContextModel = RequestContextHelper.getContext();
+    requestContextModel.userId = userId;
     RequestContextHelper.saveContext(requestContextModel, () => next());
+
     return next;
   }
 }
