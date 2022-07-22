@@ -5,7 +5,7 @@ const { AsyncLocalStorage } = require('async_hooks');
 const asyncLocalStorage = new AsyncLocalStorage();
 
 export default class RequestContextHelper {
-  public static saveContext(value: RequestContextModel, callback: any): void {
+  public static setContext(value: RequestContextModel, callback: any): void {
     asyncLocalStorage.run(value, callback);
   }
 

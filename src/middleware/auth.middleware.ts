@@ -38,7 +38,7 @@ export default class AuthMiddleware {
     // Adding data in async local storage
     const requestContextModel : RequestContextModel = RequestContextHelper.getContext();
     requestContextModel.userId = userId;
-    RequestContextHelper.saveContext(requestContextModel, () => next());
+    RequestContextHelper.setContext(requestContextModel, () => next());
 
     return next;
   }
