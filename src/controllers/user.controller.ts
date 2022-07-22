@@ -5,7 +5,7 @@ import UserResponsePayload from './payloads/user-response.payload';
 
 export default class UserController {
   public async getUserDetails(req : Request, res : Response) {
-    const { userId } = new RequestContextHelper().getData('RequestContext');
+    const { userId } = RequestContextHelper.getContext();
 
     const userServiceInstance = new UserService();
     const userModel = await userServiceInstance.getUserUsingUserId(userId);
@@ -25,7 +25,7 @@ export default class UserController {
   }
 
   public async updateUserDetails(req : Request, res : Response) {
-    const { userId } = new RequestContextHelper().getData('RequestContext');
+    const { userId } = RequestContextHelper.getContext();
     const { name } = req.body;
     const { phoneNumber } = req.body;
     const { cityId } = req.body;
