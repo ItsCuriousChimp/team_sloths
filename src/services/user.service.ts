@@ -7,4 +7,16 @@ export default class UserService {
     const userByUserId : UserModel | null = await userRepositoryInstance.getUserUsingUserId(userId);
     return userByUserId;
   }
+
+  public async updateUserDetails(
+    userId: String,
+    name : String,
+    phoneNumber: String,
+    cityId: String,
+  ) {
+    const userRepositoryInstance = new UserRepository();
+    const updatedUser =
+    userRepositoryInstance.updateUserDetails(userId, name, phoneNumber, cityId);
+    return updatedUser;
+  }
 }

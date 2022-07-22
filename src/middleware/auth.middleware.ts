@@ -29,6 +29,9 @@ export default class AuthMiddleware {
       if (err.name === 'JsonWebTokenError') {
         return res.status(401).send('Invalid Token');
       }
+      if (err.name === 'TokenExpiredError') {
+        return res.status(401).send('Token Expired');
+      }
       return res.status(400).send('System error.');
     }
 
@@ -44,6 +47,7 @@ export default class AuthMiddleware {
 
     const requestContextHelper = new RequestContextHelper();
     requestContextHelper.setData('RequestContext', requestContextModel);
+
     return next();
   }
 }

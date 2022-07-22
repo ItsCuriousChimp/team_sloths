@@ -6,6 +6,7 @@ import MovieController from './src/controllers/movie.controller';
 import BookedSeatController from './src/controllers/booked-seat.controller';
 import AccountController from './src/controllers/account.controller';
 import AuthMiddleware from './src/middleware/auth.middleware';
+import UserController from './src/controllers/user.controller';
 
 const app = express();
 app.use(express.json());
@@ -33,6 +34,10 @@ app.get('/accounts/login', new AccountController().loginUsingEmailAndPassword);
 app.get('/verify', new AuthMiddleware().verifyToken, (req: Request, res: Response) => {
   res.status(200).send('Welcome 🙌 ');
 });
+
+app.get('/user/profile', new AuthMiddleware().verifyToken, new UserController().getUserDetails);
+
+app.put('/user/profile', new AuthMiddleware().verifyToken, new UserController().updateUserDetails);
 
 app.listen(3000, () => {
   // eslint-disable-next-line no-console

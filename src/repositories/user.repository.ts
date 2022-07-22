@@ -22,6 +22,9 @@ export default class UserRepository {
       where: {
         id: String(userId),
       },
+      include: {
+        city: true,
+      },
     });
     if (user === null) { return null; }
     const userModel : UserModel = new UserModel(
@@ -32,9 +35,46 @@ export default class UserRepository {
     );
     if (user.cityId !== null) {
       userModel.cityId = user.cityId;
+      userModel.city = user.city?.name;
     }
     if (user.phoneNumber !== null) {
-      userModel.phoneNumber = user?.phoneNumber;
+      userModel.phoneNumber = user.phoneNumber;
+    }
+    return userModel;
+  }
+
+  public async updateUserDetails(
+    userId: String,
+    name : String,
+    phoneNumber: String,
+    cityId: String,
+  ) {
+    const user = await prisma.user.update({
+      where: {
+        id: String(userId),
+      },
+      data: {
+        name: String(name),
+        phoneNumber: String(phoneNumber),
+        cityId: String(cityId),
+      },
+      include: {
+        city: true,
+      },
+    });
+    if (user === null) { return null; }
+    const userModel : UserModel = new UserModel(
+      user.id,
+      user.name,
+      user.email,
+      user.loggedInAtUtc,
+    );
+    if (user.cityId !== null) {
+      userModel.cityId = user.cityId;
+      userModel.city = user.city?.name;
+    }
+    if (user.phoneNumber !== null) {
+      userModel.phoneNumber = user.phoneNumber;
     }
     return userModel;
   }

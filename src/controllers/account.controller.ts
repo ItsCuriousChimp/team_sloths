@@ -28,7 +28,6 @@ export default class AccountController {
     const accountServiceInstance : AccountService = new AccountService();
     const accessToken : String =
     await accountServiceInstance.loginUserUsingEmailAndPassword(emailUrl, passwordUrl);
-
     if (accessToken === '') {
       res.status(400).send('Email address or password incorrect');
     } else {
