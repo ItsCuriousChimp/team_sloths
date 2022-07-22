@@ -10,9 +10,4 @@ export default class MovieService {
     const movies = await new MovieRepository().getMoviesByTheatreId(theatreId);
     return movies;
   }
-
-  // public async getMovies(theatreId: String): Promise<MovieModel[]> {
-  //   const movies = await new MovieRepository().getMovies(theatreId);
-  //   return movies;
-  // }
 }

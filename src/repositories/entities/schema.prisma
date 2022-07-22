@@ -88,19 +88,19 @@ model booking {
 model user {
   id            String    @id @default(uuid())
   name          String    @db.VarChar(128)
-  email         String    @db.VarChar(64)
+  email         String    @unique @db.VarChar(64)
   city          city?     @relation(fields: [cityId], references: [id])
   cityId        String?
-  phoneNumber   String    @db.VarChar(16)
+  phoneNumber   String?   @db.VarChar(16)
   loggedInAtUtc DateTime
   booking       booking[]
   account       account[]
 }
 
 model account {
-  id           String @id @default(uuid())
-  user         user   @relation(fields: [userId], references: [id])
-  userId       String
-  username     String @db.VarChar(128)
-  passwordHash String @db.VarChar(128)
+  id           String  @id @default(uuid())
+  user         user?   @relation(fields: [userId], references: [id])
+  userId       String?
+  username     String  @unique @db.VarChar(128)
+  passwordHash String  @db.VarChar(128)
 }
