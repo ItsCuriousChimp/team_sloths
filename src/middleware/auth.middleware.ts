@@ -16,9 +16,12 @@ export default class AuthMiddleware {
       response = jwt.verify(String(token), secret) as jwt.JwtPayload;
     } catch (err: any) {
       if (err.name === 'JsonWebTokenError') {
-        return res.status(401).send('Unauthorized');
+        return res.status(401).send('Invalid Token');
       }
-      return res.status(401).send('System Error');
+      if (err.name === 'TokenExpiredError') {
+        return res.status(401).send('Token Expired');
+      }
+      throw err;
     }
 
     const { userId } = response.accessToken;
@@ -26,10 +29,10 @@ export default class AuthMiddleware {
       return res.status(401).send('Unauthorized');
     }
 
-    const requestContextModel: RequestContextModel = new RequestContextModel(userId);
-    const requestContextHelper = new RequestContextHelper();
-    requestContextHelper.setItem('RequestContext', requestContextModel);
+    const requestContextModel: RequestContextModel = RequestContextHelper.getContext();
+    requestContextModel.userId = userId;
+    RequestContextHelper.setContext(requestContextModel, () => next());
 
-    return next();
+    return next;
   }
 }

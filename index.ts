@@ -35,9 +35,9 @@ app.get('/verify', new AuthMiddleware().verifyToken, (req: Request, res: Respons
   res.status(200).send('Verified');
 });
 
-app.get('/user/profile', new UserController().getUser);
+app.get('/user/profile', new AuthMiddleware().verifyToken, new UserController().getUser);
 
-app.put('/user/profile', new UserController().updateUser);
+app.put('/user/profile', new AuthMiddleware().verifyToken, new UserController().updateUser);
 
 app.listen(3000, () => {
   // eslint-disable-next-line no-console

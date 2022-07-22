@@ -1,12 +1,11 @@
 import UserRepository from '../repositories/user.repository';
 import AccountRepository from '../repositories/account.repository';
 import UserModel from '../common/models/user.model';
-import AsyncStorage from '../common/helpers/requestContext.helper';
+import RequestContextHelper from '../common/helpers/requestContext.helper';
 
 export default class UserService {
   async getUser(): Promise<UserModel> {
-    const requestContext: any = new AsyncStorage().getItems();
-    const accountId = requestContext.get('RequestContext').userId;
+    const accountId : any = RequestContextHelper.getContext().userId;
     const account = await new AccountRepository().getAccountById(accountId);
     const user = account?.user;
     const {
@@ -20,8 +19,7 @@ export default class UserService {
   }
 
   async updateUser(name: string, phoneNumber: string, cityId: string) {
-    const items: any = new AsyncStorage().getItems();
-    const accountId = items.get('RequestContext').userId;
+    const accountId = String(RequestContextHelper.getContext().userId);
     const account = await new AccountRepository().getAccountById(accountId);
     const userId = await account?.user.id;
     const userRepository = new UserRepository();

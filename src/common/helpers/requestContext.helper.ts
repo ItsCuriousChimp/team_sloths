@@ -1,17 +1,17 @@
-import { AsyncLocalStorage } from 'async_hooks';
+import RequestContextModel from '../models/requestContext.model';
 
-export default class AsyncStorage {
-  private static storage: Map<String, any> = new Map();
-  public getItems() {
-    const asyncLocalStorage = new AsyncLocalStorage();
-    return asyncLocalStorage.run(AsyncStorage.storage, () => asyncLocalStorage.getStore());
+const { AsyncLocalStorage } = require('async_hooks');
+
+const asyncLocalStorage = new AsyncLocalStorage();
+
+export default class RequestContextHelper {
+  public static setContext(value: RequestContextModel, callback: any): void {
+    asyncLocalStorage.run(value, callback);
   }
 
-  public setItem(key: string, value: any) {
-    const asyncLocalStorage = new AsyncLocalStorage();
-    asyncLocalStorage.run(AsyncStorage.storage, () => {
-      const store: any = asyncLocalStorage.getStore();
-      store.set(key, value);
-    });
+  public static getContext(): RequestContextModel {
+    const value = asyncLocalStorage.getStore();
+    if (value === undefined) { return new RequestContextModel(); }
+    return value;
   }
 }
