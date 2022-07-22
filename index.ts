@@ -4,6 +4,7 @@ import HeartbeatController from './src/controllers/heartbeat.controller';
 import MovieController from './src/controllers/movie.controller';
 import BookedSeatsController from './src/controllers/booked-seat.controller';
 import AccountController from './src/controllers/account-controller';
+import AuthMiddleware from './src/common/middlewares/verify.Token';
 
 const app = express();
 app.use(express.json());
@@ -23,6 +24,10 @@ app.get('/theatres/:theatresId/shows', new TheatreController().getUpcomingMovieS
 // app.get('/theatres/:theatresId/movies', new MovieController().getMoviesByTheatreId);
 // Tushar
 app.get('/shows', new BookedSeatsController().getBookedSeatsByMovieId);
+
+app.get('/verify', new AuthMiddleware().verifyToken, (req: Request, res: Response) => {
+  res.status(200).send('Welcome 🙌 ');
+});
 
 app.post('/accounts/signup', new AccountController().signupUser);
 app.post('/accounts/login', new AccountController().loginUser);

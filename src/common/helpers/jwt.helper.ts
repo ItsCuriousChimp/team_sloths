@@ -8,7 +8,7 @@ export default class JWTHelper {
       { accessTokenModel },
       process.env.ACCESS_TOKEN_SECRET,
       {
-        expiresIn: process.env.JWT_EXPIRES_IN, // expires in 1 hour
+        expiresIn: process.env.JWT_EXPIRES_IN,
       },
     );
   }

@@ -27,7 +27,6 @@ export default class AccountService {
     const passwordHash : string = await new HashHelper().hashString(password);
     const accountModel : AccountModel =
     await accountRepositoryInstance.createUserAccount(email, passwordHash, userId);
-
     const accessTokenModel : AccessTokenModel =
     new AccessTokenModel(
       String(accountModel.userId),
@@ -55,7 +54,6 @@ export default class AccountService {
     if (!isPasswordSame) {
       return '';
     }
-
     const accessTokenModel : AccessTokenModel =
     new AccessTokenModel(
       String(userAccount.userId),

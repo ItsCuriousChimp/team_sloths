@@ -14,7 +14,9 @@ export default class AccountRepository {
     });
 
     if (record) {
-      return new AccountModel(record.id, record.username, record.passwordHash);
+      const accountModel = new AccountModel(record.id, record.username, record.passwordHash);
+      accountModel.userId = String(record.userId);
+      return accountModel;
     }
     return new AccountModel('', '', '');
   }
@@ -37,6 +39,7 @@ export default class AccountRepository {
       account.username,
       account.passwordHash,
     );
+    accountModel.userId = String(account.userId);
     return accountModel;
   }
 }
