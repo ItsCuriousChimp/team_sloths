@@ -34,7 +34,7 @@ export default class UserController {
     await userServiceInstance.updateUserDetails(userId, name, phoneNumber, cityId);
 
     if (!userModel) {
-      res.status(400).send('User with this user id does not exist.');
+      res.status(400).send('There was a problem with updating the details.');
     } else {
       const payload = new UserResponsePayload();
       payload.id = userModel.id;
