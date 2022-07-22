@@ -21,8 +21,8 @@ export default class UserService {
       return null;
     }
     const userRepositoryInstance = new UserRepository();
-    const updatedUser =
-    userRepositoryInstance.updateUserDetails(userId, name, phoneNumber, cityId);
+    const updatedUser : UserModel | null =
+    await userRepositoryInstance.updateUserDetails(userId, name, phoneNumber, cityId);
     return updatedUser;
   }
 }
