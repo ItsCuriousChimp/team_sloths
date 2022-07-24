@@ -15,13 +15,12 @@ export default class UserRepository {
     });
     return user.id;
   }
-  public async getUserUsingUserId(userId : String) : Promise<UserModel | null> {
+  public async getUserById(userId : String) : Promise<UserModel | null> {
     const user = await prisma.user.findFirst({
       where: {
         id: String(userId),
       },
     });
-    console.log(userId);
     if (user === null) { return null; }
     const userModel : UserModel = new UserModel(
       user.id,

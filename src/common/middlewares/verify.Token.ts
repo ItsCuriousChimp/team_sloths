@@ -5,16 +5,7 @@ import RequestContextHelper from '../helpers/request-context.helper';
 import RequestContextModel from '../models/request-context.model';
 // import UserModel from '../models/user.model';
 
-let instance : any;
-
 export default class AuthMiddleware {
-  config : object;
-
-  constructor() {
-    this.config = process.env;
-    instance = this;
-  }
-
   public async verifyToken(req : Request, res: Response, next : any) {
     const token : string = String(req.headers['access-token']);
 
@@ -24,7 +15,7 @@ export default class AuthMiddleware {
 
     let decoded : jwt.JwtPayload;
     try {
-      decoded = jwt.verify(token, instance.config.ACCESS_TOKEN_SECRET) as JwtPayload;
+      decoded = jwt.verify(token, String(process.env.ACCESS_TOKEN_SECRET)) as JwtPayload;
     } catch (err : any) {
       if (err.name === 'JsonWebTokenError') {
         return res.status(401).send('Invalid Token');

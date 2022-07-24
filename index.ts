@@ -29,6 +29,8 @@ app.get('/verify', new AuthMiddleware().verifyToken, (req: Request, res: Respons
   res.status(200).send('Welcome 🙌 ');
 });
 
+// app.get('/profile', new AuthMiddleware().verifyToken, new AccountController().getProfile);
+
 app.post('/accounts/signup', new AccountController().signupUser);
 app.post('/accounts/login', new AccountController().loginUser);
 
