@@ -10,10 +10,9 @@ export default class AccountController {
     const signupRequestPayload: SignupRequestPayload =
     new SignupRequestPayload(req.body.name, req.body.email, req.body.password);
 
-    try {
-      await signupRequestPayload.validate().validateAsync(req.body);
-    } catch (err : any) {
-      return res.status(400).send({ error: err.details[0].message });
+    const error = signupRequestPayload.validateAndExtract();
+    if (error !== null) {
+      return res.status(400).send({ error: error.details[0].message });
     }
 
     const accountServiceInstance : AccountService = new AccountService();
@@ -37,10 +36,9 @@ export default class AccountController {
     const loginRequestPayload : LoginRequestPayload =
     new LoginRequestPayload(req.body.email, req.body.password);
 
-    try {
-      await loginRequestPayload.validate().validateAsync(req.body);
-    } catch (err : any) {
-      return res.status(400).send({ error: err.details[0].message });
+    const error = loginRequestPayload.validateAndExtract();
+    if (error !== null) {
+      return res.status(400).send({ error: error.details[0].message });
     }
 
     const accountServiceInstance : AccountService = new AccountService();

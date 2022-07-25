@@ -10,10 +10,9 @@ export default class BookedSeatController {
     const showIdRequestPayload : IdRequestPayload =
     new IdRequestPayload(String(req.query.showId));
 
-    try {
-      await showIdRequestPayload.validate().validateAsync({ id: String(req.query.showId) });
-    } catch (err : any) {
-      return res.status(400).send({ error: err.details[0].message });
+    const error = showIdRequestPayload.validateAndExtract();
+    if (error !== null) {
+      return res.status(400).send({ error: error.details[0].message });
     }
     const bookedSeatServiceInstance : BookedSeatService = new BookedSeatService();
     const bookedSeatList : BookedSeatModel[] =

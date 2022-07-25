@@ -11,15 +11,15 @@ export default class UpdateUserRequestPayload {
     this.cityId = cityId;
   }
 
-  public validate() {
+  public validateAndExtract() {
     const schema = Joi.object().keys({
       name: Joi.string()
         .min(3)
         .max(128)
         .optional(),
-      phoneNumber: Joi.number()
-        .min(1000000000)
-        .max(9999999999)
+      phoneNumber: Joi.string()
+        .length(10)
+        .pattern(/^[0-9]+$/)
         .optional(),
       cityId: Joi.string()
         .min(36)
@@ -27,6 +27,11 @@ export default class UpdateUserRequestPayload {
         .optional(),
 
     });
-    return schema;
+    const res =
+    schema.validate({ name: this.name, phoneNumber: this.phoneNumber, cityId: this.cityId });
+    if (res.error) {
+      return res.error;
+    }
+    return null;
   }
 }

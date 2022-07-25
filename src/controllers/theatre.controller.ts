@@ -12,10 +12,9 @@ export default class TheatreController {
     const cityIdRequestPayload : IdRequestPayload =
     new IdRequestPayload(String(req.query.cityId));
 
-    try {
-      await cityIdRequestPayload.validate().validateAsync({ id: String(req.query.cityId) });
-    } catch (err : any) {
-      return res.status(400).send({ error: err.details[0].message });
+    const error = cityIdRequestPayload.validateAndExtract();
+    if (error !== null) {
+      return res.status(400).send({ error: error.details[0].message });
     }
 
     const theatreService : TheatreService = new TheatreService();
@@ -35,18 +34,16 @@ export default class TheatreController {
     const theatreIdRequestPayload : IdRequestPayload =
     new IdRequestPayload(String(req.params.theatreId));
 
-    try {
-      await theatreIdRequestPayload.validate().validateAsync({ id: String(req.params.theatreId) });
-    } catch (err : any) {
-      return res.status(400).send({ error: err.details[0].message });
+    let error = theatreIdRequestPayload.validateAndExtract();
+    if (error !== null) {
+      return res.status(400).send({ error: error.details[0].message });
     }
     const movieIdRequestPayload : IdRequestPayload =
     new IdRequestPayload(String(req.query.movieId));
 
-    try {
-      await movieIdRequestPayload.validate().validateAsync({ id: String(req.query.movieId) });
-    } catch (err : any) {
-      return res.status(400).send({ error: err.details[0].message });
+    error = movieIdRequestPayload.validateAndExtract();
+    if (error !== null) {
+      return res.status(400).send({ error: error.details[0].message });
     }
 
     const theatreServiceInstance : TheatreService = new TheatreService();

@@ -7,12 +7,17 @@ export default class IdRequestPayload {
     this.id = id;
   }
 
-  public validate() {
+  public validateAndExtract() {
     const schema = Joi.object().keys({
       id: Joi.string()
         .length(36)
         .required(),
     });
-    return schema;
+    const res =
+    schema.validate({ id: this.id });
+    if (res.error) {
+      return res.error;
+    }
+    return null;
   }
 }

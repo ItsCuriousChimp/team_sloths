@@ -11,7 +11,7 @@ export default class SignupRequestPayload {
     this.password = password;
   }
 
-  public validate() {
+  public validateAndExtract() {
     const schema = Joi.object().keys({
       name: Joi.string()
         .min(3)
@@ -27,6 +27,11 @@ export default class SignupRequestPayload {
         .max(32)
         .required(),
     });
-    return schema;
+    const res =
+    schema.validate({ name: this.name, email: this.email, password: this.password });
+    if (res.error) {
+      return res.error;
+    }
+    return null;
   }
 }

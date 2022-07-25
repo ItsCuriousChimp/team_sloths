@@ -32,12 +32,11 @@ export default class UserController {
     const userId : string = String(RequestContextHelper.getContext().userId);
 
     const updateUserRequestPayload : UpdateUserRequestPayload =
-    new UpdateUserRequestPayload(req.body.name, req.body.payloads, req.body.cityId);
+    new UpdateUserRequestPayload(req.body.name, req.body.phoneNumber, req.body.cityId);
 
-    try {
-      await updateUserRequestPayload.validate().validateAsync(req.body);
-    } catch (err : any) {
-      return res.status(400).send({ error: err.details[0].message });
+    const error = updateUserRequestPayload.validateAndExtract();
+    if (error !== null) {
+      return res.status(400).send({ error: error.details[0].message });
     }
 
     const userServiceInstance = new UserService();
