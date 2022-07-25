@@ -2,7 +2,7 @@
 import { Request, Response } from 'express';
 import AccountService from '../services/account.services';
 import AccessTokenResponsePayload from './payloads/access-token-response.payload';
-import SignupRequestPayload from './payloads/signup-signup-request.payload';
+import SignupRequestPayload from './payloads/signup-request.payload';
 
 export default class AccountController {
   public async signupUser(req: Request, res: Response) {

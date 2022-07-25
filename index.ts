@@ -5,6 +5,7 @@ import MovieController from './src/controllers/movie.controller';
 import BookedSeatsController from './src/controllers/booked-seat.controller';
 import AccountController from './src/controllers/account-controller';
 import AuthMiddleware from './src/common/middlewares/verify.Token';
+import UserController from './src/controllers/user-controller';
 
 const app = express();
 app.use(express.json());
@@ -29,8 +30,8 @@ app.get('/verify', new AuthMiddleware().verifyToken, (req: Request, res: Respons
   res.status(200).send('Welcome 🙌 ');
 });
 
-// app.get('/profile', new AuthMiddleware().verifyToken, new AccountController().getProfile);
-
+app.get('/profile', new AuthMiddleware().verifyToken, new UserController().getProfile);
+app.put('/profile', new AuthMiddleware().verifyToken, new UserController().updateProfile);
 app.post('/accounts/signup', new AccountController().signupUser);
 app.post('/accounts/login', new AccountController().loginUser);
 

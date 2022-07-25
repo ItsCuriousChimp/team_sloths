@@ -36,4 +36,36 @@ export default class UserRepository {
     }
     return userModel;
   }
+
+  public async updateUserById(
+    userId: String,
+    userName: String,
+    userPhoneNumber: String,
+    userCityId: String,
+  ): Promise<UserModel | null> {
+    const userUpdated = await prisma.user.update({
+      where: {
+        id: String(userId),
+      },
+      data: {
+        name: String(userName),
+        cityId: String(userCityId),
+        phoneNumber: String(userPhoneNumber),
+      },
+    });
+    if (userUpdated === null) { return null; }
+    const userModel : UserModel = new UserModel(
+      userUpdated.id,
+      userUpdated.name,
+      userUpdated.email,
+      userUpdated.loggedInAtUtc,
+    );
+    if (userUpdated.cityId !== null) {
+      userModel.cityId = userUpdated.cityId;
+    }
+    if (userUpdated.phoneNumber !== null) {
+      userModel.phoneNumber = userUpdated.phoneNumber;
+    }
+    return userModel;
+  }
 }

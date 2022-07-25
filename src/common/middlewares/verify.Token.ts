@@ -25,10 +25,10 @@ export default class AuthMiddleware {
 
     const { userId } = decoded.accessTokenModel;
 
-    const requestContextModel : RequestContextModel = new RequestContextModel(userId);
-
+    const requestContextModel : RequestContextModel = new RequestContextModel();
+    requestContextModel.userId = userId;
     const requestContextHelper = new RequestContextHelper();
-    requestContextHelper.setData('RequestContext', requestContextModel);
-    return next();
+    requestContextHelper.setData(requestContextModel, () => next());
+    return next;
   }
 }
