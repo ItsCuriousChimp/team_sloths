@@ -30,19 +30,19 @@ export default class UserRepository {
   }
 
   public async updateUserDetails(
-    userId: String,
-    name : String,
-    phoneNumber: String,
-    cityId: String,
+    userId: string,
+    name : string,
+    phoneNumber: string,
+    cityId: string,
   ) : Promise<UserModel | null> {
     const user = await prisma.user.update({
       where: {
         id: String(userId),
       },
       data: {
-        name: String(name),
-        phoneNumber: String(phoneNumber),
-        cityId: String(cityId),
+        name,
+        phoneNumber,
+        cityId,
       },
       include: {
         city: true,

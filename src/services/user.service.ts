@@ -10,14 +10,14 @@ export default class UserService {
   }
 
   public async updateUserDetails(
-    userId: String,
-    name : String,
-    phoneNumber: String,
-    cityId: String,
+    userId: string,
+    name : string,
+    phoneNumber: string,
+    cityId: string,
   ) : Promise<UserModel | null> {
     const cityRepository = new CityRepository();
     const city = await cityRepository.getCityByCityId(cityId);
-    if (city === null) {
+    if (cityId && city === null) {
       return null;
     }
     const userRepositoryInstance = new UserRepository();

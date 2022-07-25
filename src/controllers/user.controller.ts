@@ -25,7 +25,7 @@ export default class UserController {
   }
 
   public async updateUserDetails(req : Request, res : Response) {
-    const userId : String = String(RequestContextHelper.getContext().userId);
+    const userId : string = String(RequestContextHelper.getContext().userId);
     const { name } = req.body;
     const { phoneNumber } = req.body;
     const { cityId } = req.body;
