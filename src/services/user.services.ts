@@ -7,6 +7,7 @@ export default class UserService {
     const userByUserId : UserModel | null = await userRepositoryInstance.getUserById(userId);
     return userByUserId;
   }
+
   public async updateUserById(
     userId: String,
     name: String,

@@ -1,9 +1,7 @@
 import { Request, Response } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-// import UserService from '../../services/user.services';
 import RequestContextHelper from '../helpers/request-context.helper';
 import RequestContextModel from '../models/request-context.model';
-// import UserModel from '../models/user.model';
 
 export default class AuthMiddleware {
   public async verifyToken(req : Request, res: Response, next : any) {
@@ -20,7 +18,7 @@ export default class AuthMiddleware {
       if (err.name === 'JsonWebTokenError') {
         return res.status(401).send('Invalid Token');
       }
-      return res.status(400).send('System error.');
+      throw err;
     }
 
     const { userId } = decoded.accessTokenModel;
