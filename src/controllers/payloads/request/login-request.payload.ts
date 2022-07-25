@@ -2,7 +2,7 @@ import Joi from 'joi';
 
 export default class LoginRequestPayload {
   async validateAndExtract(email: string, password: string) {
-    const schema = Joi.object().keys({
+    const schema = Joi.object({
       email: Joi.string()
         .min(6)
         .max(64)

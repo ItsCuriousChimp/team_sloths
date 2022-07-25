@@ -2,7 +2,7 @@ import Joi from 'joi';
 
 export default class IdRequestPayload {
   async validateAndExtract(id: String) {
-    const schema = Joi.object().keys({
+    const schema = Joi.object({
       id: Joi.string()
         .length(36)
         .required(),
