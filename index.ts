@@ -32,7 +32,7 @@ app.post('/accounts/signup', new AccountController().signUpUserUsingEmailAndPass
 app.get('/accounts/login', new AccountController().loginUsingEmailAndPassword);
 
 app.get('/verify', new AuthMiddleware().verifyToken, (req: Request, res: Response) => {
-  res.status(200).send('Welcome 🙌 ');
+  res.status(200).send('Welcome  🙌 ');
 });
 
 app.get('/user/profile', new AuthMiddleware().verifyToken, new UserController().getUserDetails);
