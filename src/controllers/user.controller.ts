@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import RequestContextHelper from '../common/helpers/request-context.helper';
 import UserService from '../services/user.service';
 import UserResponsePayload from './payloads/user-response.payload';
+import UpdateUserRequestPayload from './payloads/request/updateUser-request.payload';
 
 export default class UserController {
   public async getUserDetails(req : Request, res : Response) {
@@ -26,9 +27,13 @@ export default class UserController {
 
   public async updateUserDetails(req : Request, res : Response) {
     const userId : string = String(RequestContextHelper.getContext().userId);
-    const { name } = req.body;
-    const { phoneNumber } = req.body;
-    const { cityId } = req.body;
+    const { name, phoneNumber, cityId } = req.body;
+    const updateUserRequestPayload =
+    await new UpdateUserRequestPayload().validateAndExtract(name, phoneNumber, cityId);
+    if (updateUserRequestPayload) {
+      res.status(400).send(updateUserRequestPayload);
+      return;
+    }
     const userServiceInstance = new UserService();
     const userModel =
     await userServiceInstance.updateUserDetails(userId, name, phoneNumber, cityId);

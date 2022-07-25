@@ -1,16 +1,21 @@
 import { Request, Response } from 'express';
 import AccountService from '../services/account.service';
 import AccessTokenResponsePayload from './payloads/access-token-response.payload';
+import SignupRequestPayload from './payloads/request/signup-request.payload';
+import LoginRequestPayload from './payloads/request/login-request.payload';
 
 export default class AccountController {
   public async signUpUserUsingEmailAndPassword(req : Request, res : Response) {
-    const nameUrl : String = req.body.name;
-    const emailUrl : String = req.body.email;
-    const passwordUrl : String = req.body.password;
-
+    const { name, email, password } = req.body;
+    const signupRequestPayload:any =
+    await new SignupRequestPayload().validateAndExtract(name, email, password);
+    if (signupRequestPayload) {
+      res.status(400).send(signupRequestPayload);
+      return;
+    }
     const accountServiceInstance : AccountService = new AccountService();
     const accessToken : String =
-    await accountServiceInstance.signUpUserUsingEmailAndPassword(nameUrl, emailUrl, passwordUrl);
+    await accountServiceInstance.signUpUserUsingEmailAndPassword(name, email, password);
 
     if (accessToken === '') {
       res.status(400).send('User with this email already exists.');
@@ -22,12 +27,17 @@ export default class AccountController {
   }
 
   public async loginUsingEmailAndPassword(req: Request, res: Response) {
-    const emailUrl : String = req.body.email;
-    const passwordUrl : String = req.body.password;
+    const { email, password } = req.body;
+    const loginRequestPayload: any =
+    await new LoginRequestPayload().validateAndExtract(email, password);
+    if (loginRequestPayload) {
+      res.status(400).send(loginRequestPayload);
+      return;
+    }
 
     const accountServiceInstance : AccountService = new AccountService();
     const accessToken : String =
-    await accountServiceInstance.loginUserUsingEmailAndPassword(emailUrl, passwordUrl);
+    await accountServiceInstance.loginUserUsingEmailAndPassword(email, password);
     if (accessToken === '') {
       res.status(400).send('Email address or password incorrect');
     } else {

@@ -4,10 +4,16 @@ import TheatreResponsePayload from './payloads/theatre-response.payload';
 import TheatreService from '../services/theatre.service';
 import ShowModel from '../common/models/show.model';
 import UpcomingMovieShowInTheatreResponsePayload from './payloads/upcoming-movie-show-in-theatre-response.payload.ts';
+import IdRequestPayload from './payloads/request/id-request.payload';
 
 export default class TheatreController {
   public async getTheatresByCityId(req: Request, res: Response) {
     const { cityId } = req.query;
+    const idRequestPayload = await new IdRequestPayload().validateAndExtract(String(cityId));
+    if (idRequestPayload) {
+      res.status(400).send(idRequestPayload);
+      return;
+    }
     const theatreService : TheatreService = new TheatreService();
     const theatreList: TheatreModel[] = await theatreService.getTheatresByCityId(String(cityId));
     const result: TheatreResponsePayload[] = [];
@@ -23,6 +29,16 @@ export default class TheatreController {
   public async getUpcomingMovieShowsByTheatreAndMovieId(req : Request, res: Response) {
     const theatreIdUrl : any = req.params.theatresId;
     const movieIdUrl : any = req.query.movieId;
+    let idRequestPayload = await new IdRequestPayload().validateAndExtract(String(theatreIdUrl));
+    if (idRequestPayload) {
+      res.status(400).send(idRequestPayload);
+      return;
+    }
+    idRequestPayload = await new IdRequestPayload().validateAndExtract(String(movieIdUrl));
+    if (idRequestPayload) {
+      res.status(400).send(idRequestPayload);
+      return;
+    }
 
     const theatreServiceInstance : TheatreService = new TheatreService();
     const showList: ShowModel[] =
