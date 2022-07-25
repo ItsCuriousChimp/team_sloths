@@ -23,7 +23,7 @@ app.get('/movies', new MovieController().getMovieByCityId);
 
 app.get('/theatres/:theatreId/movies', new MovieController().getMoviesByTheatreId);
 
-app.get('/theatres/:theatresId/shows', new TheatreController().getUpcomingMovieShowsByTheatreAndMovieId);
+app.get('/theatres/:theatreId/shows', new TheatreController().getUpcomingMovieShowsByTheatreAndMovieId);
 
 app.get('/shows', new BookedSeatController().getBookedSeatsByMovieId);
 

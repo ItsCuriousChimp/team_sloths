@@ -26,13 +26,13 @@ export default class AccountRepository {
   }
 
   public async createAccountWithoutUserId(
-    username : String,
-    passwordHash : String,
-  ) : Promise<String> {
+    username : string,
+    passwordHash : string,
+  ) : Promise<string> {
     const account = await prisma.account.create({
       data: {
-        username: String(username),
-        passwordHash: String(passwordHash),
+        username,
+        passwordHash,
       },
     });
 

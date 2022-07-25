@@ -1,15 +1,26 @@
+/* eslint-disable consistent-return */
 import { Request, Response } from 'express';
 import TheatreModel from '../common/models/theatre.model';
-import TheatreResponsePayload from './payloads/theatre-response.payload';
+import TheatreResponsePayload from './payloads/response-payload/theatre-response.payload';
 import TheatreService from '../services/theatre.service';
 import ShowModel from '../common/models/show.model';
-import UpcomingMovieShowInTheatreResponsePayload from './payloads/upcoming-movie-show-in-theatre-response.payload.ts';
+import UpcomingMovieShowInTheatreResponsePayload from './payloads/response-payload/upcoming-movie-show-in-theatre-response.payload.ts';
+import IdRequestPayload from './payloads/request-payload/id-request.payload';
 
 export default class TheatreController {
   public async getTheatresByCityId(req: Request, res: Response) {
-    const { cityId } = req.query;
+    const cityIdRequestPayload : IdRequestPayload =
+    new IdRequestPayload(String(req.query.cityId));
+
+    try {
+      await cityIdRequestPayload.validate().validateAsync({ id: String(req.query.cityId) });
+    } catch (err : any) {
+      return res.status(400).send({ error: err.details[0].message });
+    }
+
     const theatreService : TheatreService = new TheatreService();
-    const theatreList: TheatreModel[] = await theatreService.getTheatresByCityId(String(cityId));
+    const theatreList: TheatreModel[] =
+    await theatreService.getTheatresByCityId(cityIdRequestPayload.id);
     const result: TheatreResponsePayload[] = [];
     for (let i = 0; i < theatreList.length; i += 1) {
       const payload: TheatreResponsePayload = new TheatreResponsePayload();
@@ -21,12 +32,29 @@ export default class TheatreController {
   }
 
   public async getUpcomingMovieShowsByTheatreAndMovieId(req : Request, res: Response) {
-    const theatreIdUrl : any = req.params.theatresId;
-    const movieIdUrl : any = req.query.movieId;
+    const theatreIdRequestPayload : IdRequestPayload =
+    new IdRequestPayload(String(req.params.theatreId));
+
+    try {
+      await theatreIdRequestPayload.validate().validateAsync({ id: String(req.params.theatreId) });
+    } catch (err : any) {
+      return res.status(400).send({ error: err.details[0].message });
+    }
+    const movieIdRequestPayload : IdRequestPayload =
+    new IdRequestPayload(String(req.query.movieId));
+
+    try {
+      await movieIdRequestPayload.validate().validateAsync({ id: String(req.query.movieId) });
+    } catch (err : any) {
+      return res.status(400).send({ error: err.details[0].message });
+    }
 
     const theatreServiceInstance : TheatreService = new TheatreService();
     const showList: ShowModel[] =
-    await theatreServiceInstance.getUpcomingMovieShowsByTheatreAndMovieId(theatreIdUrl, movieIdUrl);
+    await theatreServiceInstance.getUpcomingMovieShowsByTheatreAndMovieId(
+      theatreIdRequestPayload.id,
+      movieIdRequestPayload.id,
+    );
 
     const result : UpcomingMovieShowInTheatreResponsePayload[] = [];
 

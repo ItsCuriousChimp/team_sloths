@@ -7,10 +7,10 @@ import UserRepository from '../repositories/user.repository';
 
 export default class AccountService {
   public async signUpUserUsingEmailAndPassword(
-    name : String,
-    email : String,
-    password : String,
-  ) : Promise<String> {
+    name : string,
+    email : string,
+    password : string,
+  ) : Promise<string> {
     const accountRepositoryInstance : AccountRepository = new AccountRepository();
 
     const accountByUsername : AccountModel | null =
@@ -22,10 +22,10 @@ export default class AccountService {
     }
 
     // Hash the password string
-    const passwordHash : String = await new HashHelper().hashString(password);
+    const passwordHash : string = await new HashHelper().hashString(password);
 
     // Create account without user id
-    const accountId : String =
+    const accountId : string =
     await accountRepositoryInstance.createAccountWithoutUserId(email, passwordHash);
 
     // Create user
@@ -43,13 +43,13 @@ export default class AccountService {
     );
 
     // Create jwt token from AccessTokenModel
-    const accessToken : String = new JWTHelper().generateJWTToken(accessTokenModel);
+    const accessToken : string = new JWTHelper().generateJWTToken(accessTokenModel);
 
     // return AccessTokenModel
     return accessToken;
   }
 
-  public async loginUserUsingEmailAndPassword(email : String, password: String) {
+  public async loginUserUsingEmailAndPassword(email : string, password: string) {
     const accountRepositoryInstance : AccountRepository = new AccountRepository();
 
     const accountByUsername : AccountModel | null =
@@ -76,7 +76,7 @@ export default class AccountService {
     );
 
     // Create jwt token from AccessTokenModel
-    const accessToken : String = new JWTHelper().generateJWTToken(accessTokenModel);
+    const accessToken : string = new JWTHelper().generateJWTToken(accessTokenModel);
 
     // return AccessTokenModel
     return accessToken;
