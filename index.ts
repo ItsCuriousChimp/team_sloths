@@ -1,23 +1,23 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import heartbeat from './src/routes/heartbeat.route';
-import movies from './src/routes/movie.route';
-import users from './src/routes/user.route';
-import accounts from './src/routes/account.route';
-import theatres from './src/routes/theatre.route';
-import shows from './src/routes/show.route';
+import heartbeatRoute from './src/routes/heartbeat.route';
+import theatreRoute from './src/routes/theatre.route';
+import movieRoute from './src/routes/movie.route';
+import accountRoute from './src/routes/account.route';
+import userRoute from './src/routes/user.route';
+import showRoute from './src/routes/show.route';
 
 const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/heartbeat', heartbeat);
-app.use('/theatres', theatres);
-app.use('/movies', movies);
-app.use('/accounts', accounts);
-app.use('/user', users);
-app.use('/shows', shows);
+app.use('/heartbeat', heartbeatRoute);
+app.use('/theatres', theatreRoute);
+app.use('/movies', movieRoute);
+app.use('/accounts', accountRoute);
+app.use('/user', userRoute);
+app.use('/shows', showRoute);
 
 app.listen(3000, () => {
   // eslint-disable-next-line no-console
