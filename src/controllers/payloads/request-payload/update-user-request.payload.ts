@@ -12,7 +12,7 @@ export default class UpdateUserRequestPayload {
   }
 
   public validateAndExtract() {
-    const schema = Joi.object().keys({
+    const schema = Joi.object({
       name: Joi.string()
         .min(3)
         .max(128)
@@ -25,7 +25,6 @@ export default class UpdateUserRequestPayload {
         .min(36)
         .max(36)
         .optional(),
-
     });
     const res =
     schema.validate({ name: this.name, phoneNumber: this.phoneNumber, cityId: this.cityId });

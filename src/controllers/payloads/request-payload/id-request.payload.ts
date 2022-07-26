@@ -8,7 +8,7 @@ export default class IdRequestPayload {
   }
 
   public validateAndExtract() {
-    const schema = Joi.object().keys({
+    const schema = Joi.object({
       id: Joi.string()
         .length(36)
         .required(),

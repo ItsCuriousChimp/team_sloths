@@ -12,7 +12,7 @@ export default class SignupRequestPayload {
   }
 
   public validateAndExtract() {
-    const schema = Joi.object().keys({
+    const schema = Joi.object({
       name: Joi.string()
         .min(3)
         .max(128)

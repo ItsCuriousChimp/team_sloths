@@ -10,7 +10,7 @@ export default class LoginRequestPayload {
   }
 
   public validateAndExtract() {
-    const schema = Joi.object().keys({
+    const schema = Joi.object({
       email: Joi.string()
         .min(6)
         .max(64)
