@@ -1,43 +1,23 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import bodyParser from 'body-parser';
-import TheatreController from './src/controllers/theatre.controller';
-import HeartbeatController from './src/controllers/heartbeat.controller';
-import MovieController from './src/controllers/movie.controller';
-import BookedSeatController from './src/controllers/booked-seat.controller';
-import AccountController from './src/controllers/account.controller';
-import AuthMiddleware from './src/middleware/auth.middleware';
-import UserController from './src/controllers/user.controller';
+import heartbeat from './src/routes/heartbeat.route';
+import movies from './src/routes/movie.route';
+import users from './src/routes/user.route';
+import accounts from './src/routes/account.route';
+import theatres from './src/routes/theatre.route';
+import shows from './src/routes/show.route';
 
 const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/heartbeat', (req: Request, res: Response) => {
-  res.send(new HeartbeatController().getHeartbeat());
-});
-
-app.get('/theatres', new TheatreController().getTheatresByCityId);
-
-app.get('/movies', new MovieController().getMovieByCityId);
-
-app.get('/theatres/:theatreId/movies', new MovieController().getMoviesByTheatreId);
-
-app.get('/theatres/:theatresId/shows', new TheatreController().getUpcomingMovieShowsByTheatreAndMovieId);
-
-app.get('/shows', new BookedSeatController().getBookedSeatsByMovieId);
-
-app.post('/accounts/signup', new AccountController().signUpUserUsingEmailAndPassword);
-
-app.get('/accounts/login', new AccountController().loginUsingEmailAndPassword);
-
-app.get('/verify', new AuthMiddleware().verifyToken, (req: Request, res: Response) => {
-  res.status(200).send('Welcome 🙌 ');
-});
-
-app.get('/user/profile', new AuthMiddleware().verifyToken, new UserController().getUserDetails);
-
-app.put('/user/profile', new AuthMiddleware().verifyToken, new UserController().updateUserDetails);
+app.use('/heartbeat', heartbeat);
+app.use('/theatres', theatres);
+app.use('/movies', movies);
+app.use('/accounts', accounts);
+app.use('/user', users);
+app.use('/shows', shows);
 
 app.listen(3000, () => {
   // eslint-disable-next-line no-console
