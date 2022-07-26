@@ -3,6 +3,6 @@ import MovieController from '../controllers/movie.controller';
 
 const router = express.Router();
 
-router.get('/movies', new MovieController().getMovieByCityId);
+router.get('/', new MovieController().getMovieByCityId);
 
 export default router;
