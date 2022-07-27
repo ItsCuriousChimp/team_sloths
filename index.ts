@@ -16,7 +16,7 @@ app.use('/heartbeat', heartbeatRoute);
 app.use('/theatres', theatreRoute);
 app.use('/movies', movieRoute);
 app.use('/accounts', accountRoute);
-app.use('/user', userRoute);
+app.use('/users', userRoute);
 app.use('/shows', showRoute);
 
 app.listen(3000, () => {
