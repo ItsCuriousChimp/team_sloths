@@ -98,6 +98,11 @@
 
     /* Completeness */
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
-    "skipLibCheck": true /* Skip type checking all .d.ts files. */
+    "skipLibCheck": true,/* Skip type checking all .d.ts files. */
+    
+    // "skipLibCheck": true, // if your TS is lower than 4.0
+    "experimentalDecorators": true, // for @automapper/classes
+    "emitDecoratorMetadata": true // for @automapper/classes
+
   }
 }

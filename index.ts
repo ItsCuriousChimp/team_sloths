@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/heartbeat', heartbeatRouter);
 app.use('/accounts', accountsRouter);
-app.use('/user', usersRouter);
+app.use('/users', usersRouter);
 app.use('/theatres', theatresRouter);
 app.use('/movies', moviesRouter);
 

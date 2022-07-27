@@ -7,7 +7,7 @@ const router = express.Router();
 
 const userController = new UserController();
 
-router.get('/profile', new AuthMiddleware().verifyToken, userController.getUserDetails);
-router.put('/profile', new AuthMiddleware().verifyToken, userController.updateUserDetails);
+router.get('/me', new AuthMiddleware().verifyToken, userController.getUserDetails);
+router.put('/me', new AuthMiddleware().verifyToken, userController.updateUserDetails);
 
 export default router;
