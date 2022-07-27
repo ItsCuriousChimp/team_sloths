@@ -6,11 +6,15 @@ import movieRoute from './src/routes/movie.route';
 import accountRoute from './src/routes/account.route';
 import userRoute from './src/routes/user.route';
 import showRoute from './src/routes/show.route';
+import AutomapperPayloadConfig from './src/controllers/payloads/automapper.config';
+import mapper from './src/common/mapper';
 
 const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+new AutomapperPayloadConfig().init(mapper);
 
 app.use('/heartbeat', heartbeatRoute);
 app.use('/theatres', theatreRoute);

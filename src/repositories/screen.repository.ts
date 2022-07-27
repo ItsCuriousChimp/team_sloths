@@ -6,8 +6,8 @@ const prisma = new PrismaClient();
 
 export default class ScreenRepository {
   public async getScreensWithItsSeatsByTheatreIdAndMovieId(
-    theatreIdUrl : any,
-    movieIdUrl : any,
+    theatreIdUrl : string,
+    movieIdUrl : string,
   ) : Promise<ScreenModel[]> {
     const screens : any = await prisma.screen.findMany({
       where: {

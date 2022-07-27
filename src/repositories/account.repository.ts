@@ -1,15 +1,17 @@
-import { PrismaClient } from '@prisma/client';
+import { account, PrismaClient } from '@prisma/client';
+// import { createMap, forMember, mapFrom } from '@automapper/core';
+// import { mapper } from '../common/mapper/mapper';
 import AccountModel from '../common/models/account.model';
 
 const prisma: PrismaClient = new PrismaClient();
 
 export default class AccountRepository {
   public async getAccountByUsername(
-    userName : String,
+    username : string,
   ) : Promise<AccountModel | null> {
-    const record = await prisma.account.findFirst({
+    const record : account | null = await prisma.account.findFirst({
       where: {
-        username: String(userName),
+        username,
       },
     });
 
@@ -26,38 +28,38 @@ export default class AccountRepository {
   }
 
   public async createAccountWithoutUserId(
-    username : String,
-    passwordHash : String,
-  ) : Promise<String> {
-    const account = await prisma.account.create({
+    username : string,
+    passwordHash : string,
+  ) : Promise<string> {
+    const record = await prisma.account.create({
       data: {
-        username: String(username),
-        passwordHash: String(passwordHash),
+        username,
+        passwordHash,
       },
     });
 
-    return account.id;
+    return record.id;
   }
 
   public async updateUserIdInAccount(
-    userId: String,
-    accountId: String,
+    userId: string,
+    accountId: string,
   ) : Promise<AccountModel> {
-    const account = await prisma.account.update({
+    const record = await prisma.account.update({
       where: {
-        id: String(accountId),
+        id: accountId,
       },
       data: {
-        userId: String(userId),
+        userId,
       },
     });
 
     const accountModel = new AccountModel(
-      account.id,
-      account.username,
-      account.passwordHash,
+      record.id,
+      record.username,
+      record.passwordHash,
     );
-    accountModel.userId = String(account.userId);
+    accountModel.userId = String(record.userId);
 
     return accountModel;
   }

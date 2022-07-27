@@ -1,8 +1,8 @@
 export default class AccessTokenModel {
-  userId : String;
+  userId! : string;
 
   constructor(
-    userId : String,
+    userId : string,
   ) {
     this.userId = userId;
   }
