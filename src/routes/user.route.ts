@@ -5,13 +5,13 @@ import AuthMiddleware from '../middleware/auth.middleware';
 const router = express.Router();
 
 router.get(
-  '/profile',
+  '/me',
   new AuthMiddleware().verifyToken,
   new UsersController().getUserDetails,
 );
 
 router.put(
-  '/profile',
+  '/me',
   new AuthMiddleware().verifyToken,
   new UsersController().updateUserDetails,
 );
