@@ -1,16 +1,22 @@
+import { AutoMap } from '@automapper/classes';
 import SeatModel from './seat.model';
 import ShowModel from './show.model';
 
 export default class ScreenModel {
-  id : String;
-  theatreId : String;
-  screenNumber : Number;
-  show : ShowModel[] | undefined;
-  seat : SeatModel[] | undefined;
+  @AutoMap()
+    id : string;
+  @AutoMap()
+    theatreId : string;
+  @AutoMap()
+    screenNumber : Number;
+  @AutoMap()
+    show : ShowModel[] | undefined;
+  @AutoMap()
+    seat : SeatModel[] | undefined;
 
   constructor(
-    id : String,
-    theatreId : String,
+    id : string,
+    theatreId : string,
     screenNumber : Number,
   ) {
     this.id = id;

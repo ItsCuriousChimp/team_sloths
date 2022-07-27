@@ -1,5 +1,5 @@
 export default class MovieResponsePayload {
-  id: String = '';
-  name: String = '';
-  language: String = '';
+  id: string = '';
+  name: string = '';
+  language: string = '';
 }

@@ -1,4 +1,4 @@
 export default class TheatreResponsePayload {
-  id: String = '';
-  name: String = '';
+  id: string = '';
+  name: string = '';
 }

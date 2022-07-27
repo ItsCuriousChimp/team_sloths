@@ -6,9 +6,9 @@ import DateTimeHelper from '../common/helpers/datetime.helper';
 const prisma: PrismaClient = new PrismaClient();
 
 export default class TheatreRepository {
-  public async getTheatresByCityId(cityId: String): Promise<TheatreModel[]> {
+  public async getTheatresByCityId(cityId: string): Promise<TheatreModel[]> {
     const theatreList: any = await prisma.theatre.findMany({
-      where: { cityId: String(cityId) },
+      where: { cityId },
     });
     const theatreModelList: TheatreModel[] = [];
     for (let i = 0; i < theatreList.length; i += 1) {

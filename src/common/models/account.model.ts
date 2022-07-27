@@ -1,13 +1,19 @@
+import { AutoMap } from '@automapper/classes';
+
 export default class AccountModel {
-  id : String;
-  userId : String | undefined;
-  username : String;
-  passwordHash : String;
+  @AutoMap()
+    id : string;
+  @AutoMap()
+    userId : string | undefined;
+  @AutoMap()
+    username : string;
+  @AutoMap()
+    passwordHash : string;
 
   constructor(
-    id : String,
-    username : String,
-    passwordHash : String,
+    id : string,
+    username : string,
+    passwordHash : string,
   ) {
     this.id = id;
     this.username = username;

@@ -1,16 +1,25 @@
+import { AutoMap } from '@automapper/classes';
+
 export default class UserModel {
-  id : String;
-  name : String;
-  email : String;
-  loggedInAtUtc : Date;
-  cityId : String | undefined;
-  phoneNumber : String | undefined;
-  city : String |undefined;
+  @AutoMap()
+    id : string;
+  @AutoMap()
+    name : string;
+  @AutoMap()
+    email : string;
+  @AutoMap()
+    loggedInAtUtc : Date;
+  @AutoMap()
+    cityId : string | undefined;
+  @AutoMap()
+    phoneNumber : string | undefined;
+  @AutoMap()
+    city : string |undefined;
 
   constructor(
-    id : String,
-    name: String,
-    email: String,
+    id : string,
+    name: string,
+    email: string,
     loggedInAtUtc : Date,
   ) {
     this.id = id;

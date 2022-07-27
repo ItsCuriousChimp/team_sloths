@@ -4,14 +4,14 @@ import TheatreRepository from '../repositories/theatre.repository';
 import ScreenRepository from '../repositories/screen.repository';
 
 export default class TheatreService {
-  public async getTheatresByCityId(cityId: String): Promise<TheatreModel[]> {
+  public async getTheatresByCityId(cityId: string): Promise<TheatreModel[]> {
     const theatres = await new TheatreRepository().getTheatresByCityId(cityId);
     return theatres;
   }
 
   public async getUpcomingMovieShowsByTheatreAndMovieId(
-    theatreId : String,
-    movieId : String,
+    theatreId : string,
+    movieId : string,
   ) : Promise<ShowModel[]> {
     const theatreRepositoryInstance = new TheatreRepository();
     const screenRepositoryInstance = new ScreenRepository();
@@ -24,7 +24,7 @@ export default class TheatreService {
 
     /* ******************** Set seat status property ******************** */
 
-    const totalSeatsMap = new Map<String, Number>();
+    const totalSeatsMap = new Map<string, Number>();
     //  Fill values in total Seats Map
     seatsInScreensForTheatreAndMovie.forEach((eachScreen : any) => {
       if (!totalSeatsMap.has(eachScreen.screenId)) {
@@ -33,7 +33,7 @@ export default class TheatreService {
     });
 
     // Map for booked seats according to each show
-    const bookedSeatsMap = new Map<String, Number>();
+    const bookedSeatsMap = new Map<string, Number>();
     // Fill values in the bookedSeatsMap
     showsWithBookedSeats.forEach((eachShow : any) => {
       if (!bookedSeatsMap.has(eachShow.id)) {
