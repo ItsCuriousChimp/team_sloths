@@ -4,9 +4,9 @@ import MovieModel from '../common/models/movie.model';
 const prisma: PrismaClient = new PrismaClient();
 
 export default class MovieRepository {
-  public async getMoviesByCityId(cityId: string): Promise<MovieModel[]> {
+  public async getMoviesByCityId(cityId: String): Promise<MovieModel[]> {
     const cityList: any = await prisma.city.findMany({
-      where: { id: cityId },
+      where: { id: String(cityId) },
       include: {
         theatre: {
           include: {
@@ -41,15 +41,19 @@ export default class MovieRepository {
 
     const movieModelList: MovieModel[] = [];
     for (let i = 0; i < uniqueMovies.length; i += 1) {
-      movieModelList.push(this.makeMovieModel(uniqueMovies[i]));
+      movieModelList.push(new MovieModel(
+        uniqueMovies[i].id,
+        uniqueMovies[i].name,
+        uniqueMovies[i].language,
+      ));
     }
     return movieModelList;
   }
 
-  public async getMoviesByTheatreId(theatreId: string): Promise<MovieModel[]> {
+  public async getMoviesByTheatreId(theatreId: String): Promise<MovieModel[]> {
     const theatre = await prisma.theatre.findUnique({
       where: {
-        id: theatreId,
+        id: String(theatreId),
       },
       include: {
         screen: {
@@ -63,7 +67,7 @@ export default class MovieRepository {
         },
       },
     });
-    const movies = new Map<string, movie>();
+    const movies = new Map<String, movie>();
     const screens = theatre?.screen;
     if (screens) {
       for (let i = 0; i < screens.length; i += 1) {
@@ -76,17 +80,9 @@ export default class MovieRepository {
     }
     const movieModelList: MovieModel[] = [];
     movies.forEach((currentMovie) => {
-      movieModelList.push(this.makeMovieModel(currentMovie));
+      const { id, name, language } = currentMovie;
+      movieModelList.push(new MovieModel(id, name, language));
     });
     return movieModelList;
-  }
-
-  private makeMovieModel(movieData : any) : MovieModel {
-    const movieModel : MovieModel = new MovieModel(
-      movieData.id,
-      movieData.name,
-      movieData.language,
-    );
-    return movieModel;
   }
 }

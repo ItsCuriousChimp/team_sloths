@@ -1,11 +1,7 @@
-import { AutoMap } from '@automapper/classes';
-
 export default class TheatreModel {
-  @AutoMap()
-    id!: string;
-  @AutoMap()
-    name!: string;
-  constructor(id: string, name: string) {
+  id: String;
+  name: String;
+  constructor(id: String, name: String) {
     this.id = id;
     this.name = name;
   }

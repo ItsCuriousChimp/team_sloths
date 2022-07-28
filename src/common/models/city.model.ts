@@ -1,14 +1,10 @@
-import { AutoMap } from '@automapper/classes';
-
 export default class CityModel {
-  @AutoMap()
-    id! : string;
-  @AutoMap()
-    name! : string;
+  id : String;
+  name : String;
 
   constructor(
-    id: string,
-    name: string,
+    id: String,
+    name: String,
   ) {
     this.id = id;
     this.name = name;

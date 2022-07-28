@@ -1,68 +1,64 @@
-import { account, PrismaClient } from '@prisma/client';
-// import { createMap, forMember, mapFrom } from '@automapper/core';
-// import { mapper } from '../common/mapper/mapper';
+import { PrismaClient } from '@prisma/client';
 import AccountModel from '../common/models/account.model';
 
 const prisma: PrismaClient = new PrismaClient();
 
 export default class AccountRepository {
   public async getAccountByUsername(
-    username : string,
+    userName : String,
   ) : Promise<AccountModel | null> {
-    const record : account | null = await prisma.account.findFirst({
+    const record = await prisma.account.findFirst({
       where: {
-        username,
+        username: String(userName),
       },
     });
 
     if (record === null) {
       return null;
     }
-    const accountModel : AccountModel = this.makeAccountModel(record);
-    return accountModel;
+    const result = new AccountModel(
+      record.id,
+      record.username,
+      record.passwordHash,
+    );
+    result.userId = String(record.userId);
+    return result;
   }
 
   public async createAccountWithoutUserId(
-    username : string,
-    passwordHash : string,
-  ) : Promise<string> {
-    const record = await prisma.account.create({
+    username : String,
+    passwordHash : String,
+  ) : Promise<String> {
+    const account = await prisma.account.create({
       data: {
-        username,
-        passwordHash,
+        username: String(username),
+        passwordHash: String(passwordHash),
       },
     });
 
-    return record.id;
+    return account.id;
   }
 
   public async updateUserIdInAccount(
-    userId: string,
-    accountId: string,
+    userId: String,
+    accountId: String,
   ) : Promise<AccountModel> {
-    const record = await prisma.account.update({
+    const account = await prisma.account.update({
       where: {
-        id: accountId,
+        id: String(accountId),
       },
       data: {
-        userId,
+        userId: String(userId),
       },
     });
 
-    const accountModel : AccountModel = this.makeAccountModel(record);
-
-    return accountModel;
-  }
-
-  private makeAccountModel(accountData :any) : AccountModel {
-    const accountModel : AccountModel = new AccountModel(
-      accountData.id,
-      accountData.username,
-      accountData.passwordHash,
+    const accountModel = new AccountModel(
+      account.id,
+      account.username,
+      account.passwordHash,
     );
-    if (accountData.userId) {
-      accountModel.userId = accountData.userId;
-    }
+    accountModel.userId = String(account.userId);
+
     return accountModel;
   }
 }

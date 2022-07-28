@@ -2,29 +2,41 @@ import { Request, Response } from 'express';
 import RequestContextHelper from '../common/helpers/request-context.helper';
 import UserService from '../services/user.service';
 import UserResponsePayload from './payloads/user-response.payload';
-import mapper from '../common/mapper';
-import UserModel from '../common/models/user.model';
+import UpdateUserRequestPayload from './payloads/request-payload/updateUser-request.payload';
 
 export default class UserController {
   public async getUserDetails(req : Request, res : Response) {
-    const { userId } = RequestContextHelper.getContext();
+    const userId : String = String(RequestContextHelper.getContext().userId);
 
     const userServiceInstance = new UserService();
-    const userModel : UserModel | null = await userServiceInstance.getUserUsingUserId(userId);
+    const userModel = await userServiceInstance.getUserUsingUserId(userId);
 
     if (!userModel) {
       res.status(400).send('User with this user id does not exist.');
     } else {
-      const userResponsePayloadInstance : UserResponsePayload =
-      mapper.map(userModel, UserModel, UserResponsePayload);
-
-      res.send(userResponsePayloadInstance);
+      const payload = new UserResponsePayload();
+      payload.id = userModel.id;
+      payload.name = userModel.name;
+      payload.phoneNumber = userModel.phoneNumber;
+      payload.email = userModel.email;
+      payload.cityId = userModel.cityId;
+      payload.city = userModel.city;
+      res.send(payload);
     }
   }
 
   public async updateUserDetails(req : Request, res : Response) {
-    const { userId } = RequestContextHelper.getContext();
-    const { name, phoneNumber, cityId } = req.body;
+    const userId : string = String(RequestContextHelper.getContext().userId);
+    const updateUserRequestPayload = new UpdateUserRequestPayload();
+    const validate: any = updateUserRequestPayload.extractAndValidate(req.body);
+
+    if (validate.error) {
+      res.status(401).send(validate.error?.message);
+      return;
+    }
+
+    const { name, phoneNumber, cityId } = validate.value;
+
     const userServiceInstance = new UserService();
     const userModel =
     await userServiceInstance.updateUserDetails(userId, name, phoneNumber, cityId);
@@ -32,10 +44,14 @@ export default class UserController {
     if (!userModel) {
       res.status(400).send('There was a problem with updating the details.');
     } else {
-      const userResponsePayloadInstance : UserResponsePayload =
-      mapper.map(userModel, UserModel, UserResponsePayload);
-
-      res.send(userResponsePayloadInstance);
+      const payload = new UserResponsePayload();
+      payload.id = userModel.id;
+      payload.name = userModel.name;
+      payload.phoneNumber = userModel.phoneNumber;
+      payload.email = userModel.email;
+      payload.cityId = userModel.cityId;
+      payload.city = userModel.city;
+      res.send(payload);
     }
   }
 }

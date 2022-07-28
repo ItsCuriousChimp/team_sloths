@@ -1,16 +1,8 @@
-import { AutoMap } from '@automapper/classes';
-
 export default class UserResponsePayload {
-  @AutoMap()
-    id!: string;
-  @AutoMap()
-    name! : string;
-  @AutoMap()
-    email!: string;
-  @AutoMap()
-    phoneNumber! : string;
-  @AutoMap()
-    cityId! : string;
-  @AutoMap()
-    city! : string;
+  id: String |undefined;
+  name : String | undefined;
+  email: String | undefined;
+  phoneNumber : String | undefined;
+  cityId : String | undefined;
+  city : String | undefined;
 }

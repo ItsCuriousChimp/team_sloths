@@ -1,4 +1,4 @@
-import { PrismaClient, theatre } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import TheatreModel from '../common/models/theatre.model';
 import ShowModel from '../common/models/show.model';
 import DateTimeHelper from '../common/helpers/datetime.helper';
@@ -6,13 +6,13 @@ import DateTimeHelper from '../common/helpers/datetime.helper';
 const prisma: PrismaClient = new PrismaClient();
 
 export default class TheatreRepository {
-  public async getTheatresByCityId(cityId: string): Promise<TheatreModel[]> {
-    const theatreList: theatre[] = await prisma.theatre.findMany({
-      where: { cityId },
+  public async getTheatresByCityId(cityId: String): Promise<TheatreModel[]> {
+    const theatreList: any = await prisma.theatre.findMany({
+      where: { cityId: String(cityId) },
     });
     const theatreModelList: TheatreModel[] = [];
     for (let i = 0; i < theatreList.length; i += 1) {
-      theatreModelList.push(this.makeTheatreModel(theatreList[i]));
+      theatreModelList.push(new TheatreModel(theatreList[i].id, theatreList[i].name));
     }
     return theatreModelList;
   }
@@ -41,29 +41,17 @@ export default class TheatreRepository {
     });
     const showsModelList: ShowModel[] = [];
     for (let i = 0; i < bookedSeats.length; i += 1) {
-      showsModelList.push(this.makeShowModel(bookedSeats[i]));
+      const showModel = new ShowModel(
+        bookedSeats[i].id,
+        bookedSeats[i].screenId,
+        bookedSeats[i].movieId,
+        bookedSeats[i].showStartTimeInUtc,
+        bookedSeats[i].showEndTimeInUtc,
+        bookedSeats[i].availableUntilUtc,
+      );
+      showModel.bookedSeat = bookedSeats[i].bookedSeat;
+      showsModelList.push(showModel);
     }
     return showsModelList;
-  }
-
-  private makeShowModel(showData : any) : ShowModel {
-    const showModel : ShowModel = new ShowModel(
-      showData.id,
-      showData.screenId,
-      showData.movieId,
-      showData.showStartTimeInUtc,
-      showData.showEndTimeInUtc,
-      showData.availableUntilUtc,
-    );
-    if (showData.bookedSeat) { showModel.bookedSeat = showData.bookedSeat; }
-    return showData;
-  }
-
-  private makeTheatreModel(theatreData : any) : TheatreModel {
-    const theatreModel : TheatreModel = new TheatreModel(
-      theatreData.id,
-      theatreData.name,
-    );
-    return theatreModel;
   }
 }

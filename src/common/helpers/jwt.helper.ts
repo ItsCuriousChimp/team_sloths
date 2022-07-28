@@ -3,7 +3,7 @@ import AccessTokenModel from '../models/access-token.model';
 const jwt = require('jsonwebtoken');
 
 export default class JWTHelper {
-  public generateJWTToken(accessTokenModel : AccessTokenModel) : string {
+  public generateJWTToken(accessTokenModel : AccessTokenModel) : String {
     return jwt.sign(
       { accessTokenModel },
       process.env.ACCESS_TOKEN_SECRET,

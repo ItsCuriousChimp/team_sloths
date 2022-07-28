@@ -1,22 +1,11 @@
-import { AutoMap } from '@automapper/classes';
-
 export default class UpcomingMovieShowInTheatreResponsePayload {
-  @AutoMap()
-    id! : string;
-  @AutoMap()
-    screenId! : string;
-  @AutoMap()
-    movieId! : string;
-  @AutoMap()
-    showStartTimeInUtc! : Date;
-  @AutoMap()
-    showEndTimeInUtc! : Date;
-  @AutoMap()
-    availableUntilUtc! : Date;
-  @AutoMap()
-    totalSeats! : Number;
-  @AutoMap()
-    availableSeats! : Number;
-  @AutoMap()
-    availabilityStatus! : string;
+  id : String | undefined;
+  screenId : String | undefined;
+  movieId : String | undefined;
+  showStartTimeInUtc : Date | undefined;
+  showEndTimeInUtc : Date | undefined;
+  availableUntilUtc : Date | undefined;
+  totalSeats : Number | undefined;
+  availableSeats : Number | undefined;
+  availabilityStatus : String | undefined;
 }
