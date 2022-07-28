@@ -38,7 +38,6 @@ export default class AccountController extends BaseController {
     try {
       loginRequestPayload = super.extractAndValidate(req.body, LoginRequestPayload);
     } catch (err : any) {
-      console.log(err);
       return res.status(400).send(err.message);
     }
 
