@@ -1,6 +1,6 @@
 export default class BookedSeatResponsePayload {
-  id : String | undefined;
-  seatId : String | undefined;
-  showId : String | undefined;
-  bookingId : String | undefined;
+  id! : string;
+  seatId! : string;
+  showId! : string;
+  bookingId! : string;
 }

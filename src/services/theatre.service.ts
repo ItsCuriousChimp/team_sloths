@@ -4,14 +4,14 @@ import TheatreRepository from '../repositories/theatre.repository';
 import ScreenRepository from '../repositories/screen.repository';
 
 export default class TheatreService {
-  public async getTheatresByCityId(cityId: String): Promise<TheatreModel[]> {
+  public async getTheatresByCityId(cityId: string): Promise<TheatreModel[]> {
     const theatres = await new TheatreRepository().getTheatresByCityId(cityId);
     return theatres;
   }
 
   public async getUpcomingMovieShowsByTheatreAndMovieId(
-    theatreId : String,
-    movieId : String,
+    theatreId : string,
+    movieId : string,
   ) : Promise<ShowModel[]> {
     const theatreRepositoryInstance = new TheatreRepository();
     const screenRepositoryInstance = new ScreenRepository();
@@ -19,7 +19,7 @@ export default class TheatreService {
     const seatsInScreensForTheatreAndMovie =
     await screenRepositoryInstance.getScreensWithItsSeatsByTheatreIdAndMovieId(theatreId, movieId);
 
-    const showsWithBookedSeats =
+    const showsWithBookedSeats : ShowModel[] =
     await theatreRepositoryInstance.getShowsAndBookedSeatByTheatreIdAndMovieId(theatreId, movieId);
 
     /* ******************** Set seat status property ******************** */
@@ -33,7 +33,7 @@ export default class TheatreService {
     });
 
     // Map for booked seats according to each show
-    const bookedSeatsMap = new Map<String, Number>();
+    const bookedSeatsMap = new Map<string, Number>();
     // Fill values in the bookedSeatsMap
     showsWithBookedSeats.forEach((eachShow : any) => {
       if (!bookedSeatsMap.has(eachShow.id)) {
@@ -47,7 +47,7 @@ export default class TheatreService {
     // Set status property in shows according to vacant seats
     for (let i : number = 0; i < showsWithBookedSeats.length; i += 1) {
       const totalNumberOfSeatsInScreen : any = totalSeatsMap.get(showsWithBookedSeats[i].screenId);
-      const totalNumberOfBookedSeatsForMovie :any = bookedSeatsMap.get(showsWithBookedSeats[i].id);
+      const totalNumberOfBookedSeatsForMovie : any = bookedSeatsMap.get(showsWithBookedSeats[i].id);
       const emptySeats : number = totalNumberOfSeatsInScreen - totalNumberOfBookedSeatsForMovie;
       showsWithBookedSeats[i].totalSeats = totalNumberOfSeatsInScreen;
       showsWithBookedSeats[i].availableSeats = emptySeats;
