@@ -5,15 +5,15 @@ import AccessTokenResponsePayload from './payloads/response-payload/access-token
 import mapper from '../common/mapper';
 import SignupRequestPayload from './payloads/request-payload/signup-request.payload';
 import LoginRequestPayload from './payloads/request-payload/login-request.payload';
-import ControllerBasePayload from './controller-base.controller';
+import BaseController from './base.controller';
 
-export default class AccountController extends ControllerBasePayload {
+export default class AccountController extends BaseController {
   public async signUpUserUsingEmailAndPassword(req : Request, res : Response) {
     let signupRequestPayload : SignupRequestPayload = new SignupRequestPayload();
     try {
       signupRequestPayload = super.extractAndValidate(req.body, SignupRequestPayload);
-    } catch (err) {
-      return res.status(400).send(err);
+    } catch (err : any) {
+      return res.status(400).send(err.message);
     }
 
     const accountServiceInstance : AccountService = new AccountService();
@@ -37,8 +37,9 @@ export default class AccountController extends ControllerBasePayload {
     let loginRequestPayload : LoginRequestPayload = new LoginRequestPayload();
     try {
       loginRequestPayload = super.extractAndValidate(req.body, LoginRequestPayload);
-    } catch (err) {
-      return res.status(400).send(err);
+    } catch (err : any) {
+      console.log(err);
+      return res.status(400).send(err.message);
     }
 
     const accountServiceInstance : AccountService = new AccountService();
