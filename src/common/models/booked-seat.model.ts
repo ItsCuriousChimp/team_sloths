@@ -2,13 +2,13 @@ import { AutoMap } from '@automapper/classes';
 
 export default class BookedSeatModel {
   @AutoMap()
-    id : string;
+    id! : string;
   @AutoMap()
-    seatId : string;
+    seatId! : string;
   @AutoMap()
-    showId : string;
+    showId! : string;
   @AutoMap()
-    bookingId : string;
+    bookingId! : string;
 
   constructor(
     id : string,
