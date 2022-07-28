@@ -2,15 +2,15 @@ import SeatModel from './seat.model';
 import ShowModel from './show.model';
 
 export default class ScreenModel {
-  id : String;
-  theatreId : String;
+  id : string;
+  theatreId : string;
   screenNumber : Number;
   show : ShowModel[] | undefined;
   seat : SeatModel[] | undefined;
 
   constructor(
-    id : String,
-    theatreId : String,
+    id : string,
+    theatreId : string,
     screenNumber : Number,
   ) {
     this.id = id;
