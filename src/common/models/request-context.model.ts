@@ -1,3 +1,6 @@
+import { AutoMap } from '@automapper/classes';
+
 export default class RequestContextModel {
-  userId : String | undefined;
+  @AutoMap()
+    userId : String | undefined;
 }

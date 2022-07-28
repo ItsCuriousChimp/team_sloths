@@ -1,4 +1,8 @@
+import { AutoMap } from '@automapper/classes';
+
 export default class TheatreResponsePayload {
-  id: String = '';
-  name: String = '';
+  @AutoMap()
+    id!: string;
+  @AutoMap()
+    name!: string;
 }

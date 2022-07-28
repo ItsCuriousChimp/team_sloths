@@ -7,11 +7,14 @@ import BookedSeatController from './src/controllers/booked-seat.controller';
 import AccountController from './src/controllers/account.controller';
 import AuthMiddleware from './src/middleware/auth.middleware';
 import UserController from './src/controllers/user.controller';
+import mapper from './src/mappings/mapper';
+import AutomapperPayloadConfig from './src/controllers/payloads/mapper.config';
 
 const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+AutomapperPayloadConfig.init(mapper);
 
 app.get('/heartbeat', (req: Request, res: Response) => {
   res.send(new HeartbeatController().getHeartbeat());

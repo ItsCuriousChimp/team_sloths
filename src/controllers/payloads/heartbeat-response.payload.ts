@@ -1,3 +1,6 @@
+import { AutoMap } from '@automapper/classes';
+
 export default class HeartbeatResponsePayload {
-  heartbeatTimestamp: Date | undefined;
+  @AutoMap()
+    heartbeatTimestamp!: Date;
 }

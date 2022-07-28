@@ -1,5 +1,8 @@
+import { AutoMap } from '@automapper/classes';
+
 export default class AccessTokenModel {
-  userId : String;
+  @AutoMap()
+    userId : String;
 
   constructor(
     userId : String,
