@@ -1,8 +1,16 @@
-export default class RequestBasePayload {
-  private schema;
-  public extract() {
-    Object.keys(this).forEach((key) => {
-      console.log(key);
+import Joi from 'joi';
+
+export default class RequestPayloadBase {
+  private schema: Joi.Schema;
+  obj: any = {};
+  constructor(schema: Joi.Schema) {
+    this.schema = schema;
+  }
+
+  extractAndValidate(req: any) {
+    Object.keys(req).forEach((key) => {
+      this.obj[key] = req[key];
     });
+    return this.schema.validate(this.obj);
   }
 }

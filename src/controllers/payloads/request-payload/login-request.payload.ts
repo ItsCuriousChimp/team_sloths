@@ -1,31 +1,15 @@
 import Joi from 'joi';
+import { JoiSchema, getClassSchema } from 'joi-class-decorators';
+import RequestPayloadBase from './request-base.payload';
 
-export default class LoginRequestPayload {
-  email: string = '';
-  password: string = '';
+export default class LoginRequestPayload extends RequestPayloadBase {
+  @JoiSchema(Joi.string().email().required())
+    email!: string;
 
-  constructor(email: string, password: string) {
-    this.email = email;
-    this.password = password;
-  }
+  @JoiSchema(Joi.string().required().min(8).max(16))
+    password!: string;
 
-  public validateAndExtract() {
-    const schema = Joi.object({
-      email: Joi.string()
-        .min(6)
-        .max(64)
-        .required()
-        .email(),
-      password: Joi.string()
-        .min(6)
-        .max(32)
-        .required(),
-    });
-    const res =
-    schema.validate({ email: this.email, password: this.password });
-    if (res.error) {
-      return res.error;
-    }
-    return null;
+  constructor() {
+    super(getClassSchema(LoginRequestPayload));
   }
 }
