@@ -12,7 +12,7 @@ export default class TheatreRepository {
     });
     const theatreModelList: TheatreModel[] = [];
     for (let i = 0; i < theatreList.length; i += 1) {
-      theatreModelList.push(new TheatreModel(theatreList[i].id, theatreList[i].name));
+      theatreModelList.push(this.createTheatreModel(theatreModelList[i]));
     }
     return theatreModelList;
   }
@@ -41,17 +41,25 @@ export default class TheatreRepository {
     });
     const showsModelList: ShowModel[] = [];
     for (let i = 0; i < bookedSeats.length; i += 1) {
-      const showModel = new ShowModel(
-        bookedSeats[i].id,
-        bookedSeats[i].screenId,
-        bookedSeats[i].movieId,
-        bookedSeats[i].showStartTimeInUtc,
-        bookedSeats[i].showEndTimeInUtc,
-        bookedSeats[i].availableUntilUtc,
-      );
-      showModel.bookedSeat = bookedSeats[i].bookedSeat;
-      showsModelList.push(showModel);
+      showsModelList.push(this.createShowModel(bookedSeats[i]));
     }
     return showsModelList;
+  }
+
+  public createTheatreModel(theatre: any): TheatreModel {
+    return new TheatreModel(theatre.id, theatre.name);
+  }
+
+  public createShowModel(bookedSeat: any): ShowModel {
+    const showModel = new ShowModel(
+      bookedSeat.id,
+      bookedSeat.screenId,
+      bookedSeat.movieId,
+      bookedSeat.showStartTimeInUtc,
+      bookedSeat.showEndTimeInUtc,
+      bookedSeat.availableUntilUtc,
+    );
+    showModel.bookedSeat = bookedSeat.bookedSeat;
+    return showModel;
   }
 }

@@ -41,11 +41,7 @@ export default class MovieRepository {
 
     const movieModelList: MovieModel[] = [];
     for (let i = 0; i < uniqueMovies.length; i += 1) {
-      movieModelList.push(new MovieModel(
-        uniqueMovies[i].id,
-        uniqueMovies[i].name,
-        uniqueMovies[i].language,
-      ));
+      movieModelList.push(this.createMovieModel(uniqueMovies[i]));
     }
     return movieModelList;
   }
@@ -80,9 +76,16 @@ export default class MovieRepository {
     }
     const movieModelList: MovieModel[] = [];
     movies.forEach((currentMovie) => {
-      const { id, name, language } = currentMovie;
-      movieModelList.push(new MovieModel(id, name, language));
+      movieModelList.push(this.createMovieModel(currentMovie));
     });
     return movieModelList;
+  }
+
+  public createMovieModel(uniqueMovie: any): MovieModel {
+    return new MovieModel(
+      uniqueMovie.id,
+      uniqueMovie.name,
+      uniqueMovie.language,
+    );
   }
 }

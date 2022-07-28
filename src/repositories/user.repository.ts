@@ -26,7 +26,7 @@ export default class UserRepository {
         city: true,
       },
     });
-    return this.makeUserModel(user);
+    return this.createUserModel(user);
   }
 
   public async updateUserDetails(
@@ -48,10 +48,10 @@ export default class UserRepository {
         city: true,
       },
     });
-    return this.makeUserModel(user);
+    return this.createUserModel(user);
   }
 
-  private makeUserModel(user : any) : UserModel | null {
+  private createUserModel(user : any) : UserModel | null {
     if (user === null) { return null; }
     const userModel : UserModel = new UserModel(
       user.id,

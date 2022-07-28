@@ -13,7 +13,10 @@ export default class CityRepository {
     if (city === null) {
       return null;
     }
-    const cityModel :CityModel = new CityModel(city.id, city.name);
-    return cityModel;
+    return this.createCityModel(city);
+  }
+
+  public createCityModel(city: any): CityModel {
+    return new CityModel(city.id, city.name);
   }
 }

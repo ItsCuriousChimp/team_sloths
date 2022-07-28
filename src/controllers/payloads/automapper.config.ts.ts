@@ -16,7 +16,7 @@ import UpcomingMovieShowInTheatreResponsePayload from './upcoming-movie-show-in-
 import UserResponsePayload from './user-response.payload';
 
 export default class AutomapperPayloadConfig {
-  public init(mapper: Mapper) {
+  public static init(mapper: Mapper) {
     createMap(mapper, UserModel, UserResponsePayload);
     createMap(mapper, TheatreModel, TheatreResponsePayload);
     createMap(mapper, ShowModel, UpcomingMovieShowInTheatreResponsePayload);

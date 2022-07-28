@@ -31,15 +31,19 @@ export default class ScreenRepository {
     });
     const screenModelList : ScreenModel[] = [];
     for (let i = 0; i < screens.length; i += 1) {
-      const screenModel = new ScreenModel(
-        screens[i].id,
-        screens[i].theatreId,
-        screens[i].screenNumber,
-      );
-      screenModel.show = screens[i].show;
-      screenModel.seat = screens[i].seat;
-      screenModelList.push(screenModel);
+      screenModelList.push(this.createScreenModel(screens[i]));
     }
     return screenModelList;
+  }
+
+  public createScreenModel(screen: any): ScreenModel {
+    const screenModel = new ScreenModel(
+      screen.id,
+      screen.theatreId,
+      screen.screenNumber,
+    );
+    screenModel.show = screen.show;
+    screenModel.seat = screen.seat;
+    return screenModel;
   }
 }
