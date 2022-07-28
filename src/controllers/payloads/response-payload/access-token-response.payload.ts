@@ -1,3 +1,6 @@
+import { AutoMap } from '@automapper/classes';
+
 export default class AccessTokenResponsePayload {
-  accessToken : String | undefined;
+  @AutoMap()
+    accessToken! : string;
 }

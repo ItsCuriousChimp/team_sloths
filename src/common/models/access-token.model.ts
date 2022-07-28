@@ -1,5 +1,5 @@
 export default class AccessTokenModel {
-  userId : string;
+  userId! : string;
 
   constructor(
     userId : string,

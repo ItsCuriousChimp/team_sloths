@@ -2,29 +2,20 @@
 import { Request, Response } from 'express';
 import BookedSeatModel from '../common/models/booked-seat.model';
 import BookedSeatService from '../services/booked-seat.service';
-import IdRequestPayload from './payloads/request-payload/id-request.payload';
 import BookedSeatResponsePayload from './payloads/response-payload/booked-seat-response.payload';
+import mapper from '../common/mapper';
 
 export default class BookedSeatController {
   public async getBookedSeatsByMovieId(req : Request, res: Response) {
-    const showIdRequestPayload : IdRequestPayload =
-    new IdRequestPayload(String(req.query.showId));
-
-    const error = showIdRequestPayload.validateAndExtract();
-    if (error !== null) {
-      return res.status(400).send({ error: error.details[0].message });
-    }
+    const showIdUrl : string = String(req.query.showId);
     const bookedSeatServiceInstance : BookedSeatService = new BookedSeatService();
     const bookedSeatList : BookedSeatModel[] =
-    await bookedSeatServiceInstance.getBookedSeatsByShowId(showIdRequestPayload.id);
+    await bookedSeatServiceInstance.getBookedSeatsByShowId(showIdUrl);
     const result: BookedSeatResponsePayload[] = [];
     bookedSeatList.forEach((bookedSeat : BookedSeatModel) => {
       const payload : BookedSeatResponsePayload =
-        new BookedSeatResponsePayload();
-      payload.id = bookedSeat.id;
-      payload.seatId = bookedSeat.seatId;
-      payload.showId = bookedSeat.showId;
-      payload.bookingId = bookedSeat.bookingId;
+      mapper.map(bookedSeat, BookedSeatModel, BookedSeatResponsePayload);
+
       result.push(payload);
     });
 

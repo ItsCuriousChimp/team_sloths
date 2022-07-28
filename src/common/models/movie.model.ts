@@ -1,8 +1,13 @@
+import { AutoMap } from '@automapper/classes';
+
 export default class MovieModel {
-  id: String;
-  name: String;
-  language: String;
-  constructor(id: String, name: String, language: String) {
+  @AutoMap()
+    id!: string;
+  @AutoMap()
+    name!: string;
+  @AutoMap()
+    language!: string;
+  constructor(id: string, name: string, language: string) {
     this.id = id;
     this.name = name;
     this.language = language;

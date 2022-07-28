@@ -30,7 +30,7 @@ export default class AccountService {
 
     // Create user
     const userRepositoryInstance = new UserRepository();
-    const userId : String = await userRepositoryInstance.createUser(name, email);
+    const userId : string = await userRepositoryInstance.createUser(name, email);
 
     // Update user id in account
     const accountModel : AccountModel =
@@ -49,7 +49,7 @@ export default class AccountService {
     return accessToken;
   }
 
-  public async loginUserUsingEmailAndPassword(email : string, password: string) {
+  public async loginUserUsingEmailAndPassword(email : string, password: string) : Promise<string> {
     const accountRepositoryInstance : AccountRepository = new AccountRepository();
 
     const accountByUsername : AccountModel | null =
