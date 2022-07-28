@@ -3,7 +3,7 @@ import RequestContextHelper from '../common/helpers/request-context.helper';
 import UserService from '../services/user.service';
 import UserResponsePayload from './payloads/user-response.payload';
 import UserModel from '../common/models/user.model';
-import mapper from '../mappings/mapper';
+import mapper from '../common/mappings/mapper';
 
 export default class UserController {
   public async getUserDetails(req : Request, res : Response) {

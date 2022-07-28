@@ -1,4 +1,4 @@
-import mapper from '../mappings/mapper';
+import mapper from '../common/mappings/mapper';
 
 import HeartbeatResponsePayload from './payloads/heartbeat-response.payload';
 import HeartbeatServices from '../services/heartbeat.service';

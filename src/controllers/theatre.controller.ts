@@ -4,7 +4,7 @@ import TheatreResponsePayload from './payloads/theatre-response.payload';
 import TheatreService from '../services/theatre.service';
 import ShowModel from '../common/models/show.model';
 import UpcomingMovieShowInTheatreResponsePayload from './payloads/upcoming-movie-show-in-theatre-response.payload.ts';
-import mapper from '../mappings/mapper';
+import mapper from '../common/mappings/mapper';
 
 export default class TheatreController {
   public async getTheatresByCityId(req: Request, res: Response) {

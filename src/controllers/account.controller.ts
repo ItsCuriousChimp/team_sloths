@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import AccountService from '../services/account.service';
 import AccessTokenResponsePayload from './payloads/access-token-response.payload';
-import mapper from '../mappings/mapper';
+import mapper from '../common/mappings/mapper';
 
 export default class AccountController {
   public async signUpUserUsingEmailAndPassword(req : Request, res : Response) {

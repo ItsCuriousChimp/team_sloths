@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import BookedSeatModel from '../common/models/booked-seat.model';
 import BookedSeatService from '../services/booked-seat.service';
 import BookedSeatResponsePayload from './payloads/booked-seat-response.payload';
-import mapper from '../mappings/mapper';
+import mapper from '../common/mappings/mapper';
 
 export default class BookedSeatController {
   public async getBookedSeatsByMovieId(req : Request, res: Response) {

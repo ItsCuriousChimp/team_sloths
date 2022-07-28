@@ -2,7 +2,7 @@ import { Response, Request } from 'express';
 import MovieModel from '../common/models/movie.model';
 import MovieResponsePayload from './payloads/movie-response.payload';
 import MovieService from '../services/movie.service';
-import mapper from '../mappings/mapper';
+import mapper from '../common/mappings/mapper';
 
 export default class MovieController {
   public async getMovieByCityId(req: Request, res: Response) {
