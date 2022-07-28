@@ -13,8 +13,16 @@ export default class CityRepository {
     if (city === null) {
       return null;
     }
-    const cityModel : CityModel = new CityModel(city.id, city.name);
+    const cityModel : CityModel = this.makeCityModel(city);
 
+    return cityModel;
+  }
+
+  private makeCityModel(cityData : any) : CityModel {
+    const cityModel : CityModel = new CityModel(
+      cityData.id,
+      cityData.name,
+    );
     return cityModel;
   }
 }

@@ -15,7 +15,7 @@ import TheatreResponsePayload from './theatre-response.payload';
 import UpcomingMovieShowInTheatreResponsePayload from './upcoming-movie-show-in-theatre-response.payload.ts';
 import UserResponsePayload from './user-response.payload';
 
-export default class AutomapperConfig {
+export default class AutomapperPayloadConfig {
   public init(mapper : Mapper) {
     createMap(mapper, UserModel, UserResponsePayload);
     createMap(mapper, TheatreModel, TheatreResponsePayload);

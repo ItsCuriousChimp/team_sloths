@@ -18,13 +18,8 @@ export default class AccountRepository {
     if (record === null) {
       return null;
     }
-    const result = new AccountModel(
-      record.id,
-      record.username,
-      record.passwordHash,
-    );
-    result.userId = String(record.userId);
-    return result;
+    const accountModel : AccountModel = this.makeAccountModel(record);
+    return accountModel;
   }
 
   public async createAccountWithoutUserId(
@@ -54,13 +49,20 @@ export default class AccountRepository {
       },
     });
 
-    const accountModel = new AccountModel(
-      record.id,
-      record.username,
-      record.passwordHash,
-    );
-    accountModel.userId = String(record.userId);
+    const accountModel : AccountModel = this.makeAccountModel(record);
 
+    return accountModel;
+  }
+
+  private makeAccountModel(accountData :any) : AccountModel {
+    const accountModel : AccountModel = new AccountModel(
+      accountData.id,
+      accountData.username,
+      accountData.passwordHash,
+    );
+    if (accountData.userId) {
+      accountModel.userId = accountData.userId;
+    }
     return accountModel;
   }
 }

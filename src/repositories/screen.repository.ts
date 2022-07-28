@@ -30,16 +30,20 @@ export default class ScreenRepository {
       },
     });
     const screenModelList : ScreenModel[] = [];
-    for (let i = 0; i < screens.length; i += 1) {
-      const screenModel = new ScreenModel(
-        screens[i].id,
-        screens[i].theatreId,
-        screens[i].screenNumber,
-      );
-      screenModel.show = screens[i].show;
-      screenModel.seat = screens[i].seat;
-      screenModelList.push(screenModel);
-    }
+    screens.forEach((screenData : any) => {
+      screenModelList.push(this.makeScreenModel(screenData));
+    });
     return screenModelList;
+  }
+
+  private makeScreenModel(screenData : any) : ScreenModel {
+    const screenModel : ScreenModel = new ScreenModel(
+      screenData.id,
+      screenData.theatreId,
+      screenData.screenNumber,
+    );
+    screenModel.show = screenData.show;
+    screenModel.seat = screenData.seat;
+    return screenModel;
   }
 }

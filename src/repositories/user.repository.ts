@@ -6,7 +6,7 @@ const prisma: PrismaClient = new PrismaClient();
 
 export default class UserRepository {
   public async createUser(name : string, email: string) : Promise<string> {
-    const user = await prisma.user.create({
+    const userData = await prisma.user.create({
       data: {
         name,
         email,
@@ -14,11 +14,11 @@ export default class UserRepository {
       },
     });
 
-    return user.id;
+    return userData.id;
   }
 
   public async getUserUsingUserId(userId : string) : Promise<UserModel | null> {
-    const user = await prisma.user.findFirst({
+    const userData = await prisma.user.findFirst({
       where: {
         id: userId,
       },
@@ -26,7 +26,7 @@ export default class UserRepository {
         city: true,
       },
     });
-    return this.makeUserModel(user);
+    return this.makeUserModel(userData);
   }
 
   public async updateUserDetails(
@@ -35,7 +35,7 @@ export default class UserRepository {
     phoneNumber: string,
     cityId: string,
   ) : Promise<UserModel | null> {
-    const user = await prisma.user.update({
+    const userData = await prisma.user.update({
       where: {
         id: userId,
       },
@@ -48,23 +48,23 @@ export default class UserRepository {
         city: true,
       },
     });
-    return this.makeUserModel(user);
+    return this.makeUserModel(userData);
   }
 
-  private makeUserModel(user : any) : UserModel | null {
-    if (user === null) { return null; }
+  private makeUserModel(userData : any) : UserModel | null {
+    if (userData === null) { return null; }
     const userModel : UserModel = new UserModel(
-      user.id,
-      user.name,
-      user.email,
-      user.loggedInAtUtc,
+      userData.id,
+      userData.name,
+      userData.email,
+      userData.loggedInAtUtc,
     );
-    if (user.cityId !== null) {
-      userModel.cityId = user.cityId;
-      userModel.city = user.city?.name;
+    if (userData.cityId !== null) {
+      userModel.cityId = userData.cityId;
+      userModel.city = userData.city?.name;
     }
-    if (user.phoneNumber !== null) {
-      userModel.phoneNumber = user.phoneNumber;
+    if (userData.phoneNumber !== null) {
+      userModel.phoneNumber = userData.phoneNumber;
     }
     return userModel;
   }

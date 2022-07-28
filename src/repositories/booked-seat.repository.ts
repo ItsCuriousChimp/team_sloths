@@ -12,14 +12,18 @@ export default class BookedSeatRepository {
     });
     const bookedSeatsList : BookedSeatModel[] = [];
     bookedSeat.forEach((seat : any) => {
-      const bookedSeatModel = new BookedSeatModel(
-        seat.id,
-        seat.seatId,
-        seat.showId,
-        seat.bookingId,
-      );
-      bookedSeatsList.push(bookedSeatModel);
+      bookedSeatsList.push(this.makeBookedSeatModel(seat));
     });
     return bookedSeatsList;
+  }
+
+  private makeBookedSeatModel(bookedSeatData : any) : BookedSeatModel {
+    const bookedSeatModel :BookedSeatModel = new BookedSeatModel(
+      bookedSeatData.id,
+      bookedSeatData.seatId,
+      bookedSeatData.showId,
+      bookedSeatData.bookingId,
+    );
+    return bookedSeatModel;
   }
 }
