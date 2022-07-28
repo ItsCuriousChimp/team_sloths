@@ -1,16 +1,13 @@
 import Joi from 'joi';
-import { JoiSchema, getClassSchema } from 'joi-class-decorators';
-import RequestPayloadBase from './request-base.payload';
+import { JoiSchema } from 'joi-class-decorators';
 
-export default class UpdateUserRequestPayload extends RequestPayloadBase {
+export default class UpdateUserRequestPayload {
   @JoiSchema(Joi.string().min(3).optional())
     name!: string;
+
   @JoiSchema(Joi.string().length(10).optional())
     phoneNumber!: string;
+
   @JoiSchema(Joi.string().guid().optional())
     cityId!: string;
-
-  constructor() {
-    super(getClassSchema(UpdateUserRequestPayload));
-  }
 }

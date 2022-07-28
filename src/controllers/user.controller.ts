@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import { Request, Response } from 'express';
 import RequestContextHelper from '../common/helpers/request-context.helper';
 import UserService from '../services/user.service';
@@ -5,8 +6,9 @@ import UserResponsePayload from './payloads/response-payload/user-response.paylo
 import mapper from '../common/mapper';
 import UserModel from '../common/models/user.model';
 import UpdateUserRequestPayload from './payloads/request-payload/update-user-request.payload';
+import ControllerBasePayload from './controller-base.controller';
 
-export default class UserController {
+export default class UserController extends ControllerBasePayload {
   public async getUserDetails(req : Request, res : Response) {
     const { userId } = RequestContextHelper.getContext();
 
@@ -26,21 +28,20 @@ export default class UserController {
   public async updateUserDetails(req : Request, res : Response) {
     const { userId } = RequestContextHelper.getContext();
 
-    const updateUserRequestPayload = new UpdateUserRequestPayload();
-    const validate: any = updateUserRequestPayload.extractAndValidate(req.body);
-
-    if (validate.error) {
-      res.status(401).send(validate.error?.details[0].message);
-      return;
+    let updateUserRequestPayload : UpdateUserRequestPayload = new UpdateUserRequestPayload();
+    try {
+      updateUserRequestPayload = super.extractAndValidate(req.body, UpdateUserRequestPayload);
+    } catch (err) {
+      return res.status(400).send(err);
     }
 
     const userServiceInstance = new UserService();
     const userModel =
     await userServiceInstance.updateUserDetails(
       userId,
-      updateUserRequestPayload.obj.name,
-      updateUserRequestPayload.obj.phoneNumber,
-      updateUserRequestPayload.obj.cityId,
+      updateUserRequestPayload.name,
+      updateUserRequestPayload.phoneNumber,
+      updateUserRequestPayload.cityId,
     );
 
     if (!userModel) {

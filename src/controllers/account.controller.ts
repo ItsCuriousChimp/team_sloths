@@ -1,26 +1,27 @@
+/* eslint-disable consistent-return */
 import { Request, Response } from 'express';
 import AccountService from '../services/account.service';
 import AccessTokenResponsePayload from './payloads/response-payload/access-token-response.payload';
 import mapper from '../common/mapper';
 import SignupRequestPayload from './payloads/request-payload/signup-request.payload';
 import LoginRequestPayload from './payloads/request-payload/login-request.payload';
+import ControllerBasePayload from './controller-base.controller';
 
-export default class AccountController {
+export default class AccountController extends ControllerBasePayload {
   public async signUpUserUsingEmailAndPassword(req : Request, res : Response) {
-    const signupRequestPayload = new SignupRequestPayload();
-    const validate: any = signupRequestPayload.extractAndValidate(req.body);
-
-    if (validate.error) {
-      res.status(401).send(validate.error?.details[0].message);
-      return;
+    let signupRequestPayload : SignupRequestPayload = new SignupRequestPayload();
+    try {
+      signupRequestPayload = super.extractAndValidate(req.body, SignupRequestPayload);
+    } catch (err) {
+      return res.status(400).send(err);
     }
 
     const accountServiceInstance : AccountService = new AccountService();
     const accessToken : string =
     await accountServiceInstance.signUpUserUsingEmailAndPassword(
-      signupRequestPayload.obj.name,
-      signupRequestPayload.obj.email,
-      signupRequestPayload.obj.password,
+      signupRequestPayload.name,
+      signupRequestPayload.email,
+      signupRequestPayload.password,
     );
 
     if (accessToken === '') {
@@ -33,19 +34,18 @@ export default class AccountController {
   }
 
   public async loginUsingEmailAndPassword(req: Request, res: Response) {
-    const loginRequestPayload = new LoginRequestPayload();
-    const validate: any = loginRequestPayload.extractAndValidate(req.body);
-
-    if (validate.error) {
-      res.status(401).send(validate.error?.details[0].message);
-      return;
+    let loginRequestPayload : LoginRequestPayload = new LoginRequestPayload();
+    try {
+      loginRequestPayload = super.extractAndValidate(req.body, LoginRequestPayload);
+    } catch (err) {
+      return res.status(400).send(err);
     }
 
     const accountServiceInstance : AccountService = new AccountService();
     const accessToken : string =
     await accountServiceInstance.loginUserUsingEmailAndPassword(
-      loginRequestPayload.obj.email,
-      loginRequestPayload.obj.password,
+      loginRequestPayload.email,
+      loginRequestPayload.password,
     );
     if (accessToken === '') {
       res.status(400).send('Email address or password incorrect');

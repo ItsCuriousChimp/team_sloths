@@ -1,15 +1,10 @@
 import Joi from 'joi';
-import { JoiSchema, getClassSchema } from 'joi-class-decorators';
-import RequestPayloadBase from './request-base.payload';
+import { JoiSchema } from 'joi-class-decorators';
 
-export default class LoginRequestPayload extends RequestPayloadBase {
+export default class LoginRequestPayload {
   @JoiSchema(Joi.string().email().required())
     email!: string;
 
-  @JoiSchema(Joi.string().required().min(8).max(16))
+  @JoiSchema(Joi.string().required().min(8).max(64))
     password!: string;
-
-  constructor() {
-    super(getClassSchema(LoginRequestPayload));
-  }
 }
