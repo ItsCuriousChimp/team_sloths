@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-new AutomapperPayloadConfig().init(mapper);
+AutomapperPayloadConfig.init(mapper);
 
 app.use('/heartbeat', heartbeatRoute);
 app.use('/theatres', theatreRoute);
