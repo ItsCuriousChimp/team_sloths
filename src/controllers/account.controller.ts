@@ -7,14 +7,14 @@ import LoginRequestPayload from './payloads/request-payload/login-request.payloa
 export default class AccountController {
   public async signUpUserUsingEmailAndPassword(req : Request, res : Response) {
     const signupRequestPayload = new SignupRequestPayload();
-    const validate: any = signupRequestPayload.extractAndValidate(req.body);
-
-    if (validate.error) {
-      res.status(401).send(validate.error?.message);
+    let validate: any;
+    try {
+      validate = signupRequestPayload.validateAndExtract(req.body, SignupRequestPayload);
+    } catch (err) {
+      res.status(401).send(err);
       return;
     }
-
-    const { name, email, password } = validate.value;
+    const { name, email, password } = validate;
 
     const accountServiceInstance : AccountService = new AccountService();
     const accessToken : String =
@@ -31,14 +31,16 @@ export default class AccountController {
 
   public async loginUsingEmailAndPassword(req: Request, res: Response) {
     const loginRequestPayload = new LoginRequestPayload();
-    const validate: any = loginRequestPayload.extractAndValidate(req.body);
-
-    if (validate.error) {
-      res.status(401).send(validate.error?.message);
+    let validate: any;
+    try {
+      validate = loginRequestPayload.validateAndExtract(req.body, LoginRequestPayload);
+    } catch (err) {
+      res.status(401).send(err);
       return;
     }
 
-    const { email, password } = validate.value;
+    const { email } = validate;
+    const { password } = validate;
 
     const accountServiceInstance : AccountService = new AccountService();
     const accessToken : String =

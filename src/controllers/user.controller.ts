@@ -28,14 +28,14 @@ export default class UserController {
   public async updateUserDetails(req : Request, res : Response) {
     const userId : string = String(RequestContextHelper.getContext().userId);
     const updateUserRequestPayload = new UpdateUserRequestPayload();
-    const validate: any = updateUserRequestPayload.extractAndValidate(req.body);
-
-    if (validate.error) {
-      res.status(401).send(validate.error?.message);
+    let validate: any;
+    try {
+      validate = updateUserRequestPayload.validateAndExtract(req.body, UpdateUserRequestPayload);
+    } catch (err) {
+      res.status(401).send(err);
       return;
     }
-
-    const { name, phoneNumber, cityId } = validate.value;
+    const { name, phoneNumber, cityId } = validate;
 
     const userServiceInstance = new UserService();
     const userModel =

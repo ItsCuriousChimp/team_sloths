@@ -1,8 +1,8 @@
 import Joi from 'joi';
-import { JoiSchema, getClassSchema } from 'joi-class-decorators';
-import RequestPayloadBase from './base-request.payload';
+import { JoiSchema } from 'joi-class-decorators';
+import ControllerBasePayload from './base-request.payload';
 
-export default class UpdateUserRequestPayload extends RequestPayloadBase {
+export default class UpdateUserRequestPayload extends ControllerBasePayload {
   @JoiSchema(Joi.string().min(3).max(128))
     name!: string;
 
@@ -11,8 +11,4 @@ export default class UpdateUserRequestPayload extends RequestPayloadBase {
 
   @JoiSchema(Joi.string().guid())
     cityId!: string;
-
-  constructor() {
-    super(getClassSchema(UpdateUserRequestPayload));
-  }
 }
