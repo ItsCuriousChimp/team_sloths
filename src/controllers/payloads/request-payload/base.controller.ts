@@ -4,7 +4,7 @@ import { getClassSchema } from 'joi-class-decorators';
 export default class BaseContoller {
   validateAndExtract(src: any, DestClass: any) {
     const destObj = new DestClass();
-    const keys = Object.keys(src);
+    const keys = Object.keys(destObj);
     keys.forEach((key) => {
       destObj[key] = src[key];
     });

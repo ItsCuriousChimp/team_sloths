@@ -3,18 +3,18 @@ import AccountService from '../services/account.service';
 import AccessTokenResponsePayload from './payloads/access-token-response.payload';
 import SignupRequestPayload from './payloads/request-payload/signup-request.payload';
 import LoginRequestPayload from './payloads/request-payload/login-request.payload';
+import BaseController from './payloads/request-payload/base.controller';
 
-export default class AccountController {
+export default class AccountController extends BaseController {
   public async signUpUserUsingEmailAndPassword(req : Request, res : Response) {
-    const signupRequestPayload = new SignupRequestPayload();
-    let validate: any;
+    let signupRequestPayload: SignupRequestPayload;
     try {
-      validate = signupRequestPayload.validateAndExtract(req.body, SignupRequestPayload);
+      signupRequestPayload = super.validateAndExtract(req.body, SignupRequestPayload);
     } catch (err: any) {
       res.status(401).send(err.message);
       return;
     }
-    const { name, email, password } = validate;
+    const { name, email, password } = signupRequestPayload;
 
     const accountServiceInstance : AccountService = new AccountService();
     const accessToken : String =
@@ -30,17 +30,16 @@ export default class AccountController {
   }
 
   public async loginUsingEmailAndPassword(req: Request, res: Response) {
-    const loginRequestPayload = new LoginRequestPayload();
-    let validate: any;
+    let loginRequestPayload: LoginRequestPayload;
     try {
-      validate = loginRequestPayload.validateAndExtract(req.body, LoginRequestPayload);
+      loginRequestPayload = super.validateAndExtract(req.body, LoginRequestPayload);
     } catch (err: any) {
       res.status(400).send(err.message);
       return;
     }
 
-    const { email } = validate;
-    const { password } = validate;
+    const { email } = loginRequestPayload;
+    const { password } = loginRequestPayload;
 
     const accountServiceInstance : AccountService = new AccountService();
     const accessToken : String =

@@ -3,8 +3,9 @@ import RequestContextHelper from '../common/helpers/request-context.helper';
 import UserService from '../services/user.service';
 import UserResponsePayload from './payloads/user-response.payload';
 import UpdateUserRequestPayload from './payloads/request-payload/updateUser-request.payload';
+import BaseController from './payloads/request-payload/base.controller';
 
-export default class UserController {
+export default class UserController extends BaseController {
   public async getUserDetails(req : Request, res : Response) {
     const userId : String = String(RequestContextHelper.getContext().userId);
 
@@ -27,15 +28,14 @@ export default class UserController {
 
   public async updateUserDetails(req : Request, res : Response) {
     const userId : string = String(RequestContextHelper.getContext().userId);
-    const updateUserRequestPayload = new UpdateUserRequestPayload();
-    let validate: any;
+    let updateUserRequestPayload: UpdateUserRequestPayload;
     try {
-      validate = updateUserRequestPayload.validateAndExtract(req.body, UpdateUserRequestPayload);
+      updateUserRequestPayload = super.validateAndExtract(req.body, UpdateUserRequestPayload);
     } catch (err: any) {
       res.status(400).send(err.message);
       return;
     }
-    const { name, phoneNumber, cityId } = validate;
+    const { name, phoneNumber, cityId } = updateUserRequestPayload;
 
     const userServiceInstance = new UserService();
     const userModel =
