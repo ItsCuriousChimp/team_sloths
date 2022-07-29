@@ -10,8 +10,8 @@ export default class AccountController {
     let validate: any;
     try {
       validate = signupRequestPayload.validateAndExtract(req.body, SignupRequestPayload);
-    } catch (err) {
-      res.status(401).send(err);
+    } catch (err: any) {
+      res.status(401).send(err.message);
       return;
     }
     const { name, email, password } = validate;
@@ -34,8 +34,8 @@ export default class AccountController {
     let validate: any;
     try {
       validate = loginRequestPayload.validateAndExtract(req.body, LoginRequestPayload);
-    } catch (err) {
-      res.status(401).send(err);
+    } catch (err: any) {
+      res.status(400).send(err.message);
       return;
     }
 

@@ -1,8 +1,8 @@
 import Joi from 'joi';
 import { JoiSchema } from 'joi-class-decorators';
-import ControllerBasePayload from './base-request.payload';
+import BaseContoller from './base.controller';
 
-export default class UpdateUserRequestPayload extends ControllerBasePayload {
+export default class UpdateUserRequestPayload extends BaseContoller {
   @JoiSchema(Joi.string().min(3).max(128))
     name!: string;
 

@@ -31,8 +31,8 @@ export default class UserController {
     let validate: any;
     try {
       validate = updateUserRequestPayload.validateAndExtract(req.body, UpdateUserRequestPayload);
-    } catch (err) {
-      res.status(401).send(err);
+    } catch (err: any) {
+      res.status(400).send(err.message);
       return;
     }
     const { name, phoneNumber, cityId } = validate;
