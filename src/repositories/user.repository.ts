@@ -5,11 +5,11 @@ import UserModel from '../common/models/user.model';
 const prisma: PrismaClient = new PrismaClient();
 
 export default class UserRepository {
-  public async createUser(name : String, email: String) : Promise<String> {
+  public async createUser(name : string, email: string) : Promise<string> {
     const user = await prisma.user.create({
       data: {
-        name: String(name),
-        email: String(email),
+        name,
+        email,
         loggedInAtUtc: new DateTimeHelper().getCurrentDate(),
       },
     });
@@ -17,10 +17,10 @@ export default class UserRepository {
     return user.id;
   }
 
-  public async getUserUsingUserId(userId : String) : Promise<UserModel | null> {
+  public async getUserUsingUserId(userId : string) : Promise<UserModel | null> {
     const user = await prisma.user.findFirst({
       where: {
-        id: String(userId),
+        id: userId,
       },
       include: {
         city: true,
@@ -37,7 +37,7 @@ export default class UserRepository {
   ) : Promise<UserModel | null> {
     const user = await prisma.user.update({
       where: {
-        id: String(userId),
+        id: userId,
       },
       data: {
         name,

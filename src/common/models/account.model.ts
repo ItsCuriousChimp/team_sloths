@@ -1,13 +1,13 @@
 export default class AccountModel {
-  id : String;
-  userId : String | undefined;
-  username : String;
-  passwordHash : String;
+  id : string;
+  userId : string | undefined;
+  username : string;
+  passwordHash : string;
 
   constructor(
-    id : String,
-    username : String,
-    passwordHash : String,
+    id : string,
+    username : string,
+    passwordHash : string,
   ) {
     this.id = id;
     this.username = username;

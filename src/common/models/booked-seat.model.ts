@@ -1,14 +1,14 @@
 export default class BookedSeatModel {
-  id : String;
-  seatId : String;
-  showId : String;
-  bookingId : String;
+  id : string;
+  seatId : string;
+  showId : string;
+  bookingId : string;
 
   constructor(
-    id : String,
-    seatId : String,
-    showId : String,
-    bookingId : String,
+    id : string,
+    seatId : string,
+    showId : string,
+    bookingId : string,
   ) {
     this.id = id;
     this.seatId = seatId;

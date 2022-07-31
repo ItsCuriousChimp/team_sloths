@@ -4,10 +4,10 @@ import BookedSeatModel from '../common/models/booked-seat.model';
 const prisma: PrismaClient = new PrismaClient();
 
 export default class BookedSeatRepository {
-  public async getBookedSeatsByShowId(showIdUrl : String) : Promise<BookedSeatModel[]> {
+  public async getBookedSeatsByShowId(showIdUrl : string) : Promise<BookedSeatModel[]> {
     const bookedSeat : any = await prisma.bookedSeat.findMany({
       where: {
-        showId: String(showIdUrl),
+        showId: showIdUrl,
       },
     });
     const bookedSeatsList : BookedSeatModel[] = [];

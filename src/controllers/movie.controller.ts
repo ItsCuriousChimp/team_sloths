@@ -2,16 +2,11 @@ import { Response, Request } from 'express';
 import MovieModel from '../common/models/movie.model';
 import MovieResponsePayload from './payloads/movie-response.payload';
 import MovieService from '../services/movie.service';
-import IdRequestPayload from './payloads/request/id-request.payload';
 
 export default class MovieController {
   public async getMovieByCityId(req: Request, res: Response) {
-    const { cityId }: any = req.query;
-    const idRequestPayload = await new IdRequestPayload().validateAndExtract(String(cityId));
-    if (idRequestPayload) {
-      res.status(400).send(idRequestPayload);
-      return;
-    }
+    const { cityId } = req.body;
+
     const movieservice: MovieService = new MovieService();
     const movieList: MovieModel[] = await movieservice.getMovieByCityId(cityId);
     const result: MovieResponsePayload[] = [];
@@ -26,12 +21,8 @@ export default class MovieController {
   }
 
   public async getMoviesByTheatreId(req: Request, res: Response): Promise<void> {
-    const { theatreId } = req.params;
-    const idRequestPayload = await new IdRequestPayload().validateAndExtract(String(theatreId));
-    if (idRequestPayload) {
-      res.status(400).send(idRequestPayload);
-      return;
-    }
+    const { theatreId } = req.body;
+
     const movieService: MovieService = new MovieService();
     const movieList: MovieModel[] = await movieService.getMoviesByTheatreId(theatreId);
     const result: MovieResponsePayload[] = [];

@@ -5,11 +5,11 @@ const prisma: PrismaClient = new PrismaClient();
 
 export default class AccountRepository {
   public async getAccountByUsername(
-    userName : String,
+    username : string,
   ) : Promise<AccountModel | null> {
     const record = await prisma.account.findFirst({
       where: {
-        username: String(userName),
+        username,
       },
     });
 
@@ -26,13 +26,13 @@ export default class AccountRepository {
   }
 
   public async createAccountWithoutUserId(
-    username : String,
-    passwordHash : String,
-  ) : Promise<String> {
+    username : string,
+    passwordHash : string,
+  ) : Promise<string> {
     const account = await prisma.account.create({
       data: {
-        username: String(username),
-        passwordHash: String(passwordHash),
+        username,
+        passwordHash,
       },
     });
 
@@ -40,15 +40,15 @@ export default class AccountRepository {
   }
 
   public async updateUserIdInAccount(
-    userId: String,
-    accountId: String,
+    userId: string,
+    accountId: string,
   ) : Promise<AccountModel> {
     const account = await prisma.account.update({
       where: {
-        id: String(accountId),
+        id: accountId,
       },
       data: {
-        userId: String(userId),
+        userId,
       },
     });
 

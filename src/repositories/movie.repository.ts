@@ -4,9 +4,9 @@ import MovieModel from '../common/models/movie.model';
 const prisma: PrismaClient = new PrismaClient();
 
 export default class MovieRepository {
-  public async getMoviesByCityId(cityId: String): Promise<MovieModel[]> {
+  public async getMoviesByCityId(cityId: string): Promise<MovieModel[]> {
     const cityList: any = await prisma.city.findMany({
-      where: { id: String(cityId) },
+      where: { id: cityId },
       include: {
         theatre: {
           include: {
@@ -50,10 +50,10 @@ export default class MovieRepository {
     return movieModelList;
   }
 
-  public async getMoviesByTheatreId(theatreId: String): Promise<MovieModel[]> {
+  public async getMoviesByTheatreId(theatreId: string): Promise<MovieModel[]> {
     const theatre = await prisma.theatre.findUnique({
       where: {
-        id: String(theatreId),
+        id: theatreId,
       },
       include: {
         screen: {
@@ -67,7 +67,7 @@ export default class MovieRepository {
         },
       },
     });
-    const movies = new Map<String, movie>();
+    const movies = new Map<string, movie>();
     const screens = theatre?.screen;
     if (screens) {
       for (let i = 0; i < screens.length; i += 1) {

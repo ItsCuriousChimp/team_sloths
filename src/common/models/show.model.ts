@@ -1,21 +1,21 @@
 import BookedSeatModel from './booked-seat.model';
 
 export default class ShowModel {
-  id : String;
-  screenId : String;
-  movieId : String;
+  id : string;
+  screenId : string;
+  movieId : string;
   showStartTimeInUtc : Date;
   showEndTimeInUtc : Date;
   availableUntilUtc : Date;
   totalSeats : Number | undefined;
   availableSeats : Number | undefined;
   bookedSeat : BookedSeatModel[] | undefined;
-  availabilityStatus : String | undefined;
+  availabilityStatus : string | undefined;
 
   constructor(
-    id : String,
-    screenId : String,
-    movieId : String,
+    id : string,
+    screenId : string,
+    movieId : string,
     showStartTimeInUtc : Date,
     showEndTimeInUtc : Date,
     availableUntilUtc : Date,
