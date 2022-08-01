@@ -15,7 +15,7 @@ services:
     container_name: bms_api
     build: .
     image: quotes-api
-    command: sh -c "npx prisma generate && npx prisma migrate dev --name init && npm start 0.0.0.0:3000"
+    command: sh -c "npx prisma generate && npm start"
     depends_on:
       - db
     ports:
@@ -27,7 +27,7 @@ services:
       DB_USER: postgres
       DB_PASSWORD: admin
       DB_NAME: bookMyShow
-      DATABASE_URL: "postgresql://postgres:admin@db:5432/bookMyShow?schema=public"
+      DATABASE_URL: "postgresql://postgres:admin1234@bms-rishi.cwzx82bl8rer.us-east-1.rds.amazonaws.com:5432/bookMyShow?schema=public"
     links:
       - db
     volumes:
