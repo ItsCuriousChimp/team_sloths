@@ -4,10 +4,10 @@ import UserService from '../services/user.service';
 import UserResponsePayload from './payloads/user-response.payload';
 import mapper from '../common/mapper';
 import UserModel from '../common/models/user.model';
-import ControllerBasePayload from './controller-base.controller';
+import BaseController from './base.controller';
 import UpdateUserRequestPayload from './payloads/request-payload/update-user-request.payload';
 
-export default class UserController extends ControllerBasePayload {
+export default class UserController extends BaseController {
   public async getUserDetails(req : Request, res : Response) {
     const { userId } = RequestContextHelper.getContext();
 

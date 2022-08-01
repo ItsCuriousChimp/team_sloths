@@ -3,7 +3,7 @@ import { getClassSchema } from 'joi-class-decorators';
 
 const instance : any = this;
 
-export default class ControllerBasePayload {
+export default class BaseController {
   private schema!: Joi.Schema;
 
   public extractAndValidate(src: any, Dest: any) {

@@ -5,9 +5,9 @@ import AccessTokenResponsePayload from './payloads/access-token-response.payload
 import mapper from '../common/mapper';
 import SignupRequestPayload from './payloads/request-payload/signup-user-request.payload';
 import LoginRequestPayload from './payloads/request-payload/login-request.payload';
-import ControllerBasePayload from './controller-base.controller';
+import BaseController from './base.controller';
 
-export default class AccountController extends ControllerBasePayload {
+export default class AccountController extends BaseController {
   public async signUpUserUsingEmailAndPassword(req : Request, res : Response) {
     let signupRequestPayload : SignupRequestPayload = new SignupRequestPayload();
     try {
