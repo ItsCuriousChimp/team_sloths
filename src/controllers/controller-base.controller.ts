@@ -2,6 +2,7 @@ import Joi from 'joi';
 import { getClassSchema } from 'joi-class-decorators';
 
 const instance : any = this;
+
 export default class ControllerBasePayload {
   private schema!: Joi.Schema;
 

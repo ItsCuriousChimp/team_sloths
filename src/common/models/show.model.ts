@@ -1,21 +1,31 @@
+import { AutoMap } from '@automapper/classes';
 import BookedSeatModel from './booked-seat.model';
 
 export default class ShowModel {
-  id : String;
-  screenId : String;
-  movieId : String;
-  showStartTimeInUtc : Date;
-  showEndTimeInUtc : Date;
-  availableUntilUtc : Date;
-  totalSeats : Number | undefined;
-  availableSeats : Number | undefined;
+  @AutoMap()
+    id! : string;
+  @AutoMap()
+    screenId! : string;
+  @AutoMap()
+    movieId! : string;
+  @AutoMap()
+    showStartTimeInUtc! : Date;
+  @AutoMap()
+    showEndTimeInUtc! : Date;
+  @AutoMap()
+    availableUntilUtc! : Date;
+  @AutoMap()
+    totalSeats! : Number;
+  @AutoMap()
+    availableSeats! : Number;
+  @AutoMap()
+    availabilityStatus! : string;
   bookedSeat : BookedSeatModel[] | undefined;
-  availabilityStatus : String | undefined;
 
   constructor(
-    id : String,
-    screenId : String,
-    movieId : String,
+    id : string,
+    screenId : string,
+    movieId : string,
     showStartTimeInUtc : Date,
     showEndTimeInUtc : Date,
     availableUntilUtc : Date,

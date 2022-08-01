@@ -1,6 +1,9 @@
+import { AutoMap } from '@automapper/classes';
+
 export default class HeartbeatModel {
-  lastHeartbeatAtTimestamp: Date;
+  @AutoMap()
+    heartbeatTimeStamp!: Date;
   constructor(timestamp: Date) {
-    this.lastHeartbeatAtTimestamp = timestamp;
+    this.heartbeatTimeStamp = timestamp;
   }
 }

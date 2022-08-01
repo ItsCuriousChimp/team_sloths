@@ -1,26 +1,27 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import bodyParser from 'body-parser';
-import AuthMiddleware from './src/middleware/auth.middleware';
-import heartbeatRouter from './src/routers/heartbeat.route';
-import accountsRouter from './src/routers/account.route';
-import usersRouter from './src/routers/user.route';
-import theatresRouter from './src/routers/theatre.route';
-import moviesRouter from './src/routers/movie.route';
+import heartbeatRoute from './src/routes/heartbeat.route';
+import theatreRoute from './src/routes/theatre.route';
+import movieRoute from './src/routes/movie.route';
+import accountRoute from './src/routes/account.route';
+import userRoute from './src/routes/user.route';
+import showRoute from './src/routes/show.route';
+import AutomapperPayloadConfig from './src/controllers/payloads/automapper.config';
+import mapper from './src/common/mapper';
 
 const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/heartbeat', heartbeatRouter);
-app.use('/accounts', accountsRouter);
-app.use('/user', usersRouter);
-app.use('/theatres', theatresRouter);
-app.use('/movies', moviesRouter);
+AutomapperPayloadConfig.init(mapper);
 
-app.get('/verify', new AuthMiddleware().verifyToken, (req: Request, res: Response) => {
-  res.status(200).send('Welcome  🙌 ');
-});
+app.use('/heartbeat', heartbeatRoute);
+app.use('/theatres', theatreRoute);
+app.use('/movies', movieRoute);
+app.use('/accounts', accountRoute);
+app.use('/users', userRoute);
+app.use('/shows', showRoute);
 
 app.listen(3000, () => {
   // eslint-disable-next-line no-console
