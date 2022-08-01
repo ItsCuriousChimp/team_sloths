@@ -3,7 +3,7 @@ import HeartbeatResponsePayload from './payloads/heartbeat-response.payload';
 import HeartbeatServices from '../services/heartbeat.service';
 
 export default class HeartbeatController {
-  public getHeartbeat(req: Request, res: Response) {
+  public getHeartbeat(req: Request, res: Response): void {
     const heartbeatService = new HeartbeatServices();
     const heartbeatResult = heartbeatService.getBeat();
     const beat = heartbeatResult.lastHeartbeatAtTimestamp;

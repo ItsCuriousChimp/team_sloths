@@ -1,3 +1,3 @@
 export default class AccessTokenResponsePayload {
-  accessToken : String | undefined;
+  accessToken : string | undefined;
 }

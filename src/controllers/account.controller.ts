@@ -17,7 +17,7 @@ export default class AccountController extends BaseController {
     const { name, email, password } = signupRequestPayload;
 
     const accountServiceInstance : AccountService = new AccountService();
-    const accessToken : String =
+    const accessToken : string =
     await accountServiceInstance.signUpUserUsingEmailAndPassword(name, email, password);
 
     if (accessToken === '') {
@@ -42,7 +42,7 @@ export default class AccountController extends BaseController {
     const { password } = loginRequestPayload;
 
     const accountServiceInstance : AccountService = new AccountService();
-    const accessToken : String =
+    const accessToken : string =
     await accountServiceInstance.loginUserUsingEmailAndPassword(email, password);
     if (accessToken === '') {
       res.status(400).send('Email address or password incorrect');

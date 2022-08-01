@@ -24,8 +24,8 @@ export default class AutomapperPayloadConfig {
     createMap(mapper, HeartbeatModel, HeartbeatResponsePayload);
     createMap(mapper, BookedSeatModel, BookedSeatResponsePayload);
     createMap(mapper, String, AccessTokenResponsePayload, forMember(
-      (d) => d.accessToken,
-      mapFrom((s) => s),
+      (d: any) => d.accessToken,
+      mapFrom((s: any) => s),
     ));
   }
 }

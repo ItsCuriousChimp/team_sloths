@@ -2,12 +2,12 @@ import { Request, Response } from 'express';
 import RequestContextHelper from '../common/helpers/request-context.helper';
 import UserService from '../services/user.service';
 import UserResponsePayload from './payloads/user-response.payload';
-import UpdateUserRequestPayload from './payloads/request-payload/updateUser-request.payload';
+import UpdateUserRequestPayload from './payloads/request-payload/update-user-request.payload';
 import BaseController from './payloads/request-payload/base.controller';
 
 export default class UserController extends BaseController {
   public async getUserDetails(req : Request, res : Response) {
-    const userId : String = String(RequestContextHelper.getContext().userId);
+    const userId : string = String(RequestContextHelper.getContext().userId);
 
     const userServiceInstance = new UserService();
     const userModel = await userServiceInstance.getUserUsingUserId(userId);

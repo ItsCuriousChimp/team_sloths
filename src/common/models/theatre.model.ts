@@ -1,7 +1,7 @@
 export default class TheatreModel {
-  id: String;
-  name: String;
-  constructor(id: String, name: String) {
+  id: string;
+  name: string;
+  constructor(id: string, name: string) {
     this.id = id;
     this.name = name;
   }

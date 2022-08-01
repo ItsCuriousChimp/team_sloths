@@ -1,8 +1,9 @@
+import DateTimeHelper from '../common/helpers/datetime.helper';
 import HeartbeatModel from '../common/models/heartbeat.model';
 
 export default class HeartbeatRepository {
   public getCurrentHeartbeat(): HeartbeatModel {
-    const heartbeatModelInstance = new HeartbeatModel(new Date());
+    const heartbeatModelInstance = new HeartbeatModel(new DateTimeHelper().getCurrentDate());
     return heartbeatModelInstance;
   }
 }

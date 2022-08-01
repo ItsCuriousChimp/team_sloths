@@ -1,14 +1,14 @@
 import BookedSeatModel from './booked-seat.model';
 
 export default class SeatModel {
-  id : String;
-  screenId : String;
+  id : string;
+  screenId : string;
   seatNumber : Number;
   bookedSeat : BookedSeatModel[] | undefined;
 
   constructor(
-    id : String,
-    screenId : String,
+    id : string,
+    screenId : string,
     seatNumber : Number,
   ) {
     this.id = id;

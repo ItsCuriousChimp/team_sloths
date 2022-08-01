@@ -1,3 +1,3 @@
 export default class RequestContextModel {
-  userId : String | undefined;
+  userId : string | undefined;
 }
