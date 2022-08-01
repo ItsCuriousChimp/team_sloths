@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  api:
+    container_name: bms_api
+    build: .
+    image: quotes-api
+    command: sh -c "npx prisma generate && npm start"
+    ports:
+      - 3000:3000
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: "postgresql://postgres:itsTusharHere@database-2.cwzx82bl8rer.us-east-1.rds.amazonaws.com:5432/bookMyShow?schema=public"

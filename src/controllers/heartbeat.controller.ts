@@ -1,5 +1,5 @@
 import { Response, Request } from 'express';
-import HeartbeatResponsePayload from './payloads/heartbeat-response.payload';
+import HeartbeatResponsePayload from './payloads/response-payload/heartbeat-response.payload';
 import HeartbeatServices from '../services/heartbeat.service';
 import mapper from '../common/mapper';
 import HeartbeatModel from '../common/models/heartbeat.model';

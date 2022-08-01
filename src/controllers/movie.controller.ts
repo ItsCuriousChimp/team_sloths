@@ -1,6 +1,6 @@
 import { Response, Request } from 'express';
 import MovieModel from '../common/models/movie.model';
-import MovieResponsePayload from './payloads/movie-response.payload';
+import MovieResponsePayload from './payloads/response-payload/movie-response.payload';
 import MovieService from '../services/movie.service';
 import mapper from '../common/mapper';
 

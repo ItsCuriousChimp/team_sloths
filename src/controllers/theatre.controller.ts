@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import TheatreModel from '../common/models/theatre.model';
-import TheatreResponsePayload from './payloads/theatre-response.payload';
+import TheatreResponsePayload from './payloads/response-payload/theatre-response.payload';
 import TheatreService from '../services/theatre.service';
 import ShowModel from '../common/models/show.model';
-import UpcomingMovieShowInTheatreResponsePayload from './payloads/upcoming-movie-show-in-theatre-response.payload.ts';
+import UpcomingMovieShowInTheatreResponsePayload from './payloads/response-payload/upcoming-movie-show-in-theatre-response.payload.ts';
 import mapper from '../common/mapper';
 
 export default class TheatreController {
