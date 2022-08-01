@@ -11,7 +11,7 @@ export default class AccountController extends BaseController {
     try {
       signupRequestPayload = super.validateAndExtract(req.body, SignupRequestPayload);
     } catch (err: any) {
-      res.status(401).send(err.message);
+      res.status(400).send(err.message);
       return;
     }
     const { name, email, password } = signupRequestPayload;
