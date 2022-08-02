@@ -9,4 +9,5 @@ RUN npm install
 COPY . .
 
 EXPOSE 3000
+
 CMD [ "./entry-point.sh" ]

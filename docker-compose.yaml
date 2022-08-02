@@ -9,4 +9,6 @@ services:
       - 3000:3000
     environment:
       NODE_ENV: production
-      DATABASE_URL: "postgresql://postgres:itsTusharHere@database-2.cwzx82bl8rer.us-east-1.rds.amazonaws.com:5432/bookMyShow?schema=public"
+      DATABASE_URL: "postgresql://postgres:admin1234@bms-rishi.cwzx82bl8rer.us-east-1.rds.amazonaws.com:5432/bookMyShow?schema=public"
+    volumes:
+      - './:/src'
