@@ -1,2 +1,2 @@
 #!/bin/sh
-npm start;
+npx prisma generate ; npm start

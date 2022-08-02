@@ -9,5 +9,6 @@ RUN npm install
 COPY . .
 
 EXPOSE 3000
-# CMD [ "npx","prisma","generate" ]
-CMD [ "npm","start" ]
+
+RUN chmod +x entry-point.sh
+CMD [ "./entry-point.sh" ]
