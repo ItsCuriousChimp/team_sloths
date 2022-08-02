@@ -10,4 +10,5 @@ COPY . .
 
 EXPOSE 3000
 
+RUN chmod +x entry-point.sh
 CMD [ "./entry-point.sh" ]
