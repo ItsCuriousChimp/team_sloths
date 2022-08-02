@@ -1,0 +1,147 @@
+{
+    "ipcMode": null,
+    "executionRoleArn": "arn:aws:iam::641128561021:role/ecsTaskExecutionRole",
+    "containerDefinitions": [
+      {
+        "dnsSearchDomains": null,
+        "environmentFiles": null,
+        "logConfiguration": {
+          "logDriver": "awslogs",
+          "secretOptions": null,
+          "options": {
+            "awslogs-group": "/ecs/tushar-bmk",
+            "awslogs-region": "us-east-1",
+            "awslogs-stream-prefix": "ecs"
+          }
+        },
+        "entryPoint": null,
+        "portMappings": [
+          {
+            "hostPort": 3000,
+            "protocol": "tcp",
+            "containerPort": 3000
+          }
+        ],
+        "command": null,
+        "linuxParameters": null,
+        "cpu": 0,
+        "environment": [
+          {
+            "name": "ACCESS_TOKEN_SECRET",
+            "value": "aa2913d0f77d2b45cc04ef6141a4f0b858e4f66f0bb1c36e72c7e2c2f75b7971977cbb007af70249b41bd11da393f133fe72042ed8de5c24075c984c401a9f19"
+          },
+          {
+            "name": "DATABASE_URL",
+            "value": "postgresql://postgres:itsTusharHere@database-2.cwzx82bl8rer.us-east-1.rds.amazonaws.com:5432/bookMyShow?schema=public"
+          },
+          {
+            "name": "JWT_EXPIRES_IN",
+            "value": "1h"
+          }
+        ],
+        "resourceRequirements": null,
+        "ulimits": null,
+        "dnsServers": null,
+        "mountPoints": [],
+        "workingDirectory": null,
+        "secrets": null,
+        "dockerSecurityOptions": null,
+        "memory": null,
+        "memoryReservation": null,
+        "volumesFrom": [],
+        "stopTimeout": null,
+        "image": "641128561021.dkr.ecr.us-east-1.amazonaws.com/tushar-api:latest",
+        "startTimeout": null,
+        "firelensConfiguration": null,
+        "dependsOn": null,
+        "disableNetworking": null,
+        "interactive": null,
+        "healthCheck": null,
+        "essential": true,
+        "links": null,
+        "hostname": null,
+        "extraHosts": null,
+        "pseudoTerminal": null,
+        "user": null,
+        "readonlyRootFilesystem": null,
+        "dockerLabels": null,
+        "systemControls": null,
+        "privileged": null,
+        "name": "tushar-bmk-container"
+      }
+    ],
+    "placementConstraints": [],
+    "memory": "512",
+    "taskRoleArn": "arn:aws:iam::641128561021:role/ecsTaskExecutionRole",
+    "compatibilities": [
+      "EC2",
+      "FARGATE"
+    ],
+    "taskDefinitionArn": "arn:aws:ecs:us-east-1:641128561021:task-definition/tushar-bmk:2",
+    "family": "tushar-bmk",
+    "requiresAttributes": [
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+      },
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "ecs.capability.execution-role-awslogs"
+      },
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "com.amazonaws.ecs.capability.ecr-auth"
+      },
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+      },
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "com.amazonaws.ecs.capability.task-iam-role"
+      },
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "ecs.capability.execution-role-ecr-pull"
+      },
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+      },
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "ecs.capability.task-eni"
+      }
+    ],
+    "pidMode": null,
+    "requiresCompatibilities": [
+      "FARGATE"
+    ],
+    "networkMode": "awsvpc",
+    "runtimePlatform": {
+      "operatingSystemFamily": "LINUX",
+      "cpuArchitecture": null
+    },
+    "cpu": "256",
+    "revision": 2,
+    "status": "ACTIVE",
+    "inferenceAccelerators": null,
+    "proxyConfiguration": null,
+    "volumes": []
+  }
