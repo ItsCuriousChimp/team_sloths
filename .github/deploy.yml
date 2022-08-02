@@ -1,6 +1,9 @@
 name: Deploy to AWS ECR
 
-on: push
+on:
+  push:
+    branches:
+      - features/github-actions-r
 
 jobs:
   build:
