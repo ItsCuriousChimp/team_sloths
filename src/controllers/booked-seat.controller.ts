@@ -1,7 +1,8 @@
+/* eslint-disable consistent-return */
 import { Request, Response } from 'express';
 import BookedSeatModel from '../common/models/booked-seat.model';
 import BookedSeatService from '../services/booked-seat.service';
-import BookedSeatResponsePayload from './payloads/booked-seat-response.payload';
+import BookedSeatResponsePayload from './payloads/response-payload/booked-seat-response.payload';
 import mapper from '../common/mapper';
 
 export default class BookedSeatController {

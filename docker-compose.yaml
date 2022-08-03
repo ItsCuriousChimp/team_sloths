@@ -3,7 +3,7 @@ services:
   api:
     container_name: bms_api
     build: .
-    image: quotes-api
+    image: latest
     command: sh -c "npx prisma generate && npm start"
     ports:
       - 3000:3000
