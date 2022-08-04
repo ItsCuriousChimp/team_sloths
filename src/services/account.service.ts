@@ -4,81 +4,88 @@ import AccessTokenModel from '../common/models/access-token.model';
 import AccountModel from '../common/models/account.model';
 import AccountRepository from '../repositories/account.repository';
 import UserRepository from '../repositories/user.repository';
+import TransactionsMiddleware from '../repositories/transaction-middleware.repository';
 
 export default class AccountService {
   public async signUpUserUsingEmailAndPassword(
-    name : string,
-    email : string,
-    password : string,
-  ) : Promise<string> {
-    const accountRepositoryInstance : AccountRepository = new AccountRepository();
+    name: string,
+    email: string,
+    password: string,
+  ): Promise<string> {
+    const transactionMiddleware = new TransactionsMiddleware();
+    return await transactionMiddleware.transactionMiddleware(async function (dataStorageInstance: any) {
+      const accountRepositoryInstance: AccountRepository = new AccountRepository();
 
-    const accountByUsername : AccountModel | null =
-    await accountRepositoryInstance.getAccountByUsername(email);
+      const accountByUsername: AccountModel | null =
+        await accountRepositoryInstance.getAccountByUsername(dataStorageInstance, email);
 
-    // if account with this username already exists
-    if (accountByUsername !== null) {
-      return '';
-    }
+      // if account with this username already exists
+      if (accountByUsername !== null) {
+        return '';
+      }
 
-    // Hash the password string
-    const passwordHash : string = await new HashHelper().hashString(password);
+      // Hash the password string
+      const passwordHash: string = await new HashHelper().hashString(password);
 
-    // Create account without user id
-    const accountId : string =
-    await accountRepositoryInstance.createAccountWithoutUserId(email, passwordHash);
+      // Create account without user id
+      const accountId: string =
+        await accountRepositoryInstance.createAccountWithoutUserId(dataStorageInstance, email, passwordHash);
 
-    // Create user
-    const userRepositoryInstance = new UserRepository();
-    const userId : string = await userRepositoryInstance.createUser(name, email);
+      // Create user
+      const userRepositoryInstance = new UserRepository();
+      const userId: string = await userRepositoryInstance.createUser(dataStorageInstance, name, email);
 
-    // Update user id in account
-    const accountModel : AccountModel =
-    await accountRepositoryInstance.updateUserIdInAccount(userId, accountId);
+      // Update user id in account
+      const accountModel: AccountModel =
+        await accountRepositoryInstance.updateUserIdInAccount(dataStorageInstance, userId, accountId);
 
-    // Initialize AccessTokenModel
-    const accessTokenModel : AccessTokenModel =
-    new AccessTokenModel(
-      String(accountModel.userId),
-    );
+      // Initialize AccessTokenModel
+      const accessTokenModel: AccessTokenModel =
+        new AccessTokenModel(
+          String(accountModel.userId),
+        );
 
-    // Create jwt token from AccessTokenModel
-    const accessToken : string = new JWTHelper().generateJWTToken(accessTokenModel);
+      // Create jwt token from AccessTokenModel
+      const accessToken: string = new JWTHelper().generateJWTToken(accessTokenModel);
 
-    // return AccessTokenModel
-    return accessToken;
+      // return AccessTokenModel
+      return accessToken;
+    });
   }
 
-  public async loginUserUsingEmailAndPassword(email : string, password: string) : Promise<string> {
-    const accountRepositoryInstance : AccountRepository = new AccountRepository();
+  public async loginUserUsingEmailAndPassword(email: string, password: string): Promise<string> {
+    const transactionMiddleware = new TransactionsMiddleware();
+    return await transactionMiddleware.transactionMiddleware(async function (dataStorageInstance: any) {
+      const accountRepositoryInstance: AccountRepository = new AccountRepository();
 
-    const accountByUsername : AccountModel | null =
-    await accountRepositoryInstance.getAccountByUsername(email);
+      const accountByUsername: AccountModel | null =
+        await accountRepositoryInstance.getAccountByUsername(dataStorageInstance, email);
 
-    // if account with this username does not exists
-    if (accountByUsername === null) {
-      return '';
-    }
+      // if account with this username does not exists
+      if (accountByUsername === null) {
+        return '';
+      }
 
-    // Check if entered password matches with the hashed password in database
-    const isPasswordSame : Boolean =
-    await new HashHelper().isHashValueSame(password, accountByUsername.passwordHash);
+      // Check if entered password matches with the hashed password in database
+      const isPasswordSame: Boolean =
+        await new HashHelper().isHashValueSame(password, accountByUsername.passwordHash);
 
-    // If password is incorrect
-    if (!isPasswordSame) {
-      return '';
-    }
+      // If password is incorrect
+      if (!isPasswordSame) {
+        return '';
+      }
 
-    // Initialize AccessTokenModel
-    const accessTokenModel : AccessTokenModel =
-    new AccessTokenModel(
-      String(accountByUsername.userId),
-    );
+      // Initialize AccessTokenModel
+      const accessTokenModel: AccessTokenModel =
+        new AccessTokenModel(
+          String(accountByUsername.userId),
+        );
 
-    // Create jwt token from AccessTokenModel
-    const accessToken : string = new JWTHelper().generateJWTToken(accessTokenModel);
+      // Create jwt token from AccessTokenModel
+      const accessToken: string = new JWTHelper().generateJWTToken(accessTokenModel);
 
-    // return AccessTokenModel
-    return accessToken;
+      // return AccessTokenModel
+      return accessToken;
+    });
   }
 }

@@ -1,28 +1,35 @@
 import UserModel from '../common/models/user.model';
 import CityRepository from '../repositories/city.repository';
+import TransactionsMiddleware from '../repositories/transaction-middleware.repository';
 import UserRepository from '../repositories/user.repository';
 
 export default class UserService {
-  public async getUserUsingUserId(userId: string) : Promise<UserModel | null> {
-    const userRepositoryInstance : UserRepository = new UserRepository();
-    const userByUserId : UserModel | null = await userRepositoryInstance.getUserUsingUserId(userId);
-    return userByUserId;
+  public async getUserUsingUserId(userId: string): Promise<UserModel | null> {
+    const transactionMiddleware = new TransactionsMiddleware();
+    return await transactionMiddleware.transactionMiddleware(async function (dataStorageInstance: any) {
+      const userRepositoryInstance: UserRepository = new UserRepository();
+      const userByUserId: UserModel | null = await userRepositoryInstance.getUserUsingUserId(dataStorageInstance, userId);
+      return userByUserId;
+    });
   }
 
   public async updateUserDetails(
     userId: string,
-    name : string,
+    name: string,
     phoneNumber: string,
     cityId: string,
-  ) : Promise<UserModel | null> {
-    const cityRepository = new CityRepository();
-    const city = await cityRepository.getCityByCityId(cityId);
-    if (cityId && city === null) {
-      return null;
-    }
-    const userRepositoryInstance = new UserRepository();
-    const updatedUser : UserModel | null =
-    await userRepositoryInstance.updateUserDetails(userId, name, phoneNumber, cityId);
-    return updatedUser;
+  ): Promise<UserModel | null> {
+    const transactionMiddleware = new TransactionsMiddleware();
+    return await transactionMiddleware.transactionMiddleware(async function (dataStorageInstance: any) {
+      const cityRepository = new CityRepository();
+      const city = await cityRepository.getCityByCityId(cityId);
+      if (cityId && city === null) {
+        return null;
+      }
+      const userRepositoryInstance = new UserRepository();
+      const updatedUser: UserModel | null =
+        await userRepositoryInstance.updateUserDetails(dataStorageInstance, userId, name, phoneNumber, cityId);
+      return updatedUser;
+    });
   }
 }

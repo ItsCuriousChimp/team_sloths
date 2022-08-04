@@ -1,11 +1,10 @@
-import { PrismaClient } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import DateTimeHelper from '../common/helpers/datetime.helper';
 import UserModel from '../common/models/user.model';
 
-const prisma: PrismaClient = new PrismaClient();
 
 export default class UserRepository {
-  public async createUser(name : string, email: string) : Promise<string> {
+  public async createUser(prisma: Prisma.TransactionClient, name: string, email: string): Promise<string> {
     const userData = await prisma.user.create({
       data: {
         name,
@@ -17,7 +16,7 @@ export default class UserRepository {
     return userData.id;
   }
 
-  public async getUserUsingUserId(userId : string) : Promise<UserModel | null> {
+  public async getUserUsingUserId(prisma: Prisma.TransactionClient, userId: string): Promise<UserModel | null> {
     const userData = await prisma.user.findFirst({
       where: {
         id: userId,
@@ -30,11 +29,12 @@ export default class UserRepository {
   }
 
   public async updateUserDetails(
+    prisma: Prisma.TransactionClient,
     userId: string,
-    name : string,
+    name: string,
     phoneNumber: string,
     cityId: string,
-  ) : Promise<UserModel | null> {
+  ): Promise<UserModel | null> {
     const userData = await prisma.user.update({
       where: {
         id: userId,
@@ -51,9 +51,9 @@ export default class UserRepository {
     return this.makeUserModel(userData);
   }
 
-  private makeUserModel(userData : any) : UserModel | null {
+  private makeUserModel(userData: any): UserModel | null {
     if (userData === null) { return null; }
-    const userModel : UserModel = new UserModel(
+    const userModel: UserModel = new UserModel(
       userData.id,
       userData.name,
       userData.email,

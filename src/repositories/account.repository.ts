@@ -1,12 +1,9 @@
-import { account, PrismaClient } from '@prisma/client';
-// import { createMap, forMember, mapFrom } from '@automapper/core';
-// import { mapper } from '../common/mapper/mapper';
+import { Prisma, account } from '@prisma/client';
 import AccountModel from '../common/models/account.model';
-
-const prisma: PrismaClient = new PrismaClient();
 
 export default class AccountRepository {
   public async getAccountByUsername(
+    prisma: Prisma.TransactionClient,
     username : string,
   ) : Promise<AccountModel | null> {
     const record : account | null = await prisma.account.findFirst({
@@ -23,6 +20,7 @@ export default class AccountRepository {
   }
 
   public async createAccountWithoutUserId(
+    prisma: Prisma.TransactionClient,
     username : string,
     passwordHash : string,
   ) : Promise<string> {
@@ -37,6 +35,7 @@ export default class AccountRepository {
   }
 
   public async updateUserIdInAccount(
+    prisma: Prisma.TransactionClient,
     userId: string,
     accountId: string,
   ) : Promise<AccountModel> {
