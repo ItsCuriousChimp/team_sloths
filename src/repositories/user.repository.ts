@@ -1,12 +1,16 @@
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import DateTimeHelper from '../common/helpers/datetime.helper';
 import UserModel from '../common/models/user.model';
 
 const prisma: PrismaClient = new PrismaClient();
 
 export default class UserRepository {
-  public async createUser(name : string, email: string) : Promise<string> {
-    const userData = await prisma.user.create({
+  public async createUser(
+    prismaInstance : Prisma.TransactionClient,
+    name : string,
+    email: string,
+  ) : Promise<string> {
+    const userData = await prismaInstance.user.create({
       data: {
         name,
         email,

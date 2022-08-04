@@ -3,6 +3,7 @@ import JWTHelper from '../common/helpers/jwt.helper';
 import AccessTokenModel from '../common/models/access-token.model';
 import AccountModel from '../common/models/account.model';
 import AccountRepository from '../repositories/account.repository';
+import TransactionsDataStorage from '../repositories/transactions-data-storage.repository';
 import UserRepository from '../repositories/user.repository';
 
 export default class AccountService {
@@ -24,22 +25,26 @@ export default class AccountService {
     // Hash the password string
     const passwordHash : string = await new HashHelper().hashString(password);
 
-    // Create account without user id
-    const accountId : string =
-    await accountRepositoryInstance.createAccountWithoutUserId(email, passwordHash);
+    const transactionDataStorage : TransactionsDataStorage = new TransactionsDataStorage();
 
-    // Create user
-    const userRepositoryInstance = new UserRepository();
-    const userId : string = await userRepositoryInstance.createUser(name, email);
+    const runInTransaction : AccountModel =
+    await transactionDataStorage.runInTransaction(async (dataStorageInstance : any) => {
+      const accountId : string =
+      await new AccountRepository().createAccountWithoutUserId(dataStorageInstance, name, email);
 
-    // Update user id in account
-    const accountModel : AccountModel =
-    await accountRepositoryInstance.updateUserIdInAccount(userId, accountId);
+      const userId : string =
+      await new UserRepository().createUser(dataStorageInstance, email, passwordHash);
+
+      const accountModel : AccountModel =
+      await new AccountRepository().updateUserIdInAccount(dataStorageInstance, userId, accountId);
+
+      return accountModel;
+    });
 
     // Initialize AccessTokenModel
     const accessTokenModel : AccessTokenModel =
     new AccessTokenModel(
-      String(accountModel.userId),
+      String(runInTransaction.userId),
     );
 
     // Create jwt token from AccessTokenModel
