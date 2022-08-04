@@ -1,12 +1,15 @@
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 
 const prisma: PrismaClient = new PrismaClient();
 
 export default class TransactionsDataStorage {
-  public async runInTransaction(func : any) {
-    return prisma.$transaction(async (prismaInstance:any) => func(prismaInstance), {
-      maxWait: 5000,
-      timeout: 10000,
-    });
+  public async runInTransaction(func : any) : Promise<any> {
+    return prisma.$transaction(
+      async (prismaInstance : Prisma.TransactionClient) => func(prismaInstance),
+      {
+        maxWait: 5000,
+        timeout: 10000,
+      },
+    );
   }
 }
