@@ -3,7 +3,7 @@ import { Prisma, PrismaClient } from '@prisma/client';
 const prisma: PrismaClient = new PrismaClient();
 
 export default class TransactionsDataStorage {
-  public async runInTransaction(func : any) : Promise<any> {
+  public async executeInTransaction(func : any) : Promise<any> {
     return prisma.$transaction(
       async (prismaInstance : Prisma.TransactionClient) => func(prismaInstance),
       {

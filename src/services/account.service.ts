@@ -27,8 +27,8 @@ export default class AccountService {
 
     const transactionDataStorage : TransactionsDataStorage = new TransactionsDataStorage();
 
-    const runInTransaction : AccountModel =
-    await transactionDataStorage.runInTransaction(async (dataStorageInstance : any) => {
+    const accountModelOfNewUser : AccountModel =
+    await transactionDataStorage.executeInTransaction(async (dataStorageInstance : any) => {
       const accountId : string =
       await new AccountRepository().createAccountWithoutUserId(dataStorageInstance, name, email);
 
@@ -44,7 +44,7 @@ export default class AccountService {
     // Initialize AccessTokenModel
     const accessTokenModel : AccessTokenModel =
     new AccessTokenModel(
-      String(runInTransaction.userId),
+      String(accountModelOfNewUser.userId),
     );
 
     // Create jwt token from AccessTokenModel
