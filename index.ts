@@ -9,10 +9,17 @@ import showRoute from './src/routes/show.route';
 import AutomapperPayloadConfig from './src/controllers/payloads/automapper.config';
 import mapper from './src/common/mapper';
 
+const swaggerUi = require('swagger-ui-express');
+const fs = require('fs');
+const swaggerDocument = require('./swagger.json');
+
+const customCss = fs.readFileSync((`${process.cwd()}/swagger.css`), 'utf8');
+
 const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, { customCss }));
 
 AutomapperPayloadConfig.init(mapper);
 
