@@ -27,14 +27,16 @@ export default class AccountService {
 
     const transactionDataStorage : TransactionsDataStorage = new TransactionsDataStorage();
 
+    // run the below commands in transaction either all succeed or all fail
     const accountModelOfNewUser : AccountModel =
     await transactionDataStorage.executeInTransaction(async (dataStorageInstance : any) => {
+      // make account without user id
       const accountId : string =
       await new AccountRepository().createAccountWithoutUserId(dataStorageInstance, name, email);
-
+      // make user
       const userId : string =
       await new UserRepository().createUser(dataStorageInstance, email, passwordHash);
-
+      // add user id to account
       const accountModel : AccountModel =
       await new AccountRepository().updateUserIdInAccount(dataStorageInstance, userId, accountId);
 
