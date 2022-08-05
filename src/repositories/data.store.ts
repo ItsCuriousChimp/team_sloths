@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export default class TransactionsMiddleware {
+export default class DataStore {
   async transactionMiddleware(body: any) {
     const response = await prisma.$transaction(
       async (prismaInstance: any): Promise<any> => {

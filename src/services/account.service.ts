@@ -4,7 +4,7 @@ import AccessTokenModel from '../common/models/access-token.model';
 import AccountModel from '../common/models/account.model';
 import AccountRepository from '../repositories/account.repository';
 import UserRepository from '../repositories/user.repository';
-import TransactionsMiddleware from '../repositories/transaction-middleware.repository';
+import DataStore from '../repositories/data.store';
 
 export default class AccountService {
   public async signUpUserUsingEmailAndPassword(
@@ -12,7 +12,7 @@ export default class AccountService {
     email: string,
     password: string,
   ): Promise<string> {
-    const transactionMiddleware = new TransactionsMiddleware();
+    const transactionMiddleware = new DataStore();
     const res =
     await transactionMiddleware.transactionMiddleware(async (dataStorageInstance: any) => {
       const accountRepositoryInstance: AccountRepository =
@@ -57,41 +57,35 @@ export default class AccountService {
   }
 
   public async loginUserUsingEmailAndPassword(email: string, password: string): Promise<string> {
-    const transactionMiddleware = new TransactionsMiddleware();
-    const res =
-    await transactionMiddleware.transactionMiddleware(async (dataStorageInstance: any) => {
-      const accountRepositoryInstance: AccountRepository =
-      new AccountRepository(dataStorageInstance);
+    const accountRepositoryInstance: AccountRepository = new AccountRepository();
 
-      const accountByUsername: AccountModel | null =
+    const accountByUsername: AccountModel | null =
         await accountRepositoryInstance.getAccountByUsername(email);
 
-      // if account with this username does not exists
-      if (accountByUsername === null) {
-        return '';
-      }
+    // if account with this username does not exists
+    if (accountByUsername === null) {
+      return '';
+    }
 
-      // Check if entered password matches with the hashed password in database
-      const isPasswordSame: Boolean =
+    // Check if entered password matches with the hashed password in database
+    const isPasswordSame: Boolean =
         await new HashHelper().isHashValueSame(password, accountByUsername.passwordHash);
 
-      // If password is incorrect
-      if (!isPasswordSame) {
-        return '';
-      }
+    // If password is incorrect
+    if (!isPasswordSame) {
+      return '';
+    }
 
-      // Initialize AccessTokenModel
-      const accessTokenModel: AccessTokenModel =
+    // Initialize AccessTokenModel
+    const accessTokenModel: AccessTokenModel =
         new AccessTokenModel(
           String(accountByUsername.userId),
         );
 
-      // Create jwt token from AccessTokenModel
-      const accessToken: string = new JWTHelper().generateJWTToken(accessTokenModel);
+    // Create jwt token from AccessTokenModel
+    const accessToken: string = new JWTHelper().generateJWTToken(accessTokenModel);
 
-      // return AccessTokenModel
-      return accessToken;
-    });
-    return res;
+    // return AccessTokenModel
+    return accessToken;
   }
 }
