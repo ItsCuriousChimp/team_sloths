@@ -1,16 +1,13 @@
-import { Prisma, PrismaClient } from '@prisma/client';
 import DateTimeHelper from '../common/helpers/datetime.helper';
 import UserModel from '../common/models/user.model';
+import BaseRepository from './base.repository';
 
-const prisma: PrismaClient = new PrismaClient();
-
-export default class UserRepository {
+export default class UserRepository extends BaseRepository {
   public async createUser(
-    prismaInstance : Prisma.TransactionClient,
     name : string,
     email: string,
   ) : Promise<string> {
-    const userData = await prismaInstance.user.create({
+    const userData = await this.dsClient.user.create({
       data: {
         name,
         email,
@@ -22,7 +19,7 @@ export default class UserRepository {
   }
 
   public async getUserUsingUserId(userId : string) : Promise<UserModel | null> {
-    const userData = await prisma.user.findFirst({
+    const userData = await this.dsClient.user.findFirst({
       where: {
         id: userId,
       },
@@ -39,7 +36,7 @@ export default class UserRepository {
     phoneNumber: string,
     cityId: string,
   ) : Promise<UserModel | null> {
-    const userData = await prisma.user.update({
+    const userData = await this.dsClient.user.update({
       where: {
         id: userId,
       },

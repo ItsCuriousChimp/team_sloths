@@ -1,13 +1,12 @@
-import { account, Prisma, PrismaClient } from '@prisma/client';
+import { account } from '@prisma/client';
 import AccountModel from '../common/models/account.model';
+import BaseRepository from './base.repository';
 
-const prisma: PrismaClient = new PrismaClient();
-
-export default class AccountRepository {
+export default class AccountRepository extends BaseRepository {
   public async getAccountByUsername(
     username : string,
   ) : Promise<AccountModel | null> {
-    const record : account | null = await prisma.account.findFirst({
+    const record : account | null = await this.dsClient.account.findFirst({
       where: {
         username,
       },
@@ -21,11 +20,10 @@ export default class AccountRepository {
   }
 
   public async createAccountWithoutUserId(
-    prismaInstance : Prisma.TransactionClient,
     username : string,
     passwordHash : string,
   ) : Promise<string> {
-    const record = await prismaInstance.account.create({
+    const record = await this.dsClient.account.create({
       data: {
         username,
         passwordHash,
@@ -36,11 +34,10 @@ export default class AccountRepository {
   }
 
   public async updateUserIdInAccount(
-    prismaInstance : Prisma.TransactionClient,
     userId: string,
     accountId: string,
   ) : Promise<AccountModel> {
-    const record = await prismaInstance.account.update({
+    const record = await this.dsClient.account.update({
       where: {
         id: accountId,
       },

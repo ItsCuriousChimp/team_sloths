@@ -1,11 +1,9 @@
-import { PrismaClient } from '@prisma/client';
 import CityModel from '../common/models/city.model';
+import BaseRepository from './base.repository';
 
-const prisma: PrismaClient = new PrismaClient();
-
-export default class CityRepository {
+export default class CityRepository extends BaseRepository {
   public async getCityByCityId(cityId : string) :Promise<CityModel | null> {
-    const city = await prisma.city.findFirst({
+    const city = await this.dsClient.city.findFirst({
       where: {
         id: cityId,
       },
