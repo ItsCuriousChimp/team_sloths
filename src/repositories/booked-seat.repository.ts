@@ -1,11 +1,9 @@
-import { PrismaClient } from '@prisma/client';
 import BookedSeatModel from '../common/models/booked-seat.model';
+import BaseRepository from './base.repository';
 
-const prisma: PrismaClient = new PrismaClient();
-
-export default class BookedSeatRepository {
+export default class BookedSeatRepository extends BaseRepository {
   public async getBookedSeatsByShowId(showIdUrl : string) : Promise<BookedSeatModel[]> {
-    const bookedSeat : any = await prisma.bookedSeat.findMany({
+    const bookedSeat : any = await this.dsClient.bookedSeat.findMany({
       where: {
         showId: showIdUrl,
       },

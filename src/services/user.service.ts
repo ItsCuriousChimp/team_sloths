@@ -6,11 +6,14 @@ import UserRepository from '../repositories/user.repository';
 export default class UserService {
   public async getUserUsingUserId(userId: string): Promise<UserModel | null> {
     const transactionMiddleware = new TransactionsMiddleware();
-    return await transactionMiddleware.transactionMiddleware(async function (dataStorageInstance: any) {
-      const userRepositoryInstance: UserRepository = new UserRepository();
-      const userByUserId: UserModel | null = await userRepositoryInstance.getUserUsingUserId(dataStorageInstance, userId);
+    const res =
+    await transactionMiddleware.transactionMiddleware(async (dataStorageInstance: any) => {
+      const userRepositoryInstance: UserRepository = new UserRepository(dataStorageInstance);
+      const userByUserId: UserModel | null =
+      await userRepositoryInstance.getUserUsingUserId(userId);
       return userByUserId;
     });
+    return res;
   }
 
   public async updateUserDetails(
@@ -20,16 +23,18 @@ export default class UserService {
     cityId: string,
   ): Promise<UserModel | null> {
     const transactionMiddleware = new TransactionsMiddleware();
-    return await transactionMiddleware.transactionMiddleware(async function (dataStorageInstance: any) {
+    const res =
+    await transactionMiddleware.transactionMiddleware(async (dataStorageInstance: any) => {
       const cityRepository = new CityRepository();
       const city = await cityRepository.getCityByCityId(cityId);
       if (cityId && city === null) {
         return null;
       }
-      const userRepositoryInstance = new UserRepository();
+      const userRepositoryInstance = new UserRepository(dataStorageInstance);
       const updatedUser: UserModel | null =
-        await userRepositoryInstance.updateUserDetails(dataStorageInstance, userId, name, phoneNumber, cityId);
+        await userRepositoryInstance.updateUserDetails(userId, name, phoneNumber, cityId);
       return updatedUser;
     });
+    return res;
   }
 }

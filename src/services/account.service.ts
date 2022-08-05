@@ -13,11 +13,13 @@ export default class AccountService {
     password: string,
   ): Promise<string> {
     const transactionMiddleware = new TransactionsMiddleware();
-    return await transactionMiddleware.transactionMiddleware(async function (dataStorageInstance: any) {
-      const accountRepositoryInstance: AccountRepository = new AccountRepository();
+    const res =
+    await transactionMiddleware.transactionMiddleware(async (dataStorageInstance: any) => {
+      const accountRepositoryInstance: AccountRepository =
+      new AccountRepository(dataStorageInstance);
 
       const accountByUsername: AccountModel | null =
-        await accountRepositoryInstance.getAccountByUsername(dataStorageInstance, email);
+        await accountRepositoryInstance.getAccountByUsername(email);
 
       // if account with this username already exists
       if (accountByUsername !== null) {
@@ -29,15 +31,15 @@ export default class AccountService {
 
       // Create account without user id
       const accountId: string =
-        await accountRepositoryInstance.createAccountWithoutUserId(dataStorageInstance, email, passwordHash);
+        await accountRepositoryInstance.createAccountWithoutUserId(email, passwordHash);
 
       // Create user
-      const userRepositoryInstance = new UserRepository();
-      const userId: string = await userRepositoryInstance.createUser(dataStorageInstance, name, email);
+      const userRepositoryInstance = new UserRepository(dataStorageInstance);
+      const userId: string = await userRepositoryInstance.createUser(name, email);
 
       // Update user id in account
       const accountModel: AccountModel =
-        await accountRepositoryInstance.updateUserIdInAccount(dataStorageInstance, userId, accountId);
+        await accountRepositoryInstance.updateUserIdInAccount(userId, accountId);
 
       // Initialize AccessTokenModel
       const accessTokenModel: AccessTokenModel =
@@ -51,15 +53,18 @@ export default class AccountService {
       // return AccessTokenModel
       return accessToken;
     });
+    return res;
   }
 
   public async loginUserUsingEmailAndPassword(email: string, password: string): Promise<string> {
     const transactionMiddleware = new TransactionsMiddleware();
-    return await transactionMiddleware.transactionMiddleware(async function (dataStorageInstance: any) {
-      const accountRepositoryInstance: AccountRepository = new AccountRepository();
+    const res =
+    await transactionMiddleware.transactionMiddleware(async (dataStorageInstance: any) => {
+      const accountRepositoryInstance: AccountRepository =
+      new AccountRepository(dataStorageInstance);
 
       const accountByUsername: AccountModel | null =
-        await accountRepositoryInstance.getAccountByUsername(dataStorageInstance, email);
+        await accountRepositoryInstance.getAccountByUsername(email);
 
       // if account with this username does not exists
       if (accountByUsername === null) {
@@ -87,5 +92,6 @@ export default class AccountService {
       // return AccessTokenModel
       return accessToken;
     });
+    return res;
   }
 }
