@@ -4,8 +4,9 @@ import BookedSeatModel from '../common/models/booked-seat.model';
 import BookedSeatService from '../services/booked-seat.service';
 import BookedSeatResponsePayload from './payloads/response-payload/booked-seat-response.payload';
 import mapper from '../common/mapper';
+import BaseController from './base.controller';
 
-export default class BookedSeatController {
+export default class BookedSeatController extends BaseController {
   public async getBookedSeatsByMovieId(req : Request, res: Response) {
     const showIdUrl : string = String(req.query.showId);
     const bookedSeatServiceInstance : BookedSeatService = new BookedSeatService();

@@ -3,8 +3,9 @@ import HeartbeatResponsePayload from './payloads/response-payload/heartbeat-resp
 import HeartbeatServices from '../services/heartbeat.service';
 import mapper from '../common/mapper';
 import HeartbeatModel from '../common/models/heartbeat.model';
+import BaseController from './base.controller';
 
-export default class HeartbeatController {
+export default class HeartbeatController extends BaseController {
   public getHeartbeat(req : Request, res: Response) : void {
     const heartbeatService : HeartbeatServices = new HeartbeatServices();
     const heartbeatResult : HeartbeatModel = heartbeatService.getBeat();
