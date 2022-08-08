@@ -3,9 +3,9 @@ import CityRepository from '../repositories/city.repository';
 import UserRepository from '../repositories/user.repository';
 
 export default class UserService {
-  public async getUserUsingUserId(userId: string) : Promise<UserModel | null> {
+  public async getUserUsingUserId(userId: string) : Promise<UserModel> {
     const userRepositoryInstance : UserRepository = new UserRepository();
-    const userByUserId : UserModel | null = await userRepositoryInstance.getUserUsingUserId(userId);
+    const userByUserId : UserModel = await userRepositoryInstance.getUserUsingUserId(userId);
     return userByUserId;
   }
 
@@ -14,14 +14,12 @@ export default class UserService {
     name : string,
     phoneNumber: string,
     cityId: string,
-  ) : Promise<UserModel | null> {
+  ) : Promise<UserModel> {
     const cityRepository = new CityRepository();
-    const city = await cityRepository.getCityByCityId(cityId);
-    if (cityId && city === null) {
-      return null;
-    }
+    // check if city exists in database
+    await cityRepository.getCityByCityId(cityId);
     const userRepositoryInstance = new UserRepository();
-    const updatedUser : UserModel | null =
+    const updatedUser : UserModel =
     await userRepositoryInstance.updateUserDetails(userId, name, phoneNumber, cityId);
     return updatedUser;
   }

@@ -1,20 +1,18 @@
 import { account } from '@prisma/client';
+import ArgumentValidationError from '../common/errors/argument-validation.error';
 import AccountModel from '../common/models/account.model';
 import BaseRepository from './base.repository';
 
 export default class AccountRepository extends BaseRepository {
   public async getAccountByUsername(
     username : string,
-  ) : Promise<AccountModel | null> {
+  ) : Promise<AccountModel> {
     const record : account | null = await this.dsClient.account.findFirst({
       where: {
         username,
       },
     });
 
-    if (record === null) {
-      return null;
-    }
     const accountModel : AccountModel = this.makeAccountModel(record);
     return accountModel;
   }
@@ -52,6 +50,9 @@ export default class AccountRepository extends BaseRepository {
   }
 
   private makeAccountModel(accountData :any) : AccountModel {
+    if (accountData === null) {
+      throw new ArgumentValidationError('Invalid user id');
+    }
     const accountModel : AccountModel = new AccountModel(
       accountData.id,
       accountData.username,

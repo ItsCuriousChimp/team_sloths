@@ -1,3 +1,4 @@
+import ArgumentValidationError from '../common/errors/argument-validation.error';
 import DateTimeHelper from '../common/helpers/datetime.helper';
 import UserModel from '../common/models/user.model';
 import BaseRepository from './base.repository';
@@ -18,7 +19,7 @@ export default class UserRepository extends BaseRepository {
     return userData.id;
   }
 
-  public async getUserUsingUserId(userId : string) : Promise<UserModel | null> {
+  public async getUserUsingUserId(userId : string) : Promise<UserModel> {
     const userData = await this.dsClient.user.findFirst({
       where: {
         id: userId,
@@ -35,7 +36,7 @@ export default class UserRepository extends BaseRepository {
     name : string,
     phoneNumber: string,
     cityId: string,
-  ) : Promise<UserModel | null> {
+  ) : Promise<UserModel> {
     const userData = await this.dsClient.user.update({
       where: {
         id: userId,
@@ -49,11 +50,14 @@ export default class UserRepository extends BaseRepository {
         city: true,
       },
     });
+
     return this.makeUserModel(userData);
   }
 
-  private makeUserModel(userData : any) : UserModel | null {
-    if (userData === null) { return null; }
+  private makeUserModel(userData : any) : UserModel {
+    if (userData === null) {
+      throw new ArgumentValidationError('Invalid user id');
+    }
     const userModel : UserModel = new UserModel(
       userData.id,
       userData.name,

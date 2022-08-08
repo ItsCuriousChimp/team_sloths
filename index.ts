@@ -8,6 +8,7 @@ import userRoute from './src/routes/user.route';
 import showRoute from './src/routes/show.route';
 import AutomapperPayloadConfig from './src/controllers/payloads/automapper.config';
 import mapper from './src/common/mapper';
+import errorHandlerMiddleware from './src/middlewares/error.middleware';
 
 const app = express();
 app.use(express.json());
@@ -22,6 +23,9 @@ app.use('/movies', movieRoute);
 app.use('/accounts', accountRoute);
 app.use('/users', userRoute);
 app.use('/shows', showRoute);
+
+// Error handler middleware
+app.use(errorHandlerMiddleware);
 
 app.listen(3000, () => {
   // eslint-disable-next-line no-console
