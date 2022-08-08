@@ -6,13 +6,16 @@ import BaseRepository from './base.repository';
 export default class AccountRepository extends BaseRepository {
   public async getAccountByUsername(
     username : string,
-  ) : Promise<AccountModel> {
+  ) : Promise<AccountModel | null> {
     const record : account | null = await this.dsClient.account.findFirst({
       where: {
         username,
       },
     });
 
+    if (record === null) {
+      return null;
+    }
     const accountModel : AccountModel = this.makeAccountModel(record);
     return accountModel;
   }

@@ -17,7 +17,7 @@ export default class AccountService {
     const accountRepositoryInstance : AccountRepository = new AccountRepository();
 
     // if account with this username already exists will throw error
-    const accountByUsername : AccountModel =
+    const accountByUsername : AccountModel | null =
     await accountRepositoryInstance.getAccountByUsername(email);
 
     if (accountByUsername !== null) {
@@ -64,8 +64,12 @@ export default class AccountService {
   public async loginUserUsingEmailAndPassword(email : string, password: string) : Promise<string> {
     const accountRepositoryInstance : AccountRepository = new AccountRepository();
 
-    const accountByUsername : AccountModel =
+    const accountByUsername : AccountModel | null =
     await accountRepositoryInstance.getAccountByUsername(email);
+
+    if (accountByUsername === null) {
+      throw new ArgumentValidationError('Account with this username already exists');
+    }
 
     // Check if entered password matches with the hashed password in database
     const isPasswordSame : Boolean =
