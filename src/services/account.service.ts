@@ -16,10 +16,9 @@ export default class AccountService {
   ) : Promise<string> {
     const accountRepositoryInstance : AccountRepository = new AccountRepository();
 
-    // if account with this username already exists will throw error
     const accountByUsername : AccountModel | null =
     await accountRepositoryInstance.getAccountByUsername(email);
-
+    // if account with this username already exists will throw error
     if (accountByUsername !== null) {
       throw new ArgumentValidationError('Account with this username already exists');
     }
