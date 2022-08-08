@@ -14,7 +14,7 @@ export default class AccountService {
   ): Promise<string> {
     const transactionMiddleware = new DataStore();
     const res =
-    await transactionMiddleware.transactionMiddleware(async (dataStorageInstance: any) => {
+    await transactionMiddleware.executeAsTransaction(async (dataStorageInstance: any) => {
       const accountRepositoryInstance: AccountRepository =
       new AccountRepository(dataStorageInstance);
 
