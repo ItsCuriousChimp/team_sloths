@@ -1,5 +1,4 @@
 import { account } from '@prisma/client';
-import ArgumentValidationError from '../common/errors/argument-validation.error';
 import AccountModel from '../common/models/account.model';
 import BaseRepository from './base.repository';
 
@@ -53,9 +52,6 @@ export default class AccountRepository extends BaseRepository {
   }
 
   private makeAccountModel(accountData :any) : AccountModel {
-    if (accountData === null) {
-      throw new ArgumentValidationError('Invalid user id');
-    }
     const accountModel : AccountModel = new AccountModel(
       accountData.id,
       accountData.username,
