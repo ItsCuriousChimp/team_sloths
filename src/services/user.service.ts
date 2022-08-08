@@ -1,4 +1,3 @@
-import ArgumentValidationError from '../common/errors/argument-validation.error';
 import UserModel from '../common/models/user.model';
 import CityRepository from '../repositories/city.repository';
 import UserRepository from '../repositories/user.repository';
@@ -17,9 +16,9 @@ export default class UserService {
     cityId: string,
   ) : Promise<UserModel> {
     const cityRepository = new CityRepository();
-    const city = await cityRepository.getCityByCityId(cityId);
-    if (cityId && city === null) {
-      throw new ArgumentValidationError('City does not exist');
+    if (cityId) {
+      // check if city exists in database
+      await cityRepository.getCityByCityId(cityId);
     }
     const userRepositoryInstance = new UserRepository();
     const updatedUser : UserModel =
