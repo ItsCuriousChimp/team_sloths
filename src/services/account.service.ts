@@ -1,3 +1,4 @@
+import ArgumentValidationError from '../common/errors/argument-validation.error';
 import UnauthorizedError from '../common/errors/unauthorized.error';
 import HashHelper from '../common/helpers/hash.helper';
 import JWTHelper from '../common/helpers/jwt.helper';
@@ -16,7 +17,12 @@ export default class AccountService {
     const accountRepositoryInstance : AccountRepository = new AccountRepository();
 
     // if account with this username already exists will throw error
+    const accountByUsername : AccountModel =
     await accountRepositoryInstance.getAccountByUsername(email);
+
+    if (accountByUsername !== null) {
+      throw new ArgumentValidationError('Account with this username already exists');
+    }
 
     // Hash the password string
     const passwordHash : string = await new HashHelper().hashString(password);
