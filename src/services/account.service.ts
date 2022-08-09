@@ -67,7 +67,7 @@ export default class AccountService {
     await accountRepositoryInstance.getAccountByUsername(email);
 
     if (accountByUsername === null) {
-      throw new ArgumentValidationError('Account with this username already exists');
+      throw new ArgumentValidationError('Account with this username does not exists');
     }
 
     // Check if entered password matches with the hashed password in database

@@ -1,3 +1,6 @@
+/* eslint-disable import/first */
+require('express-async-errors');
+
 import express from 'express';
 import bodyParser from 'body-parser';
 import heartbeatRoute from './src/routes/heartbeat.route';
@@ -11,6 +14,7 @@ import mapper from './src/common/mapper';
 import errorHandlerMiddleware from './src/middlewares/error.middleware';
 
 const app = express();
+
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -31,3 +35,12 @@ app.listen(3000, () => {
   // eslint-disable-next-line no-console
   console.log('listening on port 3000');
 });
+
+// process
+//   .on('unhandledRejection', (reason, p) => {
+//     console.error(reason, 'Unhandled Rejection at Promise', p);
+//   })
+//   .on('uncaughtException', (err :any) => {
+//     console.error(err, 'Uncaught Exception thrown');
+//     process.exit(1);
+//   });

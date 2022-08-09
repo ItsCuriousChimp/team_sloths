@@ -1,5 +1,5 @@
 /* eslint-disable consistent-return */
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import RequestContextHelper from '../common/helpers/request-context.helper';
 import UserService from '../services/user.service';
 import UserResponsePayload from './payloads/response-payload/user-response.payload';
@@ -9,44 +9,30 @@ import UpdateUserRequestPayload from './payloads/request-payload/update-user-req
 import BaseController from './base.controller';
 
 export default class UserController extends BaseController {
-  public async getUserDetails(req : Request, res : Response, next: NextFunction) {
+  public async getUserDetails(req : Request, res : Response) {
     const { userId } = RequestContextHelper.getContext();
 
     const userServiceInstance = new UserService();
-    let userModel : UserModel;
-    try {
-      userModel = await userServiceInstance.getUserUsingUserId(userId);
-    } catch (err) {
-      return next(err);
-    }
+    const userModel : UserModel = await userServiceInstance.getUserUsingUserId(userId);
     const userResponsePayloadInstance : UserResponsePayload =
     mapper.map(userModel, UserModel, UserResponsePayload);
 
     res.send(userResponsePayloadInstance);
   }
 
-  public async updateUserDetails(req : Request, res : Response, next : NextFunction) {
+  public async updateUserDetails(req : Request, res : Response) {
     const { userId } = RequestContextHelper.getContext();
 
-    let updateUserRequestPayload : UpdateUserRequestPayload = new UpdateUserRequestPayload();
-    try {
-      updateUserRequestPayload = super.extractAndValidate(req.body, UpdateUserRequestPayload);
-    } catch (err : any) {
-      return next(err);
-    }
+    const updateUserRequestPayload : UpdateUserRequestPayload =
+    super.extractAndValidate(req.body, UpdateUserRequestPayload);
 
     const userServiceInstance = new UserService();
-    let userModel : UserModel;
-    try {
-      userModel = await userServiceInstance.updateUserDetails(
-        userId,
-        updateUserRequestPayload.name,
-        updateUserRequestPayload.phoneNumber,
-        updateUserRequestPayload.cityId,
-      );
-    } catch (err) {
-      return next(err);
-    }
+    const userModel : UserModel = await userServiceInstance.updateUserDetails(
+      userId,
+      updateUserRequestPayload.name,
+      updateUserRequestPayload.phoneNumber,
+      updateUserRequestPayload.cityId,
+    );
     const userResponsePayloadInstance : UserResponsePayload =
       mapper.map(userModel, UserModel, UserResponsePayload);
 

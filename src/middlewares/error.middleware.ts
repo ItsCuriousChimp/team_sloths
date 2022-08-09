@@ -28,4 +28,4 @@ const errorHandlerMiddleware = (
   res.status(statusCode).send(errorResponse);
 };
 
-export = errorHandlerMiddleware;
+export default errorHandlerMiddleware;

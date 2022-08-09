@@ -4,6 +4,6 @@ export default abstract class BaseError extends Error {
     super(message);
     Object.setPrototypeOf(this, new.target.prototype);
     this.name = name;
-    Error.captureStackTrace(this);
+    // Error.captureStackTrace(this);
   }
 }

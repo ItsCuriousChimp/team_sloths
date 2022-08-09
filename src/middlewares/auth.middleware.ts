@@ -14,11 +14,11 @@ export default class AuthMiddleware {
     instance = this;
   }
 
-  public async verifyToken(req : Request, res: Response, next : NextFunction) {
+  public async verifyToken(req : Request, res: Response, next: NextFunction) {
     const token : string = String(req.headers['access-token']);
 
     if (!token) {
-      return next(new UnauthorizedError('Access Token not passed.'));
+      throw new UnauthorizedError('Access Token not passed.');
     }
 
     let decoded : jwt.JwtPayload;
@@ -26,9 +26,9 @@ export default class AuthMiddleware {
       decoded = jwt.verify(token, instance.config.ACCESS_TOKEN_SECRET) as JwtPayload;
     } catch (err : any) {
       if (err.name === 'JsonWebTokenError' || err.name === 'TokenExpiredError') {
-        return next(new UnauthorizedError(err.message));
+        throw new UnauthorizedError(err.message);
       }
-      return next(new Error(err));
+      throw new Error(err);
     }
 
     const { userId } = decoded.accessTokenModel;
