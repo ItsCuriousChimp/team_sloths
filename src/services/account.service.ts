@@ -5,6 +5,7 @@ import AccountModel from '../common/models/account.model';
 import AccountRepository from '../repositories/account.repository';
 import UserRepository from '../repositories/user.repository';
 import DataStore from '../repositories/data.store';
+import ArgumentValidationError from '../common/errors/argument-validation.error';
 
 export default class AccountService {
   public async signUpUserUsingEmailAndPassword(
@@ -23,7 +24,7 @@ export default class AccountService {
 
       // if account with this username already exists
       if (accountByUsername !== null) {
-        return '';
+        throw new ArgumentValidationError('Account Already Exists');
       }
 
       // Hash the password string
@@ -64,7 +65,7 @@ export default class AccountService {
 
     // if account with this username does not exists
     if (accountByUsername === null) {
-      return '';
+      throw new ArgumentValidationError('Incorrect username or password');
     }
 
     // Check if entered password matches with the hashed password in database
@@ -73,7 +74,7 @@ export default class AccountService {
 
     // If password is incorrect
     if (!isPasswordSame) {
-      return '';
+      throw new ArgumentValidationError('Incorrect username or password');
     }
 
     // Initialize AccessTokenModel

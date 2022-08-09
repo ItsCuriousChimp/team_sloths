@@ -1,3 +1,4 @@
+import ArgumentValidationError from '../common/errors/argument-validation.error';
 import UserModel from '../common/models/user.model';
 import CityRepository from '../repositories/city.repository';
 import UserRepository from '../repositories/user.repository';
@@ -7,6 +8,9 @@ export default class UserService {
     const userRepositoryInstance: UserRepository = new UserRepository();
     const userByUserId: UserModel | null =
       await userRepositoryInstance.getUserUsingUserId(userId);
+    if (userByUserId === null) {
+      throw new ArgumentValidationError('Account Not Found');
+    }
     return userByUserId;
   }
 
@@ -19,11 +23,12 @@ export default class UserService {
     const cityRepository = new CityRepository();
     const city = await cityRepository.getCityByCityId(cityId);
     if (cityId && city === null) {
-      return null;
+      throw new ArgumentValidationError('City does not exist');
     }
     const userRepositoryInstance = new UserRepository();
     const updatedUser: UserModel | null =
         await userRepositoryInstance.updateUserDetails(userId, name, phoneNumber, cityId);
+    if (updatedUser === null) { throw new ArgumentValidationError('Could not update user'); }
     return updatedUser;
   }
 }

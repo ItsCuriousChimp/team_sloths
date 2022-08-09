@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
+import UnauthorizedError from '../common/errors/unauthorized.error';
 import RequestContextHelper from '../common/helpers/request-context.helper';
 import RequestContextModel from '../common/models/request-context.model';
 
@@ -17,7 +18,7 @@ export default class AuthMiddleware {
     const token : string = String(req.headers['access-token']);
 
     if (!token) {
-      return res.status(401).send('Unauthorized');
+      return next(new UnauthorizedError('Token Not Available'));
     }
 
     let decoded : jwt.JwtPayload;
@@ -25,12 +26,12 @@ export default class AuthMiddleware {
       decoded = jwt.verify(token, instance.config.ACCESS_TOKEN_SECRET) as JwtPayload;
     } catch (err : any) {
       if (err.name === 'JsonWebTokenError') {
-        return res.status(401).send('Invalid Token');
+        return next(new UnauthorizedError(err.message));
       }
       if (err.name === 'TokenExpiredError') {
-        return res.status(401).send('Token Expired');
+        return next(new UnauthorizedError(err.message));
       }
-      throw err;
+      return next(new UnauthorizedError(err.message));
     }
 
     const { userId } = decoded.accessTokenModel;
