@@ -19,7 +19,7 @@ export default class UserService {
     const cityRepository = new CityRepository();
     const city = await cityRepository.getCityByCityId(cityId);
     if (cityId && city == null) {
-      throw new ArgumentValidationError('Invalid user id');
+      throw new ArgumentValidationError('E0101', 'Invalid city id');
     }
     const userRepositoryInstance = new UserRepository();
     const updatedUser : UserModel =

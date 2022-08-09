@@ -18,7 +18,7 @@ export default class AuthMiddleware {
     const token : string = String(req.headers['access-token']);
 
     if (!token) {
-      throw new UnauthorizedError('Access Token not passed.');
+      throw new UnauthorizedError('E0100', 'Access Token not passed.');
     }
 
     let decoded : jwt.JwtPayload;
@@ -26,7 +26,7 @@ export default class AuthMiddleware {
       decoded = jwt.verify(token, instance.config.ACCESS_TOKEN_SECRET) as JwtPayload;
     } catch (err : any) {
       if (err.name === 'JsonWebTokenError' || err.name === 'TokenExpiredError') {
-        throw new UnauthorizedError(err.message);
+        throw new UnauthorizedError('E0100', err.message);
       }
       throw new Error(err);
     }

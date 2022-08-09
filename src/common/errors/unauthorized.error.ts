@@ -1,7 +1,7 @@
 import BaseError from './base.error';
 
 export default class UnauthorizedError extends BaseError {
-  constructor(message : string) {
-    super('UnauthorizedError', message);
+  constructor(errorCode: string, additionalDetails? : string) {
+    super('UnauthorizedError', errorCode, additionalDetails);
   }
 }

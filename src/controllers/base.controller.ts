@@ -1,5 +1,6 @@
 import { getClassSchema } from 'joi-class-decorators';
 import ArgumentValidationError from '../common/errors/argument-validation.error';
+// import { E0101 } from '../common/errors/error-codes';
 
 export default class BaseController {
   public extractAndValidate(src: any, destClass: any) {
@@ -11,7 +12,7 @@ export default class BaseController {
     const schema = getClassSchema(destClass);
     const validate : any = schema.validate(destObj);
     if (validate.error) {
-      throw new ArgumentValidationError(validate.error.message);
+      throw new ArgumentValidationError('E0101', validate.error.message);
     }
     return destObj;
   }

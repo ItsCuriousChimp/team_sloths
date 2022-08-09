@@ -20,7 +20,7 @@ export default class AccountService {
     await accountRepositoryInstance.getAccountByUsername(email);
     // if account with this username already exists will throw error
     if (accountByUsername !== null) {
-      throw new ArgumentValidationError('Account with this username already exists');
+      throw new ArgumentValidationError('E0102');
     }
 
     // Hash the password string
@@ -67,7 +67,7 @@ export default class AccountService {
     await accountRepositoryInstance.getAccountByUsername(email);
 
     if (accountByUsername === null) {
-      throw new ArgumentValidationError('Account with this username does not exists');
+      throw new UnauthorizedError('E0100');
     }
 
     // Check if entered password matches with the hashed password in database
@@ -76,7 +76,7 @@ export default class AccountService {
 
     // If password is incorrect
     if (!isPasswordSame) {
-      throw new UnauthorizedError('Invalid username or password');
+      throw new UnauthorizedError('E0100');
     }
 
     // Initialize AccessTokenModel
