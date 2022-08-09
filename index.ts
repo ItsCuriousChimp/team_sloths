@@ -35,12 +35,3 @@ app.listen(3000, () => {
   // eslint-disable-next-line no-console
   console.log('listening on port 3000');
 });
-
-// process
-//   .on('unhandledRejection', (reason, p) => {
-//     console.error(reason, 'Unhandled Rejection at Promise', p);
-//   })
-//   .on('uncaughtException', (err :any) => {
-//     console.error(err, 'Uncaught Exception thrown');
-//     process.exit(1);
-//   });
