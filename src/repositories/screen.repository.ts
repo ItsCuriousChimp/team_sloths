@@ -1,15 +1,13 @@
-import { PrismaClient } from '@prisma/client';
 import DateTimeHelper from '../common/helpers/datetime.helper';
 import ScreenModel from '../common/models/screen.model';
+import BaseRepository from './base.repository';
 
-const prisma = new PrismaClient();
-
-export default class ScreenRepository {
+export default class ScreenRepository extends BaseRepository {
   public async getScreensWithItsSeatsByTheatreIdAndMovieId(
     theatreIdUrl : string,
     movieIdUrl : string,
   ) : Promise<ScreenModel[]> {
-    const screens : any = await prisma.screen.findMany({
+    const screens : any = await this.dsClient.screen.findMany({
       where: {
         theatreId: theatreIdUrl,
         show: {

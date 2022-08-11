@@ -1,15 +1,12 @@
-import { account, PrismaClient } from '@prisma/client';
-// import { createMap, forMember, mapFrom } from '@automapper/core';
-// import { mapper } from '../common/mapper/mapper';
+import { account } from '@prisma/client';
 import AccountModel from '../common/models/account.model';
+import BaseRepository from './base.repository';
 
-const prisma: PrismaClient = new PrismaClient();
-
-export default class AccountRepository {
+export default class AccountRepository extends BaseRepository {
   public async getAccountByUsername(
     username : string,
   ) : Promise<AccountModel | null> {
-    const record : account | null = await prisma.account.findFirst({
+    const record : account | null = await this.dsClient.account.findFirst({
       where: {
         username,
       },
@@ -26,7 +23,7 @@ export default class AccountRepository {
     username : string,
     passwordHash : string,
   ) : Promise<string> {
-    const record = await prisma.account.create({
+    const record = await this.dsClient.account.create({
       data: {
         username,
         passwordHash,
@@ -40,7 +37,7 @@ export default class AccountRepository {
     userId: string,
     accountId: string,
   ) : Promise<AccountModel> {
-    const record = await prisma.account.update({
+    const record = await this.dsClient.account.update({
       where: {
         id: accountId,
       },
