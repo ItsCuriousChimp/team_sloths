@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import UnauthorizedError from '../common/errors/unauthorized.error';
 import RequestContextHelper from '../common/helpers/request-context.helper';
@@ -14,7 +14,7 @@ export default class AuthMiddleware {
     instance = this;
   }
 
-  public async verifyToken(req : Request, res: Response, next: NextFunction) {
+  public async verifyToken(req : Request, res: Response, next : any) {
     const token : string = String(req.headers['access-token']);
 
     if (!token) {
