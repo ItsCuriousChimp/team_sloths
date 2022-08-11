@@ -13,44 +13,29 @@ export default class UserController extends BaseController {
     const { userId } = RequestContextHelper.getContext();
 
     const userServiceInstance = new UserService();
-    const userModel : UserModel | null = await userServiceInstance.getUserUsingUserId(userId);
+    const userModel : UserModel = await userServiceInstance.getUserUsingUserId(userId);
+    const userResponsePayloadInstance : UserResponsePayload =
+    mapper.map(userModel, UserModel, UserResponsePayload);
 
-    if (!userModel) {
-      res.status(400).send('User with this user id does not exist.');
-    } else {
-      const userResponsePayloadInstance : UserResponsePayload =
-      mapper.map(userModel, UserModel, UserResponsePayload);
-
-      res.send(userResponsePayloadInstance);
-    }
+    res.send(userResponsePayloadInstance);
   }
 
   public async updateUserDetails(req : Request, res : Response) {
     const { userId } = RequestContextHelper.getContext();
 
-    let updateUserRequestPayload : UpdateUserRequestPayload = new UpdateUserRequestPayload();
-    try {
-      updateUserRequestPayload = super.extractAndValidate(req.body, UpdateUserRequestPayload);
-    } catch (err : any) {
-      return res.status(400).send(err.message);
-    }
+    const updateUserRequestPayload : UpdateUserRequestPayload =
+    super.extractAndValidate(req.body, UpdateUserRequestPayload);
 
     const userServiceInstance = new UserService();
-    const userModel =
-    await userServiceInstance.updateUserDetails(
+    const userModel : UserModel = await userServiceInstance.updateUserDetails(
       userId,
       updateUserRequestPayload.name,
       updateUserRequestPayload.phoneNumber,
       updateUserRequestPayload.cityId,
     );
-
-    if (!userModel) {
-      res.status(400).send('There was a problem with updating the details.');
-    } else {
-      const userResponsePayloadInstance : UserResponsePayload =
+    const userResponsePayloadInstance : UserResponsePayload =
       mapper.map(userModel, UserModel, UserResponsePayload);
 
-      res.send(userResponsePayloadInstance);
-    }
+    res.send(userResponsePayloadInstance);
   }
 }

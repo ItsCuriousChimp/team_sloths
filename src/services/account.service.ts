@@ -1,9 +1,11 @@
+import ArgumentValidationError from '../common/errors/argument-validation.error';
+import UnauthorizedError from '../common/errors/unauthorized.error';
 import HashHelper from '../common/helpers/hash.helper';
 import JWTHelper from '../common/helpers/jwt.helper';
 import AccessTokenModel from '../common/models/access-token.model';
 import AccountModel from '../common/models/account.model';
 import AccountRepository from '../repositories/account.repository';
-import TransactionsDataStore from '../repositories/transactions-data-store.repository';
+import DataStore from '../repositories/data.store';
 import UserRepository from '../repositories/user.repository';
 
 export default class AccountService {
@@ -16,30 +18,31 @@ export default class AccountService {
 
     const accountByUsername : AccountModel | null =
     await accountRepositoryInstance.getAccountByUsername(email);
-
-    // if account with this username already exists
+    // if account with this username already exists will throw error
     if (accountByUsername !== null) {
-      return '';
+      throw new ArgumentValidationError('E0102');
     }
 
     // Hash the password string
     const passwordHash : string = await new HashHelper().hashString(password);
 
-    const transactionDataStorage : TransactionsDataStore = new TransactionsDataStore();
+    const transactionDataStorage : DataStore = new DataStore();
 
     // run the below commands in transaction either all succeed or all fail
     const accountModelOfNewUser : AccountModel =
     await transactionDataStorage.executeInTransaction(async (dataStoreInstance : any) => {
+      const accountRepositoryInstanceForTransactions : AccountRepository =
+      new AccountRepository(dataStoreInstance);
       // make account without user id
       const accountId : string =
-      await new AccountRepository(dataStoreInstance)
+      await accountRepositoryInstanceForTransactions
         .createAccountWithoutUserId(email, passwordHash);
       // make user
       const userId : string =
       await new UserRepository(dataStoreInstance).createUser(name, email);
       // add user id to account
       const accountModel : AccountModel =
-      await new AccountRepository(dataStoreInstance).updateUserIdInAccount(userId, accountId);
+      await accountRepositoryInstanceForTransactions.updateUserIdInAccount(userId, accountId);
 
       return accountModel;
     });
@@ -63,9 +66,8 @@ export default class AccountService {
     const accountByUsername : AccountModel | null =
     await accountRepositoryInstance.getAccountByUsername(email);
 
-    // if account with this username does not exists
     if (accountByUsername === null) {
-      return '';
+      throw new UnauthorizedError('E0100');
     }
 
     // Check if entered password matches with the hashed password in database
@@ -74,7 +76,7 @@ export default class AccountService {
 
     // If password is incorrect
     if (!isPasswordSame) {
-      return '';
+      throw new UnauthorizedError('E0100');
     }
 
     // Initialize AccessTokenModel

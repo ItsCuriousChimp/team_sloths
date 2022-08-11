@@ -3,8 +3,9 @@ import MovieModel from '../common/models/movie.model';
 import MovieResponsePayload from './payloads/response-payload/movie-response.payload';
 import MovieService from '../services/movie.service';
 import mapper from '../common/mapper';
+import BaseController from './base.controller';
 
-export default class MovieController {
+export default class MovieController extends BaseController {
   public async getMovieByCityId(req: Request, res: Response) {
     const { cityId } = req.query;
     const movieService: MovieService = new MovieService();

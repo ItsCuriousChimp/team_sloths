@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
+import UnauthorizedError from '../common/errors/unauthorized.error';
 import RequestContextHelper from '../common/helpers/request-context.helper';
 import RequestContextModel from '../common/models/request-context.model';
 
@@ -17,20 +18,17 @@ export default class AuthMiddleware {
     const token : string = String(req.headers['access-token']);
 
     if (!token) {
-      return res.status(401).send('Unauthorized');
+      throw new UnauthorizedError('E0100', 'Access Token not passed.');
     }
 
     let decoded : jwt.JwtPayload;
     try {
       decoded = jwt.verify(token, instance.config.ACCESS_TOKEN_SECRET) as JwtPayload;
     } catch (err : any) {
-      if (err.name === 'JsonWebTokenError') {
-        return res.status(401).send('Invalid Token');
+      if (err.name === 'JsonWebTokenError' || err.name === 'TokenExpiredError') {
+        throw new UnauthorizedError('E0100', err.message);
       }
-      if (err.name === 'TokenExpiredError') {
-        return res.status(401).send('Token Expired');
-      }
-      throw err;
+      throw new Error(err);
     }
 
     const { userId } = decoded.accessTokenModel;

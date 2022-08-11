@@ -8,15 +8,15 @@ export default class CityRepository extends BaseRepository {
         id: cityId,
       },
     });
-    if (city === null) {
-      return null;
-    }
-    const cityModel : CityModel = this.makeCityModel(city);
+    const cityModel : CityModel | null = this.makeCityModel(city);
 
     return cityModel;
   }
 
-  private makeCityModel(cityData : any) : CityModel {
+  private makeCityModel(cityData : any) : CityModel | null {
+    if (cityData === null) {
+      return null;
+    }
     const cityModel : CityModel = new CityModel(
       cityData.id,
       cityData.name,

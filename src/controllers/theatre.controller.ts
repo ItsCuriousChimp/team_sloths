@@ -5,8 +5,9 @@ import TheatreService from '../services/theatre.service';
 import ShowModel from '../common/models/show.model';
 import UpcomingMovieShowInTheatreResponsePayload from './payloads/response-payload/upcoming-movie-show-in-theatre-response.payload.ts';
 import mapper from '../common/mapper';
+import BaseController from './base.controller';
 
-export default class TheatreController {
+export default class TheatreController extends BaseController {
   public async getTheatresByCityId(req: Request, res: Response) {
     const { cityId } = req.query;
     const theatreService : TheatreService = new TheatreService();
