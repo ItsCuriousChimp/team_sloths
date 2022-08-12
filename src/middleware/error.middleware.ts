@@ -1,11 +1,12 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import UnauthorisedError from '../common/errors/custom-errors/unauthorised.error';
 import ArgumentValidationError from '../common/errors/custom-errors/argument.validation.error';
 import NotFoundError from '../common/errors/custom-errors/not-found.error';
 import UnprocessableEntityError from '../common/errors/custom-errors/unprocessable.entity.error';
 
 export default class ErrorMiddleware {
-  public static async handleError(err: any, req: Request, res: Response) {
+  // eslint-disable-next-line no-unused-vars
+  public static async handleError(err: any, req: Request, res: Response, next: NextFunction) {
     if (err instanceof ArgumentValidationError) {
       return res.status(400).send(err.message);
     }

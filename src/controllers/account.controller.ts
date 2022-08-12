@@ -6,22 +6,12 @@ import mapper from '../common/mapper';
 import SignupRequestPayload from './payloads/request-payload/signup-request.payload';
 import LoginRequestPayload from './payloads/request-payload/login-request.payload';
 import BaseController from './base.controller';
-import ArgumentValidationError from '../common/errors/custom-errors/argument.validation.error';
-import UnauthorisedError from '../common/errors/custom-errors/unauthorised.error';
-import UnprocessableEntityError from '../common/errors/custom-errors/unprocessable.entity.error';
 
 export default class AccountController extends BaseController {
-  public async signUpUserUsingEmailAndPassword(req : Request, res : Response, next : any)
+  public async signUpUserUsingEmailAndPassword(req : Request, res : Response)
    : Promise<void> {
-    let signupRequestPayload : SignupRequestPayload = new SignupRequestPayload();
-
-    try {
-      signupRequestPayload = super.extractAndValidate(req.body, SignupRequestPayload);
-    } catch (errr:any) {
-      // const err = new BaseError('SignupRequestPayload', errr.message, errr);
-      // return res.status(400).send(err.message);
-      return next(new ArgumentValidationError(errr.message));
-    }
+    let signupRequestPayload: SignupRequestPayload = new SignupRequestPayload();
+    signupRequestPayload = super.extractAndValidate(req.body, SignupRequestPayload);
 
     const accountServiceInstance : AccountService = new AccountService();
     const accessToken : string =
@@ -30,22 +20,14 @@ export default class AccountController extends BaseController {
       signupRequestPayload.email,
       signupRequestPayload.password,
     );
-
-    if (accessToken === '') {
-      return next(new UnprocessableEntityError('User with this email already exists.'));
-    }
     const accessTokenResponsePayloadInstance =
       mapper.map(accessToken, String, AccessTokenResponsePayload);
     res.send(accessTokenResponsePayloadInstance);
   }
 
-  public async loginUsingEmailAndPassword(req: Request, res: Response, next: any) {
+  public async loginUsingEmailAndPassword(req: Request, res: Response) {
     let loginRequestPayload : LoginRequestPayload = new LoginRequestPayload();
-    try {
-      loginRequestPayload = super.extractAndValidate(req.body, LoginRequestPayload);
-    } catch (err : any) {
-      return next(new ArgumentValidationError(err.message));
-    }
+    loginRequestPayload = super.extractAndValidate(req.body, LoginRequestPayload);
 
     const accountServiceInstance : AccountService = new AccountService();
     const accessToken : string =
@@ -53,9 +35,6 @@ export default class AccountController extends BaseController {
       loginRequestPayload.email,
       loginRequestPayload.password,
     );
-    if (accessToken === '') {
-      return next(new UnauthorisedError('Invalid email or password'));
-    }
     const accessTokenResponsePayloadInstance =
       mapper.map(accessToken, String, AccessTokenResponsePayload);
     res.send(accessTokenResponsePayloadInstance);

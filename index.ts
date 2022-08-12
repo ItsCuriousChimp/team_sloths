@@ -1,3 +1,6 @@
+/* eslint-disable import/first */
+require('express-async-errors');
+
 import express from 'express';
 import bodyParser from 'body-parser';
 import heartbeatRoute from './src/routes/heartbeat.route';
@@ -9,7 +12,6 @@ import showRoute from './src/routes/show.route';
 import AutomapperPayloadConfig from './src/controllers/payloads/automapper.config';
 import mapper from './src/common/mapper';
 import ErrorMiddleware from './src/middleware/error.middleware';
-import NotFoundError from './src/common/errors/custom-errors/not-found.error';
 
 const app = express();
 
@@ -27,10 +29,8 @@ app.use('/users', userRoute);
 app.use('/shows', showRoute);
 
 app.use('/', ErrorMiddleware.handleError);
-app.use('*', (req, res, next) => {
-  next(new NotFoundError('Route not found'));
-});
-app.listen(3000, () => {
+
+app.listen(5000, () => {
   // eslint-disable-next-line no-console
   console.log('listening on port 3000');
 });

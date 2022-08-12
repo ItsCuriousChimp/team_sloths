@@ -4,6 +4,8 @@ import AccessTokenModel from '../common/models/access-token.model';
 import AccountModel from '../common/models/account.model';
 import AccountRepository from '../repositories/account.repository';
 import UserRepository from '../repositories/user.repository';
+import UnprocessableEntityError from '../common/errors/custom-errors/unprocessable.entity.error';
+import UnauthorisedError from '../common/errors/custom-errors/unauthorised.error';
 
 export default class AccountService {
   public async signUpUserUsingEmailAndPassword(
@@ -16,9 +18,8 @@ export default class AccountService {
     const accountByUsername : AccountModel | null =
     await accountRepositoryInstance.getAccountByUsername(email);
 
-    // if account with this username already exists
     if (accountByUsername !== null) {
-      return '';
+      throw new UnprocessableEntityError('User with this email already exists.');
     }
 
     // Hash the password string
@@ -55,9 +56,8 @@ export default class AccountService {
     const accountByUsername : AccountModel | null =
     await accountRepositoryInstance.getAccountByUsername(email);
 
-    // if account with this username does not exists
     if (accountByUsername === null) {
-      return '';
+      throw new UnprocessableEntityError('Invalid email or password');
     }
 
     // Check if entered password matches with the hashed password in database
@@ -66,7 +66,7 @@ export default class AccountService {
 
     // If password is incorrect
     if (!isPasswordSame) {
-      return '';
+      throw new UnauthorisedError('Invalid email or password');
     }
 
     // Initialize AccessTokenModel
