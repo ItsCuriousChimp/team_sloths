@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import UnauthorisedError from '../common/errors/custom-errors/unauthorised.error';
 import ArgumentValidationError from '../common/errors/custom-errors/argument.validation.error';
-import NotFoundError from '../common/errors/custom-errors/not-found.error';
 import UnprocessableEntityError from '../common/errors/custom-errors/unprocessable.entity.error';
 
 export default class ErrorMiddleware {
@@ -12,9 +11,6 @@ export default class ErrorMiddleware {
     }
     if (err instanceof UnauthorisedError) {
       return res.status(401).send(err.message);
-    }
-    if (err instanceof NotFoundError) {
-      return res.status(404).send(err.message);
     }
 
     if (err instanceof UnprocessableEntityError) {
